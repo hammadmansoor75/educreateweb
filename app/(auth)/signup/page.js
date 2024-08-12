@@ -22,26 +22,26 @@ const page = () => {
                    <div className='flex flex-col items-start justify-center'>   
                        <label className='text-black dark:text-white text-md'>Full Name</label>
                        <div className='flex items-center justify-center gap-4'>
-                            <input type='text' placeholder='First Name' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-lg text-md placeholder-md p-2' />
-                            <input type='text' placeholder='Last Name' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-lg text-md placeholder-md p-2' />
+                            <input type='text' placeholder='First Name' className='bg-inherit border-2 mt-1 border-gray-600 w-full placeholder-gray-600 rounded-md text-md placeholder-md p-2' />
+                            <input type='text' placeholder='Last Name' className='border-2 border-gray-600 w-full placeholder-gray-600 mt-1 rounded-md bg-inherit text-md placeholder-md p-2' />
                        </div>
                    </div>
                    <div className='mt-2 flex flex-col items-start justify-center'>
                       <label className='text-black dark:text-white text-md'>Username</label>
-                      <input type='text' placeholder='Username' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-lg text-md placeholder-md p-2' />
+                      <input type='text' placeholder='Username' className='border-2 border-gray-600 w-full placeholder-gray-600 mt-1 rounded-md bg-inherit text-md placeholder-md p-2' />
                    </div>
                    <div className='mt-2 flex flex-col items-start justify-center'>
                       <label className='text-black dark:text-white text-md'>Email</label>
-                      <input type='email' placeholder='Email' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-lg text-md placeholder-md p-2' />
+                      <input type='email' placeholder='Email' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-md mt-1 bg-inherit text-md placeholder-md p-2' />
                    </div>
                    <div className='mt-2 flex items-center justify-start gap-5'>
                       <div className='flex flex-col items-start justify-center'>
                             <label className='text-black dark:text-white text-md'>Password</label>
-                            <input type='email' placeholder='Enter password' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-lg text-md placeholder-md p-2' />
+                            <input type='email' placeholder='Enter password' className='border-2 border-gray-600 w-full placeholder-gray-600 mt-1 rounded-md bg-inherit text-md placeholder-md p-2' />
                       </div>
                       <div className='flex flex-col items-start justify-center'>
                             <label className='text-black dark:text-white text-md'>Confirm Password</label>
-                            <input type='email' placeholder='Confirm password' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-lg text-md placeholder-md p-2' />
+                            <input type='email' placeholder='Confirm password' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-md mt-1 bg-inherit text-md placeholder-md p-2' />
                       </div>
                    </div>
                    <div className='flex items-center justify-start gap-2 mt-2'>

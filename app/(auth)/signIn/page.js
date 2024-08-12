@@ -21,11 +21,11 @@ const page = () => {
                 <form className='p-5'>
                    <div className='flex flex-col items-start justify-center'>   
                        <label className='text-black dark:text-white text-md'>Email</label>
-                       <input type='email' placeholder='Email address' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-lg text-md placeholder-md p-2' />
+                       <input type='email' placeholder='Email address' className='bg-inherit mt-1 border-2 border-gray-600 w-full placeholder-gray-600 rounded-md text-md placeholder-md p-2' />
                    </div>
                    <div className='mt-5 flex flex-col items-start justify-center'>
                       <label className='text-black dark:text-white text-md'>Password</label>
-                      <input type='email' placeholder='Enter password' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-lg text-md placeholder-md p-2' />
+                      <input type='email' placeholder='Enter password' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-md bg-inherit mt-1 text-md placeholder-md p-2' />
                    </div>
                    <div className='flex items-center justify-center gap-2 mt-5'>
                       <p className='text-black dark:text-white'>Dont have an account?</p>

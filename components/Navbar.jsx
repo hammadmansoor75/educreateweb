@@ -49,10 +49,11 @@ const Navbar = () => {
                     })}
                 </div>
                 <div className='hidden md:flex items-center justify-center gap-3'>
-                    <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md'>Create Account</button></Link>
-                    <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md'>Sign In</button></Link>
+                <ThemeToggler/>
+                    <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md text-white font-semibold'>Create Account</button></Link>
+                    <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md text-white font-semibold'>Sign In</button></Link>
                     
-                    <ThemeToggler/>
+                    
                 </div>
                 
                 <div className='md:hidden sm:flex'>
@@ -76,8 +77,8 @@ const Navbar = () => {
                     })}
                     </div>
                     <div className='mt-3 px-5 flex items-center justify-center gap-3'>
-                        <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md'>Create Account</button></Link>
-                        <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md'>Sign In</button></Link>
+                        <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md text-white font-semibold'>Create Account</button></Link>
+                        <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md text-white font-semibold'>Sign In</button></Link>
                     </div>
                     
                 </div>

@@ -51,12 +51,12 @@ export default function Home() {
             <button className="text-md flex items-center gap-2 justify-center bg-gradient-to-r from-pink-300 to-blue-400 border-blue-700 border-2 opacity-1 rounded-full p-3 text-pinkBtnText font-bold mt-5 dark:bg-blueBtn shadow-2xl shadow-pinkBtn" >Create Free AI Course <span><FaArrowRight/></span></button>
           </div>
           <div className="hidden md:flex">
-            <Image src='/assets/homepage-01.png' height={700} width={700} alt="homepage"/>
+            <Image src='/assets/homepage-01.svg' height={700} width={700} alt="homepage"/>
           </div>
         </div>
       </section>
       <section className="py-10 bg-white dark:bg-black flex items-center justify-center">
-        <Image src='/assets/homepage-02.png' height={1200} width={1000} alt="video"/>
+        <Image src='/assets/homepage-02.svg' height={1200} width={1000} alt="video"/>
       </section>
 
       <section className="py-10 bg-white dark:bg-black">
@@ -114,7 +114,7 @@ export default function Home() {
 
 
       <section className="hidden md:flex py-10 bg-white dark:bg-black  justify-center">
-        <Image src='/assets/homegrid.png' alt="grid" height={900} width={900} />
+        <Image src='/assets/homegridBig.svg' alt="grid" height={900} width={900} />
         <h1 className="absolute mt-[600px] text-center text-4xl bg-black bg-opacity-70 py-9 px-8 rounded-md font-bold text-white">Made in <span className="text-blue-700">Open eLMS AI</span></h1>
       </section>
 
@@ -127,7 +127,7 @@ export default function Home() {
               <button className="mt-3 flex items-center justify-center gap-2 p-2 rounded-md bg-instructorBlueBtn">Start Creating <FaArrowRight/></button>
             </div>
             <div className="">
-              <Image src='/assets/homess.png' alt="ss" height={600} width={600}/>
+              <Image src='/assets/homess.svg' alt="ss" height={600} width={600}/>
             </div>
           </div>
         </div>
@@ -135,20 +135,20 @@ export default function Home() {
 
 
       <section className="py-10 bg-white dark:bg-black">
-        <h1 className="text-3xl font-semibold text-center sm:px-2">Top Customer Feedback</h1>
+        {/* <h1 className="text-3xl font-semibold text-center sm:px-2">Top Customer Feedback</h1> */}
         <Testimonials />
 
       </section>
 
       <section className="py-20 px-5 bg-darkGreyBg dark:bg-black text-white">
-        <div className="container mx-auto md:flex items-center justify-center">
+        <div className="container mx-auto md:flex items-center justify-center gap-5">
           <div className="w-full md:w-1/2">
             <h1 className="text-3xl font-semibold">Start teaching with us and inspire others</h1>
             <p className="mt-3 text-base text-textGray">Become an instructor & start teaching with 26k certified instructors. Create a success story with 67.1k Students — Grow yourself with 71 countries.</p>
             <button className="mt-3 bg-darkGreyBgBlueBtn py-2 rounded-md text-xl shadow-md shadow-inherit px-4">Register Now</button>
           </div>
           <div className="mt-5 md:mt-0">
-          <Image src='/assets/instructor.jpg' className="rounded-lg" alt="instructor" height={500} width={500} />
+          <Image src='/assets/Instructor.svg' className="rounded-lg" alt="instructor" height={500} width={500} />
           </div>
         </div>
         

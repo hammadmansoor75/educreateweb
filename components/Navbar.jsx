@@ -23,6 +23,10 @@ const navLinks = [
         name : 'Pricing',
         link : '/pricing'
     },
+    {
+        name : 'My Learning',
+        link : '/mylearning'
+    },
 ]
 
 const Navbar = () => {

@@ -35,3 +35,11 @@ body {
 .logo{
   background-image: url('/public/assets/triangle.png');
 }
+
+
+.backgroundImage{
+  background-image: url('/public/assets/Header.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

@@ -27,7 +27,14 @@ module.exports = {
         darkGreyBg : '#1d2026',
         darkGreyBgBlueBtn : '#006fee',
         pinkBtnGradient : '#842ce1',
-        blueBtnGradient : '#003da0'
+        blueBtnGradient : '#003da0',
+        blueTick : '#7c67fe',
+        blueIcon : '#85b6ff',
+        bgGreyABout : '#878787',
+        examplePurpleBtn : '#564ffd',
+        loginStart : '#B2CFFA',
+        loginVia : '#DEE9FB',
+        loginEnd : '#AAE9FD'
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

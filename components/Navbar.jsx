@@ -49,8 +49,9 @@ const Navbar = () => {
                     })}
                 </div>
                 <div className='hidden md:flex items-center justify-center gap-3'>
-                    <button className='bg-signupBtn p-2 rounded-md'>Create Account</button>
-                    <button className='bg-signinBtn p-2 rounded-md'>Sign In</button>
+                    <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md'>Create Account</button></Link>
+                    <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md'>Sign In</button></Link>
+                    
                     <ThemeToggler/>
                 </div>
                 
@@ -75,8 +76,8 @@ const Navbar = () => {
                     })}
                     </div>
                     <div className='mt-3 px-5 flex items-center justify-center gap-3'>
-                        <button className='bg-signupBtn p-2 rounded-md'>Create Account</button>
-                        <button className='bg-signinBtn p-2 rounded-md'>Sign In</button>
+                        <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md'>Create Account</button></Link>
+                        <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md'>Sign In</button></Link>
                     </div>
                     
                 </div>

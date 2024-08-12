@@ -8,13 +8,13 @@ const page = () => {
   return (
     <main>
         <section className='flex items-center justify-center w-full'>
-            <div className='bg-gradient-to-tr from-loginStart via-loginVia to-loginEnd dark:bg-gradient-to-r dark:from-blue-950 dark:to-black flex flex-col gap-10 items-center justify-center w-3/5 min-h-[100vh]'>
+            <div className='hidden bg-gradient-to-tr from-loginStart via-loginVia to-loginEnd dark:bg-gradient-to-r dark:from-blue-950 dark:to-black md:flex flex-col gap-10 items-center justify-center w-3/5 min-h-[100vh]'>
                 <h1 className='text-4xl text-wrap px-12 text-center text-black dark:text-white'>Turn your topic into course content, in <span className='text-blue-400 font-semibold'> minutes.</span></h1>
                 <div className='bg-white rounded-lg py-3 px-20' >
                     <Image src='/assets/login.svg' alt='login' height={500} width={500} />
                 </div>
             </div>
-            <div className='bg-white dark:bg-black w-2/5 min-h-[100vh] flex justify-center flex-col'>
+            <div className='bg-white dark:bg-black w-full md:w-2/5 min-h-[100vh] flex justify-center flex-col'>
                 {/* <ThemeToggler/> */}
                 <h1 className='text-3xl text-black dark:text-white text-center'>Welcome to <span className='text-blue-400 font-semibold'> Open eLMS AI</span></h1>
                 <p className='text-base text-black dark:text-white text-center'>Use you work email for a better experience.</p>

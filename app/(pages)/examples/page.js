@@ -1,3 +1,4 @@
+import ExampleCarousel from '@/components/ExamplesCarousel'
 import ExampleSlider from '@/components/ExampleSlider'
 import Image from 'next/image'
 import React from 'react'
@@ -14,8 +15,8 @@ const page = () => {
             </div>
         </section>
         <section className='py-10 px-[100px] bg-white dark:bg-black '>
-            <div className='container mx-auto bg-bgGreyABout rounded-lg'>
-                <ExampleSlider/>
+            <div className='container mx-auto rounded-lg'>
+                <ExampleCarousel/>
             </div>
         </section>
         <section className='py-10 bg-bgGreyABout dark:bg-black'>

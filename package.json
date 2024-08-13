@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
+    "framer-motion": "^11.3.24",
     "keen-slider": "^6.8.6",
     "next": "14.2.5",
     "react": "^18",

@@ -5,7 +5,8 @@ import {FaArrowRight,FaArrowLeft } from "react-icons/fa6";
 import CourseSlide from "@/components/CourseSlide";
 import {useState} from "react"
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import Testimonials from "@/components/Testimonials";
+import Testimonials from "@/components/Testimonials";4
+import {motion} from 'framer-motion'
 
 
 const courseSlideData = [
@@ -50,9 +51,13 @@ export default function Home() {
             <p className=" text-base text-textGray dark:text-white mt-4">Our mission is to help people to design the best course content anytime, anywhere.</p>
             <button className="text-md flex items-center gap-2 justify-center bg-gradient-to-r from-pink-300 to-blue-400 border-blue-700 border-2 opacity-1 rounded-full p-3 text-pinkBtnText font-bold mt-5 dark:bg-blueBtn shadow-2xl shadow-pinkBtn" >Create Free AI Course <span><FaArrowRight/></span></button>
           </div>
-          <div className="hidden md:flex">
+          <motion.div
+          initial="hidden"
+          whileInView='visible'
+          // viewport={{once:true}}
+          className="hidden md:flex">
             <Image src='/assets/homepage-01.svg' height={700} width={700} alt="homepage"/>
-          </div>
+          </motion.div>
         </div>
       </section>
       <section className="py-10 bg-white dark:bg-black flex items-center justify-center">

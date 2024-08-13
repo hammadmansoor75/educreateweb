@@ -34,7 +34,8 @@ module.exports = {
         examplePurpleBtn : '#564ffd',
         loginStart : '#B2CFFA',
         loginVia : '#DEE9FB',
-        loginEnd : '#AAE9FD'
+        loginEnd : '#AAE9FD',
+        contentcreationtext : '#4E5566',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

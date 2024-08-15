@@ -124,7 +124,7 @@ export default function Home() {
 
       <section className="hidden md:flex py-10 bg-white dark:bg-black  justify-center">
         <Image src='/assets/homegridBig.svg' alt="grid" height={900} width={900} />
-        <h1 className="absolute mt-[600px] text-center text-4xl bg-black bg-opacity-70 py-9 px-8 rounded-md font-bold text-white">Made in <span className="text-blue-700">Open eLMS AI</span></h1>
+        <h1 className="absolute mt-[600px] text-center text-4xl bg-black bg-opacity-70 py-9 px-8 rounded-md font-bold text-white">Made in <span className="text-blue-700">EduCreate AI</span></h1>
       </section>
 
       <BecomeInstructorComponent/>

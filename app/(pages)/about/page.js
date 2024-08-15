@@ -16,7 +16,7 @@ const page = () => {
         <section style={{ backgroundImage: `url(${'/assets/Header.png'})`, backgroundSize: 'cover'}} className='py-10 min-h-[600px]'>
             <div className='mt-40 flex flex-col items-center justify-center'>
                 <h1 className='text-5xl text-center text-white font-bold'>About Us</h1>
-                <p className='text-white text-base w-1/2 text-center'>Open eLMS has been helping organizations to improve the knowledge and skills of their learners both in the corporate and education sectors since 2003.</p>
+                <p className='text-white text-base w-1/2 text-center'>EduCreate AI has been helping organizations to improve the knowledge and skills of their learners both in the corporate and education sectors since 2003.</p>
             </div>
         </section>
         <section className='py-20 bg-white dark:bg-black flex flex-col items-center justify-center'>
@@ -31,12 +31,12 @@ const page = () => {
                 <div className='px-5'>
                     <h1 className='text-4xl text-black dark:text-white font-bold'>Our Services</h1>
                     <div className='flex flex-col items-start justify-start px-5 mt-5'>
-                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span> Open eLMS the AI Powered LMS</p>
-                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span>Open eLMS Chat company specific Chat GTP</p>
-                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span> Open eLMS Creator authors eLearning</p>
-                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span> Open eLMS Classroom hosts your online lessons</p>
-                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span>Open eLMS Forms manages your HR processes</p>
-                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span>Open eLMS Bespoke builds your new eLearning</p>
+                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span>EduCreate  the AI Powered LMS</p>
+                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span>EduCreate Chat company specific Chat GTP</p>
+                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span> EduCreate Creator authors eLearning</p>
+                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span> EduCreate Classroom hosts your online lessons</p>
+                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span>EduCreate Forms manages your HR processes</p>
+                        <p className='text-sm text-black dark:text-white flex items-center justify-center gap-2'><span className='text-blueTick'><BsCheckCircleFill/></span>EduCreate Bespoke builds your new eLearning</p>
                     </div>
                 </div>
                 <div>

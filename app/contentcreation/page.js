@@ -41,7 +41,7 @@ const page = () => {
         <div className='flex items-center justify-between'>
           <div className='flex items-center justify-center'>
             <Image src='/assets/logoSingle.png' alt='logo' height={70} width={70}/>
-            <h1 className='text-3xl font-semibold text-black'>Open eLMS AI</h1>
+            <h1 className='text-3xl font-semibold text-black'>EduCreate AI</h1>
            </div>
         </div>
 
@@ -168,7 +168,7 @@ const page = () => {
       </section>
 
       <footer className='bg-black p-4' >
-        <p className='text-gray-500 text-center'>© 2024 - openElmsAi. Designed by Adil. All rights reserved</p>
+        <p className='text-gray-500 text-center'>© 2024 - educreateai. Designed by Adil. All rights reserved</p>
       </footer>
     </main>
   )

@@ -12,7 +12,7 @@ const page = () => {
             <div className='flex items-center justify-center flex-col gap-5'>
                 <PiGraduationCap size={40} className='text-orange-500'/>
                 <h1 className='text-4xl font-bold text-blue-700 drop-shadow-lg shadow-blue-700'>MY Learning</h1>
-                <p className='text-md text-black dark:text-white'>You are currently using Open eLMS AI version</p>
+                <p className='text-md text-black dark:text-white'>You are currently using EduCreate AI version</p>
                 <p className='text-md text-black dark:text-white'>Give it a try right below.</p>
                 <button className='flex items-center justify-center gap-2 text-blue-700 font-semibold border-2 border-gray-300 py-1 px-3 bg-blue-300 drop-shadow-lg '>Select to upgrade <FaShoppingCart className='text-orange-500'/> </button>
             </div>

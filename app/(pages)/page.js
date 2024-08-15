@@ -63,7 +63,7 @@ export default function Home() {
           <motion.div
           ref={ref}
           initial={{opacity:0, y : '100%'}}
-          animate = { isInView ? {opacity:1, y:'0%'} : {} }
+          animate = { {opacity:1, y:'0%'} }
           transition={{duration:1, ease : "easeOut"}}
           className="w-4/5 md:w-1/2 ml-14">
             <h1 className="text-3xl md:text-5xl font-bold dark:text-white">Unlock the power of AI for your Education </h1>

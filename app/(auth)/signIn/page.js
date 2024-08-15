@@ -18,7 +18,7 @@ const page = () => {
             </div>
             <div className='bg-white dark:bg-black w-full md:w-2/5 min-h-[100vh] flex justify-center flex-col'>
                
-                <h1 className='text-3xl text-black dark:text-white text-center text-wrap'>Welcome to <span className='text-blue-400 font-semibold'> Open eLMS AI</span></h1>
+                <h1 className='text-3xl text-black dark:text-white text-center text-wrap'>Welcome to <span className='text-blue-400 font-semibold'> Edu Create AI</span></h1>
                 <p className='text-base text-black dark:text-white text-center'>Use you work email for a better experience.</p>
                 <form className='p-5'>
                    <div className='flex flex-col items-start justify-center'>   

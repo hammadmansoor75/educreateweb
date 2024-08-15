@@ -2,7 +2,9 @@ import ThemeToggler from '@/components/ThemeToggler'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { FaApple, FaArrowRight, FaFacebook, FaGoogle } from 'react-icons/fa6'
+import { FaA, FaApple, FaArrowRight, FaFacebook, FaGoogle } from 'react-icons/fa6'
+import { FcGoogle } from "react-icons/fc";
+
 
 const page = () => {
   return (
@@ -27,19 +29,19 @@ const page = () => {
                       <label className='text-black dark:text-white text-md'>Password</label>
                       <input type='email' placeholder='Enter password' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-md bg-inherit mt-1 text-md placeholder-md p-2' />
                    </div>
-                   <div className='flex items-center justify-center gap-2 mt-5'>
-                      <p className='text-black dark:text-white'>Dont have an account?</p>
-                      <Link href='/signup' className='text-blue-800 underline' >Create Account</Link>
+                   <div className='flex items-center justify-start gap-2 mt-5'>
+                      <p className='text-black dark:text-white text-sm'>Dont have an account?</p>
+                      <Link href='/signup' className='text-blue-800 underline text-sm' >Create Account</Link>
                     </div>
                     <div className='flex items-center justify-end'>
                         <button className='bg-indigo-600 text-white font-semibold p-3 flex items-center justify-center gap-1 font-base rounded-full mt-5'>Log In <span><FaArrowRight className='text-black'/></span></button>
                     </div>   
                </form>
                <p className='text-center font-semibold text-md text-black dark:text-white'>OR SIGN IN WITH</p>
-               <div className='flex flex-col md:flex-row items-center justify-center gap-3 mt-5'>
-                    <button className='bg-inherit text-black dark:text-white border-2 border-black dark:border-white px-4 py-1 flex items-center justify-center gap-2'><span ><FaGoogle/></span>Google</button>
-                    <button className='bg-inherit text-blue-900 border-2 border-blue-900 px-4 py-1 flex items-center justify-center gap-2'><span ><FaFacebook/></span>Facebook</button>
-                    <button className='bg-inherit text-black dark:text-white border-2 border-black dark:border-white px-4 py-1 flex items-center justify-center gap-2'><span ><FaApple/></span>Apple</button>
+               <div className='flex flex-col md:flex-row items-center justify-center gap-3 mt-5 px-5'>
+                    <button className='bg-inherit text-black dark:text-white border border-black dark:border-white flex items-center justify-start gap-2 w-full'><span className='border-r px-2 py-2 border-black dark:border-white' ><FcGoogle/></span><span className='px-4 py-1'>Google</span></button>
+                    <button className='bg-inherit text-blue-700 border border-blue-700 flex items-center justify-start gap-2 w-full'><span className='border-r border-blue-700 px-2 py-2' ><FaFacebook/></span><span className='px-4 py-1'>Facebook</span></button>
+                    <button className='bg-inherit text-black dark:text-white border border-black dark:border-white flex items-center justify-start gap-2 w-full'><span className='border-r px-2 py-2 border-black dark:border-white' ><FaApple/></span><span className='px-4 py-1'>Apple</span></button>
                </div>
             </div>
         </section>

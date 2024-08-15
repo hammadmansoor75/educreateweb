@@ -13,6 +13,7 @@ import Component1 from "@/components/HomePageComponents/Component1";
 import Component2 from "@/components/HomePageComponents/Component2";
 import InstructorComponent from "@/components/HomePageComponents/InstructorComponent";
 import BecomeInstructorComponent from "@/components/HomePageComponents/BecomeInstructorComponent";
+import Link from "next/link";
 
 
 const courseSlideData = [
@@ -57,7 +58,33 @@ export default function Home() {
 
   return (
     <main className="">
-      <Component1/>
+      <section className="py-20 bg-white dark:bg-gradient-to-r from-gradientBlueStart via-gradientBlueMid to-gradientBlueEnd">
+        <div className="md:flex items-center justify-between gap-2">
+          <motion.div
+          ref={ref}
+          initial={{opacity:0, y : '100%'}}
+          animate = { isInView ? {opacity:1, y:'0%'} : {} }
+          transition={{duration:1, ease : "easeOut"}}
+          className="w-4/5 md:w-1/2 ml-14">
+            <h1 className="text-3xl md:text-5xl font-bold dark:text-white">Unlock the power of AI for your Education </h1>
+            <p className=" text-base text-textGray dark:text-white mt-4">Our mission is to help people to design the best course content anytime, anywhere.</p>
+            <Link href='/contentcreation' >
+              <button  className="text-md flex items-center gap-2 justify-center bg-gradient-to-r from-pink-300 to-blue-400 border-blue-700 border-2 opacity-1 rounded-full p-3 text-pinkBtnText font-bold mt-5 dark:bg-blueBtn shadow-2xl shadow-pinkBtn" >Create Free AI Course <span><FaArrowRight/></span></button>
+            </Link>
+            
+
+            {/* <Link href='/contentcreation'>Content Creation</Link> */}
+          </motion.div>
+          <motion.div
+            ref = {ref}
+            initial = {{x : '-100%', opacity:0}}
+            animate={ isInView ? {x:'0%',opacity:1} : {}}
+            transition = {{duration:1, ease:'easeInOut'}}
+            className="hidden md:flex">
+            <Image src='/assets/homepage-01.svg' height={700} width={700} alt="homepage"/>
+          </motion.div>
+        </div>
+      </section>
       <Component2/>
 
       <section className="py-10 bg-white dark:bg-black">
@@ -109,29 +136,7 @@ export default function Home() {
 
       </section>
 
-      <section className="py-20 px-5 bg-darkGreyBg dark:bg-black text-white">
-        <div className="container mx-auto md:flex items-center justify-center gap-5">
-          <motion.div
-          ref = {ref}
-          initial = {{x : '-100%', opacity:0}}
-          animate={isInView ? {x:'0%',opacity:1} : {}}
-          transition = {{duration:1, ease:'easeInOut'}}
-          className="w-full md:w-1/2">
-            <h1 className="text-3xl font-semibold">Start teaching with us and inspire others</h1>
-            <p className="mt-3 text-base text-textGray">Become an instructor & start teaching with 26k certified instructors. Create a success story with 67.1k Students — Grow yourself with 71 countries.</p>
-            <button className="mt-3 bg-darkGreyBgBlueBtn py-2 rounded-md text-xl shadow-md shadow-inherit px-4">Register Now</button>
-          </motion.div>
-          <motion.div
-          ref = {ref}
-          initial = {{x : '100%', opacity:0}}
-          animate={isInView ? {x:'0%',opacity:1} : {}}
-          transition = {{duration:1, ease:'easeInOut'}}
-          className="mt-5 md:mt-0">
-          <Image src='/assets/Instructor.svg' className="rounded-lg" alt="instructor" height={500} width={500} />
-          </motion.div>
-        </div>
-        
-      </section>
+      <Component1></Component1>
     </main>
   );
 }

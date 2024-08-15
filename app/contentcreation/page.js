@@ -41,25 +41,25 @@ const page = () => {
         <div className='flex items-center justify-between'>
           <div className='flex items-center justify-center'>
             <Image src='/assets/logoSingle.png' alt='logo' height={70} width={70}/>
-            <h1 className='text-3xl font-semibold'>Open eLMS AI</h1>
+            <h1 className='text-3xl font-semibold text-black'>Open eLMS AI</h1>
            </div>
         </div>
 
         <div className='flex items-center justify-start gap-4'>
           <FaArrowLeft size={20} />
           <div className=''>
-            <p className='font-semibold'>Course : Introduction to DevOps</p>
+            <p className='font-semibold text-black'>Course : Introduction to DevOps</p>
             <div className='mt-2 flex items-center justify-start gap-5'>
               <span className='flex items-center justify-center gap-2'>
-                <LuFolderClosed/>
+                <LuFolderClosed className='text-black' />
                 <p className='text-contentcreationtext text-sm'>38 slides</p>
               </span>
               <span className='flex items-center justify-center gap-2'>
-                <BsQuestionSquareFill/>
+                <BsQuestionSquareFill className='text-black' />
                 <p className='text-contentcreationtext text-sm'>7 questions</p>
               </span>
               <span className='flex items-center justify-center gap-2'>
-                <BiSolidMessageSquareDetail/>
+                <BiSolidMessageSquareDetail className='text-black' />
                 <p className='text-contentcreationtext text-sm'>Select designs and/or expand screens, edit text then scroll to bottom to create eLearning. This eLearning can then be further edited once it has been created.</p>
               </span>
             </div>
@@ -88,10 +88,10 @@ const page = () => {
                     <div className='bg-gray-300 rounded-full p-2' >
                       <LuFolderClosed />
                     </div>
-                    <p className='text-sm '>Welcome to this learning session on Introduction to DevOps. In this course we shall address:</p>
+                    <p className='text-sm text-black '>Welcome to this learning session on Introduction to DevOps. In this course we shall address:</p>
                 </div>
                 {contents.map((content, index) => (
-                  <div key={index} className='mt-3 flex items-center justify-between' >
+                  <div key={index} className='mt-3 flex items-center justify-between text-black' >
                     <div className='flex items-center justify-center gap-2'>
                       <div className='bg-gray-300 rounded-full py-1 px-3' >
                         {index + 1}

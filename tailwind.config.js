@@ -45,6 +45,7 @@ module.exports = {
         loginVia : '#DEE9FB',
         loginEnd : '#AAE9FD',
         contentcreationtext : '#4E5566',
+        newBlue : '#3549cb',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

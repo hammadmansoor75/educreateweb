@@ -36,7 +36,7 @@ const Navbar = () => {
     }
   return (
     <>
-        <header className='dark:bg-black dark:text-white bg-white text-black'>
+        <header className='dark:bg-black dark:text-white bg-white text-black sticky top-0 z-50'>
             <nav className='container mx-auto p-4 flex items-center justify-between'>
                 <div className='flex items-start'>
                     <div className='logo'></div>

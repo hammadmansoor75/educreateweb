@@ -44,7 +44,7 @@ const Testimonials = () => {
               Top Customer Feedback
             </h2>
 
-            <p className="mt-4 text-gray-700">
+            <p className="mt-4 text-white">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas veritatis illo placeat
               harum porro optio fugit a culpa sunt id!
             </p>
@@ -53,7 +53,7 @@ const Testimonials = () => {
               <button
                 aria-label="Previous slide"
                 id="keen-slider-previous-desktop"
-                className="rounded-full border border-rose-600 p-3 text-rose-600 transition hover:bg-rose-600 hover:text-white"
+                className="rounded-full border border-newBlue p-3 text-newBlue transition hover:bg-newBlue hover:text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ const Testimonials = () => {
               <button
                 aria-label="Next slide"
                 id="keen-slider-next-desktop"
-                className="rounded-full border border-rose-600 p-3 text-rose-600 transition hover:bg-rose-600 hover:text-white"
+                className="rounded-full border border-newBlue p-3 text-newBlue transition hover:bg-newBlue hover:text-white"
               >
                 <svg
                   className="size-5 rtl:rotate-180"
@@ -118,7 +118,7 @@ const Testimonials = () => {
                     </div>
 
                     <div className="mt-4">
-                      <p className="text-2xl font-bold text-rose-600 sm:text-3xl">Staying Alive</p>
+                      <p className="text-2xl font-bold text-newBlue sm:text-3xl">Staying Alive</p>
 
                       <p className="mt-4 leading-relaxed text-gray-700">
                         No, Rose, they are not breathing. And they have no arms or legs … Where are
@@ -156,7 +156,7 @@ const Testimonials = () => {
                     </div>
 
                     <div className="mt-4">
-                      <p className="text-2xl font-bold text-rose-600 sm:text-3xl">Dwight Schrute Wisdom</p>
+                      <p className="text-2xl font-bold text-newBlue sm:text-3xl">Dwight Schrute Wisdom</p>
 
                       <p className="mt-4 leading-relaxed text-gray-700">
                         I am fast. To give you a reference point, I am somewhere between a snake and a mongoose... and a panther.
@@ -192,7 +192,7 @@ const Testimonials = () => {
                     </div>
 
                     <div className="mt-4">
-                      <p className="text-2xl font-bold text-rose-600 sm:text-3xl">Jims Jokes</p>
+                      <p className="text-2xl font-bold text-newBlue sm:text-3xl">Jims Jokes</p>
 
                       <p className="mt-4 leading-relaxed text-gray-700">
                         Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.

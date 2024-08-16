@@ -4,12 +4,12 @@ import { FaPlus } from "react-icons/fa6"
 
 const ContentCreationSlide = () => {
     return (
-        <div className="mt-5 flex items-center justify-center gap-5">
+        <div className="mt-5 md:flex items-center justify-center gap-5">
             <div>
                 <Image src='/assets/contentcreationslide.svg' alt="slide" height={700} width={900}/>
             </div>
             <div>
-                <div className="flex items-center justify-start gap-2">
+                <div className="md:flex p-5 md:p-0 space-y-2 md:space-y-0 items-center justify-start gap-2">
                     <button className='text-black dark:text-white bg-inherit py-2 px-4 border border-purple-500 text-sm'>Select design or generate new image</button>
                     <button className='flex items-center justify-center gap-2 bg-indigo-700 text-white rounded-full py-2 px-4 text-sm' ><FaPlus size={20} /> Generate Image</button>
                 </div>

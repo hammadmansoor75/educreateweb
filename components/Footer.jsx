@@ -10,9 +10,9 @@ import { FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className='bg-darkGreyBg dark:bg-black py-10'>
-        <div className='border-b-2 border-textGray mb-5'></div>
-        <div className='container mx-auto'>
+    <footer className='bg-darkGreyBg py-10'>
+        <div className='border-b border-textGray mb-5'></div>
+        <div className='container mx-auto py-10'>
             <div className='md:flex items-center justify-center gap-5'>
                 {/* Logo Div */}
                 <div className='flex flex-col items-center justify-center'>

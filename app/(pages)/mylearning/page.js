@@ -22,47 +22,47 @@ const page = () => {
                 <form>
                     <div className='flex flex-col items-start justify-center gap-1'>
                         <label className='text-black dark:text-white'>Title</label>
-                        <input type='text' placeholder='Your course title' className='bg-gray-200 px-4 py-2 border-purple-500 rounded-lg placeholder-gray-500 w-1/2 md:w-full border' />
+                        <input type='text' placeholder='Your course title' className='bg-gray-200 px-4 py-2 border-newBlue rounded-lg placeholder-gray-500 w-1/2 md:w-full border' />
                     </div>
                     <div className='flex flex-col items-start justify-center gap-1 mt-3'>
                         <label className='text-black dark:text-white'>Subtitle</label>
-                        <input type='text' placeholder='Your course subtitle' className='bg-gray-200 px-4 py-2 border-purple-500 rounded-lg placeholder-gray-500 md:w-full w-1/2 border' />
+                        <input type='text' placeholder='Your course subtitle' className='bg-gray-200 px-4 py-2 border-newBlue rounded-lg placeholder-gray-500 md:w-full w-1/2 border' />
                     </div>
                     <div className='flex flex-col items-start justify-center gap-1 mt-3'>
                         <label className='text-black dark:text-white'>Learning Objectices (Optional)</label>
-                        <textarea type='text' placeholder='Your course subtitle' className='bg-gray-200 px-4 py-2 border-purple-500 rounded-lg placeholder-gray-500 md:w-full w-1/2 border md:min-h-52' />
+                        <textarea type='text' placeholder='Your course subtitle' className='bg-gray-200 px-4 py-2 border-newBlue rounded-lg placeholder-gray-500 md:w-full w-1/2 border md:min-h-52' />
                     </div>
                     <div className='md:flex items-center justify-between mt-3 gap-3'>
                         <div className='flex flex-col items-start justify-center gap-1'>
                             <label className='text-black dark:text-white'>Course Language</label>
-                            <select type='text' placeholder='Select' className='bg-gray-200 px-4 py-2 border-purple-500 rounded-sm placeholder-gray-500 min-w-60 border' >
+                            <select type='text' placeholder='Select' className='bg-gray-200 px-4 py-2 border-newBlue rounded-sm placeholder-gray-500 min-w-60 border' >
                                 <option className='text-gray-500'>Select</option>
                             </select>
                         </div>
                         <div className='flex flex-col items-start justify-center gap-1'>
                             <label className='text-black dark:text-white'>Subtitle Language (Optional)</label>
-                            <select type='text' placeholder='Select' className='bg-gray-200 px-4 py-2 border-purple-500 rounded-sm placeholder-gray-500 min-w-60 border' >
+                            <select type='text' placeholder='Select' className='bg-gray-200 px-4 py-2 border-newBlue rounded-sm placeholder-gray-500 min-w-60 border' >
                                 <option className='text-gray-500'>Select</option>
                             </select>
                         </div>
                         <div className='flex flex-col items-start justify-center gap-1'>
                             <label className='text-black dark:text-white'>Course Level</label>
-                            <select type='text' placeholder='Select' className='bg-gray-200 px-4 py-2 border-purple-500 rounded-sm placeholder-gray-500 min-w-60 border' >
+                            <select type='text' placeholder='Select' className='bg-gray-200 px-4 py-2 border-newBlue rounded-sm placeholder-gray-500 min-w-60 border' >
                                 <option className='text-gray-500'>Select</option>
                             </select>
                         </div>
                         <div className='flex flex-col items-start justify-center gap-1'>
                             <label className='text-black dark:text-white'>Style & Tone</label>
-                            <select type='text' placeholder='Select' className='bg-gray-200 px-4 py-2 border-purple-500 rounded-sm placeholder-gray-500 min-w-60 border' >
+                            <select type='text' placeholder='Select' className='bg-gray-200 px-4 py-2 border-newBlue rounded-sm placeholder-gray-500 min-w-60 border' >
                                 <option className='text-gray-500'>Select</option>
                             </select>
                         </div>
                     </div>
                     <div className='flex flex-col items-start justify-center gap-1 mt-3'>
                         <label className='text-black dark:text-white'>Upload Document (Optional)</label>
-                        <div className='bg-gray-200 px-4 border-purple-500 rounded-lg placeholder-gray-500 w-2/3 md:w-full border md:min-h-52 py-4'>
+                        <div className='bg-gray-200 px-4 border-newBlue rounded-lg placeholder-gray-500 w-2/3 md:w-full border md:min-h-52 py-4'>
                             <div className='flex items-center justify-center gap-5'>
-                                <CiImageOn className='hidden md:flex border border-purple-500 rounded-lg' size={200} />
+                                <CiImageOn className='hidden md:flex border border-newBlue rounded-lg' size={200} />
                                 <div className='w-full md:w-1/2'>
                                     <p className=''>Optionally, upload a <strong>.pdf file (size limit of 10MB)</strong> in order to facilitate the creation of a course that is based on the textual content contained within the file. Optimizing the format of the document can lead to more desirable results</p>
                                     <input className='mt-5' type='file' />

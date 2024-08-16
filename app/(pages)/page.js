@@ -14,6 +14,7 @@ import Component2 from "@/components/HomePageComponents/Component2";
 import InstructorComponent from "@/components/HomePageComponents/InstructorComponent";
 import BecomeInstructorComponent from "@/components/HomePageComponents/BecomeInstructorComponent";
 import Link from "next/link";
+import Companies from "@/components/HomePageComponents/Companies";
 
 
 const courseSlideData = [
@@ -87,20 +88,7 @@ export default function Home() {
       </section>
       <Component2/>
 
-      <section className="py-10 bg-white dark:bg-black">
-        <div className="container mx-auto bg-black w-3/4 rounded-sm">
-            <div className="flex flex-wrap justify-center items-center gap-5">
-              <Image src='/assets/company/netflix.jpg' alt="company" height={200} width={200}/>
-              <Image src='/assets/company/youtube.jpg' alt="company" height={200} width={200}/>
-              <Image src='/assets/company/google.png' alt="company" height={200} width={200}/>
-              <Image src='/assets/company/lenovo.png' alt="company" height={200} width={200}/>
-              <Image src='/assets/company/slack.pmg.png' alt="company" height={200} width={200}/>
-              <Image src='/assets/company/verizon.jpg' alt="company" height={200} width={200}/>
-              <Image src='/assets/company/lexmark.jpg' alt="company" height={200} width={200}/>
-              <Image src='/assets/company/microsoft.png' alt="company" height={200} width={200}/>
-            </div>
-        </div>
-      </section>
+      <Companies/>
 
       
 
@@ -124,7 +112,13 @@ export default function Home() {
 
       <section className="hidden md:flex py-10 bg-white dark:bg-black  justify-center">
         <Image src='/assets/homegridBig.svg' alt="grid" height={900} width={900} />
-        <h1 className="absolute mt-[600px] text-center text-4xl bg-black bg-opacity-70 py-9 px-8 rounded-md font-bold text-white">Made in <span className="text-blue-700">EduCreate AI</span></h1>
+        
+       
+
+        <div className="absolute mt-[600px] animate-bounce flex flex-col items-center justify-center" >
+          <h1 className="text-center text-5xl py-9 px-8 rounded-md font-bold text-white">Made in</h1>
+          <Image className="" src='/assets/logo.png' alt="logo" height={300} width={300}/>
+        </div>
       </section>
 
       <BecomeInstructorComponent/>

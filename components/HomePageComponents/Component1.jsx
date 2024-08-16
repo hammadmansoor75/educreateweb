@@ -23,7 +23,7 @@ const Component1 = () => {
           transition = {{duration:1, ease:'easeInOut'}}
           className="w-full md:w-1/2">
             <h1 className="text-3xl font-semibold">Start teaching with us and inspire others</h1>
-            <p className="mt-3 text-base text-white">Become an instructor & start teaching with 26k certified instructors. Create a success story with 67.1k Students — Grow yourself with 71 countries.</p>
+            <p className="mt-3 text-base text-white dark:text-white">Become an instructor & start teaching with 26k certified instructors. Create a success story with 67.1k Students — Grow yourself with 71 countries.</p>
             <button className="mt-3 bg-darkGreyBgBlueBtn py-2 rounded-md text-xl shadow-md shadow-inherit px-4">Register Now</button>
           </motion.div>
           <motion.div

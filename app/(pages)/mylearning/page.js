@@ -17,7 +17,7 @@ const page = () => {
                 <button className='flex items-center justify-center gap-2 text-blue-700 font-semibold border-2 border-gray-300 py-1 px-3 bg-blue-300 drop-shadow-lg '>Select to upgrade <FaShoppingCart className='text-orange-500'/> </button>
             </div>
 
-            <div className='bg-white dark:bg-black md:py-5 py-2 px-2 md:px-10 rounded-lg border-2 border-green-500 mt-10'>
+            <div className='bg-white dark:bg-black md:py-5 py-2 px-2 md:px-10 rounded-lg border-2 border-newBlue mt-10'>
                 <h1 className='text-2xl md:text-4xl font-bold text-blue-700 text-center'>Enter Details to Create Course Content</h1>
                 <form>
                     <div className='flex flex-col items-start justify-center gap-1'>

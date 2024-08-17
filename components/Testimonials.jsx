@@ -98,7 +98,7 @@ const Testimonials = () => {
             <div id="keen-slider" className="keen-slider">
               {/* Slide 1 */}
               <div className="keen-slider__slide rounded-lg">
-                <blockquote className="rounded-lg flex h-full flex-col justify-between bg-white p-6 shadow-sm sm:p-8 lg:p-12">
+                <blockquote className="rounded-lg flex h-full flex-col justify-between bg-white dark:bg-black dark:border-newBlue dark:border p-6 shadow-sm sm:p-8 lg:p-12">
                   <div>
                     <div className="flex gap-0.5 text-yellow-500">
                        {array.map((item) => {
@@ -120,7 +120,7 @@ const Testimonials = () => {
                     <div className="mt-4">
                       <p className="text-2xl font-bold text-newBlue sm:text-3xl">Staying Alive</p>
 
-                      <p className="mt-4 leading-relaxed text-gray-700">
+                      <p className="mt-4 leading-relaxed text-gray-700 dark:text-white">
                         No, Rose, they are not breathing. And they have no arms or legs … Where are
                         they? You know what? If we come across somebody with no arms or legs, do we
                         bother resuscitating them? I mean, what quality of life do we have there?
@@ -128,7 +128,7 @@ const Testimonials = () => {
                     </div>
                   </div>
 
-                  <footer className="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
+                  <footer className="mt-4 text-sm font-medium text-gray-700 dark:text-white sm:mt-6">
                     &mdash; Michael Scott
                   </footer>
                 </blockquote>
@@ -136,7 +136,7 @@ const Testimonials = () => {
 
               {/* Slide 2 */}
               <div className="keen-slider__slide">
-                <blockquote className="rounded-lg flex h-full flex-col justify-between bg-white p-6 shadow-sm sm:p-8 lg:p-12">
+                <blockquote className="rounded-lg flex h-full flex-col justify-between dark:bg-black dark:border border-newBlue bg-white p-6 shadow-sm sm:p-8 lg:p-12">
                   <div>
                     <div className="flex gap-0.5 text-yellow-500">
                     {array.map((item) => {
@@ -158,13 +158,13 @@ const Testimonials = () => {
                     <div className="mt-4">
                       <p className="text-2xl font-bold text-newBlue sm:text-3xl">Dwight Schrute Wisdom</p>
 
-                      <p className="mt-4 leading-relaxed text-gray-700">
+                      <p className="mt-4 leading-relaxed text-gray-700 dark:text-white">
                         I am fast. To give you a reference point, I am somewhere between a snake and a mongoose... and a panther.
                       </p>
                     </div>
                   </div>
 
-                  <footer className="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
+                  <footer className="mt-4 text-sm font-medium text-gray-700 dark:text-white sm:mt-6">
                     &mdash; Dwight Schrute
                   </footer>
                 </blockquote>
@@ -172,7 +172,7 @@ const Testimonials = () => {
 
               {/* Slide 3 */}
               <div className="keen-slider__slide">
-                <blockquote className="rounded-lg flex h-full flex-col justify-between bg-white p-6 shadow-sm sm:p-8 lg:p-12">
+                <blockquote className="rounded-lg flex h-full flex-col justify-between dark:bg-black dark:border border-newBlue bg-white p-6 shadow-sm sm:p-8 lg:p-12">
                   <div>
                     <div className="flex gap-0.5 text-yellow-500">
                     {array.map((item) => {
@@ -194,13 +194,13 @@ const Testimonials = () => {
                     <div className="mt-4">
                       <p className="text-2xl font-bold text-newBlue sm:text-3xl">Jims Jokes</p>
 
-                      <p className="mt-4 leading-relaxed text-gray-700">
+                      <p className="mt-4 leading-relaxed text-gray-700 dark:text-white">
                         Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.
                       </p>
                     </div>
                   </div>
 
-                  <footer className="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
+                  <footer className="mt-4 text-sm font-medium text-gray-700 sm:mt-6 dark:text-white">
                     &mdash; Jim Halpert
                   </footer>
                 </blockquote>
@@ -212,7 +212,7 @@ const Testimonials = () => {
           <button
             aria-label="Previous slide"
             id="keen-slider-previous"
-            className="rounded-full border border-rose-600 p-3 text-rose-600 transition hover:bg-rose-600 hover:text-white"
+            className="rounded-full border border-newBlue p-3 text-newBlue transition hover:bg-newBlue hover:text-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

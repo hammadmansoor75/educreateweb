@@ -21,7 +21,7 @@ const InstructorComponent = () => {
               <p className="mt-3 text-black dark:text-white text-base">Nunc euismod sapien non felis eleifend porttitor. Maecenas dictum eros justo, id commodo ante laoreet nec. Phasellus aliquet, orci id pellentesque mollis.</p>
               <div className="mt-3 p-2 bg-blueBox rounded-md">
                   <FcComments size={30} />
-                  <p className="mt-3 text-black text-base">Nulla sed malesuada augue. Morbi interdum vulputate imperdiet. Pellentesque ullamcorper auctor ante, egestas interdum quam facilisis commodo. Phasellus efficitur quis ex in consectetur. Mauris tristique suscipit metus, a molestie dui dapibus vel.</p>
+                  <p className="mt-3 text-white text-base">Nulla sed malesuada augue. Morbi interdum vulputate imperdiet. Pellentesque ullamcorper auctor ante, egestas interdum quam facilisis commodo. Phasellus efficitur quis ex in consectetur. Mauris tristique suscipit metus, a molestie dui dapibus vel.</p>
               </div>
               <div className="mt-4 flex items-center justify-start gap-2">
                   <button className="bg-gray-300 p-2 rounded-md"><FaArrowLeft/></button>

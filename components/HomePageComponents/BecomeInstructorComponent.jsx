@@ -19,7 +19,7 @@ const BecomeInstructorComponent = () => {
         transition = {{duration:1, ease:'easeInOut'}}
         className="bg-instructorBlueBox rounded-md p-5 w-full md:w-1/3">
           <h1 className="text-3xl font-semibold">Become an instructor</h1>
-          <p className="mt-3 text-base text-textGray">Instructors from around the world teach millions of students on Udemy. We provide the tools and skills to teach what you love.</p>
+          <p className="mt-3 text-base text-white">Instructors from around the world teach millions of students on Udemy. We provide the tools and skills to teach what you love.</p>
           <button className="mt-3 flex items-center justify-center gap-2 p-2 rounded-md bg-instructorBlueBtn">Start Creating <FaArrowRight/></button>
         </motion.div>
         <motion.div

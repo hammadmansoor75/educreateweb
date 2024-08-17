@@ -17,14 +17,14 @@ const carouselList = [
 
 const ExampleCarousel = () => {
     return (
-        <Carousel className='w-full bg-gray-300 p-10 rounded-lg dark:bg-black dark:border '>
-            <h1 className="mb-5 text-3xl text-center font-semibold text-black dark:text-white">Example Courses</h1>
+        <Carousel className='w-full bg-gray-300 md:p-10 p-4  rounded-lg dark:bg-black dark:border '>
+            <h1 className="mb-5 text-3xl hidden md:flex text-center font-semibold text-black dark:text-white">Example Courses</h1>
             <CarouselContent>
                 
                 {carouselList.map((data,index) => (
                     <CarouselItem key={index} className="flex items-center justify-center" >
                         <div className="min-h-[400px] max-h-[400px] min-w-[500px] max-w-[500px] rounded-lg flex items-end justify-end flex-col" style={{ backgroundImage: `url(${data.courseImage})`, backgroundSize: 'cover'}} >
-                            <div className="p-5">
+                            <div className="md:p-5">
                                 <button className="flex items-center justify-center gap-2 bg-indigo-700 p-2 rounded-md text-white">View Course <span><FaArrowRight/></span></button>
                                 <h2 className="text-white text-2xl p-5">{data.courseTagline}</h2>
                             </div>

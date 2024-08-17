@@ -14,7 +14,7 @@ const page = () => {
                 <button className='flex items-center justify-center gap-2 bg-examplePurpleBtn text-white p-3 rounded-md mt-5 '>Book Demo <span><FaArrowRight/></span></button>
             </div>
         </section>
-        <section className='py-10 md:px-10 px-5 bg-white dark:bg-black '>
+        <section className='py-10 md:px-10 px-4 bg-white dark:bg-black '>
             <div className='container mx-auto rounded-lg'>
                 <ExampleCarousel/>
             </div>

@@ -19,7 +19,7 @@ const InstructorComponent = () => {
             className="w-full md:w-1/2">
               <h2 className="text-2xl text-black dark:text-white">10k+ Instructor created their success story with EduCreate AI</h2>
               <p className="mt-3 text-black dark:text-white text-base">Nunc euismod sapien non felis eleifend porttitor. Maecenas dictum eros justo, id commodo ante laoreet nec. Phasellus aliquet, orci id pellentesque mollis.</p>
-              <div className="mt-3 p-2 bg-blueBox rounded-md">
+              <div className="mt-3 p-2 rounded-md bg-black border border-newBlue">
                   <FcComments size={30} />
                   <p className="mt-3 text-white text-base">Nulla sed malesuada augue. Morbi interdum vulputate imperdiet. Pellentesque ullamcorper auctor ante, egestas interdum quam facilisis commodo. Phasellus efficitur quis ex in consectetur. Mauris tristique suscipit metus, a molestie dui dapibus vel.</p>
               </div>

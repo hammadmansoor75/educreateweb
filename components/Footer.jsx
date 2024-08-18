@@ -17,8 +17,8 @@ const Footer = () => {
                 {/* Logo Div */}
                 <div className='flex flex-col items-center justify-center'>
                     <div className='flex items-center justify-center gap-2'>
-                        <Image src='/assets/logoSingle.png' alt="logo" height={30} width={30}/>
-                        <h1 className='text-white text-2xl font-semibold'>EduCreate AI</h1>
+                        <Image src='/assets/logoWhite.png' alt="logo" height={180} width={180}/>
+                        {/* <h1 className='text-white text-2xl font-semibold'>EduCreate AI</h1> */}
                     </div>
                     <p className='md:w-1/2 mt-2 text-textGray text-center'>Aliquam rhoncus ligula est, non pulvinar elit
                     convallis nec. Donec mattis odio at.</p>

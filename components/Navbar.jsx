@@ -39,8 +39,9 @@ const Navbar = () => {
         <header className='dark:bg-black dark:text-white bg-white text-black sticky top-0 z-50'>
             <nav className='container mx-auto p-4 flex items-center justify-between'>
                 <div className='flex items-start'>
-                    <div className='logo'></div>
-                    <Image src='/assets/logo.png' height={180} width={180} alt='logo'/>
+                    <div className='logo flex items-center justify-center'></div>
+                    <Image src='/assets/logo.png' className='dark:hidden flex' height={180} width={180} alt='logo'/>
+                    <Image src='/assets/logoWhite.png' className='dark:flex hidden' height={180} width={180} alt='logo'/>
                     {/* <h1 className='font-bold text-xl'>Educreate.ai</h1> */}
                 </div>
                 <div className='hidden md:flex items-center justify-center gap-4'>

@@ -19,7 +19,8 @@ const page = () => {
                 <ExampleCarousel/>
             </div>
         </section>
-        <section className='py-10 bg-bgGreyABout dark:bg-black'>
+        <section className='bg-bgGreyABout'  >
+            <section className='py-10 bg-bgGreyABout dark:bg-black'>
             <div className='flex items-center justify-center'>
                 <Image src='/assets/exampleVideo.svg' alt="video" height={1000} width={1000}/>
             </div>
@@ -34,6 +35,8 @@ const page = () => {
             </div>
             <Image className='mt-5 md:mt-0' src='/assets/exampleGlobe.png' alt='globe' height={400} width={400} />
         </section>
+        </section>
+        
     </main>
   )
 }

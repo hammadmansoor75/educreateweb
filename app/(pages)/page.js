@@ -117,8 +117,8 @@ export default function Home() {
 
         <div className="absolute mt-[600px] animate-bounce flex items-center justify-center bg-black opacity-70 rounded-md" >
           <h1 className="text-center text-5xl py-9 px-8 rounded-md font-bold text-white">Made in</h1>
-          <Image className="" src='/assets/logoSingle.png' alt="logo" height={50} width={50}/>
-          <h1 className="text-center text-5xl py-9 px-8 rounded-md font-bold text-blue-700">EduCreate AI</h1>
+          <Image className="" src='/assets/logoWhite.png' alt="logo" height={400} width={400}/>
+          {/* <h1 className="text-center text-5xl py-9 px-8 rounded-md font-bold text-blue-700">EduCreate AI</h1> */}
         </div>
       </section>
 

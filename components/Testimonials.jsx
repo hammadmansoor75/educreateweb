@@ -233,7 +233,7 @@ const Testimonials = () => {
           <button
             aria-label="Next slide"
             id="keen-slider-next"
-            className="ml-4 rounded-full border border-rose-600 p-3 text-rose-600 transition hover:bg-rose-600 hover:text-white"
+            className="ml-4 rounded-full border border-newBlue p-3 text-newBlue transition hover:bg-newBlue hover:text-white"
           >
             <svg
               className="size-5 rtl:rotate-180"

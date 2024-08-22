@@ -30,14 +30,16 @@ const Page = () => {
                 password : data.password,
                 redirect : false
             })
+
+            console.log(signInData)
             
             if(signInData?.error){
                 console.log(signInData.error)
-                toast({
-                    title: "Error",
-                    description : "Something went wrong!",
-                    variant : 'destructive'
-                })
+                // toast({
+                //     title: "Error",
+                //     description : "Something went wrong!",
+                //     variant : 'destructive'
+                // })
             }else{
                 router.refresh();
                 router.push('/mylearning')

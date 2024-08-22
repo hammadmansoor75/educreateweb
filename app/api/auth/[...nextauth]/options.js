@@ -32,12 +32,12 @@ export const authOptions = {
             if(!credentials?.email || !credentials?.password){
                 return null
             }
-            // console.log(credentials.email, credentials.password)
+            console.log(credentials.email, credentials.password)
             const existingUser = await db.user.findUnique({where: {email : credentials.email}})
-            // console.log(existingUser)
+            console.log(existingUser)
             if(!existingUser) return null
             const passwordMatch = await compare(credentials.password, existingUser.hashedPassword)
-            // console.log(passwordMatch)
+            console.log(passwordMatch)
             if(!passwordMatch) return null
             return {
                 id : existingUser.id,
@@ -58,25 +58,25 @@ export const authOptions = {
         async session({session,user,token}){
             return session
         },
-        async signIn({profile}){
-            if(!profile?.email){
-                throw new Error("No Profile")
-            }
-            console.log(profile)
-            const existingUser = await db.user.findUnique({
-                where : {
-                    email : profile.email
-                }
-            })
-            if(existingUser){
-                throw new Error("User with this email already exists");
-            }
-            const newUser = await db.user.create({
-                email : profile.email,
-                firstName : profile.given_name,
-                lastName : profile.family_name
-            })
-            return true
-        }
+        // async signIn({profile}){
+        //     if(!profile?.email){
+        //         throw new Error("No Profile")
+        //     }
+        //     console.log(profile)
+        //     const existingUser = await db.user.findUnique({
+        //         where : {
+        //             email : profile.email
+        //         }
+        //     })
+        //     if(existingUser){
+        //         throw new Error("User with this email already exists");
+        //     }
+        //     const newUser = await db.user.create({
+        //         email : profile.email,
+        //         firstName : profile.given_name,
+        //         lastName : profile.family_name
+        //     })
+        //     return true
+        // }
       }
 }

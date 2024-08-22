@@ -5,6 +5,9 @@ import Link from 'next/link'
 import ThemeToggler from './ThemeToggler'
 import { FaBars } from 'react-icons/fa6';
 import {MdOutlineClose} from 'react-icons/md'
+import { useSession } from 'next-auth/react';
+import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+import { signOut } from 'next-auth/react';
 
 const navLinks = [
     {
@@ -23,17 +26,16 @@ const navLinks = [
         name : 'Pricing',
         link : '/pricing'
     },
-    {
-        name : 'My Learning',
-        link : '/mylearning'
-    },
 ]
+
+
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const handleOpenChange = () => {
         setIsOpen(!isOpen);
     }
+    const {data:session,status} = useSession();
   return (
     <>
         <header className='dark:bg-black dark:text-white bg-white text-black sticky top-0 z-50'>
@@ -48,11 +50,24 @@ const Navbar = () => {
                     {navLinks.map((link) => {
                         return <Link className='hover:border-b-2 hover:border-black dark:hover:border-white ' href={link.link} key={link.link}>{link.name}</Link>
                     })}
+                    {session?.user && (
+                        <Link href='/myLearning' className='hover:border-b-2 hover:border-black dark:hover:border-white ' >My Learning</Link>
+                    ) }
                 </div>
                 <div className='hidden md:flex items-center justify-center gap-3'>
                 <ThemeToggler/>
-                    <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md text-white'>Create Account</button></Link>
-                    <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md text-white'>Sign In</button></Link>
+                    {!session?.user ? (
+                        <>
+                            <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md text-white'>Create Account</button></Link>
+                            <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md text-white'>Sign In</button></Link>
+                        </>
+                    ) : (
+                        <button onClick={()=>signOut({
+                            redirect:true,
+                            callbackUrl: `${window.location.origin}/`
+                        })} className='bg-signinBtn p-2 rounded-md text-white' >Sign Out</button>
+                    )}
+                    
                     
                     
                 </div>

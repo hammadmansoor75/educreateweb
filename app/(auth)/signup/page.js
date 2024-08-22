@@ -1,11 +1,61 @@
+"use client"
 import ThemeToggler from '@/components/ThemeToggler'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { FaApple, FaArrowRight, FaFacebook, FaGoogle } from 'react-icons/fa6'
 import { FcGoogle } from 'react-icons/fc'
+import {z} from 'zod'
+import {useForm} from 'react-hook-form'
+import {zodResolver} from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 
-const page = () => {
+const Page = () => {
+    const router = useRouter();
+    const formSchema = z.object({
+        firstName : z.string().min(3,'First Name is required'),
+        lastName : z.string().min(3,"Last Name is required"),
+        email : z.string().email('Invalid Email Address'),
+        password : z.string().min(1,'Password is required').min(6,'Password must have 6 characters'),
+        confirmPassword:  z.string().min(1,'Password confirmation is required'),
+        // termsAccepted: z.boolean().refine(val => val === true, {
+        //     message: 'You must accept the terms and conditions',
+        // })
+    }).refine((data) => data.password === data.confirmPassword, {
+        path : ['confirmPassword'],
+        message : 'Passwords do not match'
+    })
+
+    const {register,handleSubmit,formState : {errors}} = useForm({resolver:zodResolver(formSchema)})
+
+    const onSubmit = async(data) => {
+        try {
+            const response = await fetch('/api/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName : data.firstName,
+                    lastName : data.lastName,
+                    email : data.email,
+                    password : data.password,
+                    confirmPassword : data.confirmPassword
+                }),
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                // Handle API errors
+                console.log(errorData.message);
+            } else {
+                // Handle successful submission
+                router.push('/signIn')
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+        }
+    }
+
   return (
     <main>
         <section className='flex items-center justify-center w-full'>
@@ -19,38 +69,51 @@ const page = () => {
                 {/* <ThemeToggler/> */}
                 <h1 className='text-3xl text-black dark:text-white text-center'>Welcome to <span className='text-blue-400 font-semibold'> Edu Create AI</span></h1>
                 <p className='text-base text-black dark:text-white text-center'>Use you work email for a better experience.</p>
-                <form className='p-5'>
+                <form className='p-5' onSubmit={handleSubmit(onSubmit)}>
                    <div className='flex flex-col items-start justify-center'>   
                        <label className='text-black dark:text-white text-md'>Full Name</label>
                        <div className='flex items-center justify-center gap-4'>
-                            <input type='text' placeholder='First Name' className='bg-inherit border-2 mt-1 border-gray-600 w-full placeholder-gray-600 rounded-md text-md placeholder-md p-2' />
-                            <input type='text' placeholder='Last Name' className='border-2 border-gray-600 w-full placeholder-gray-600 mt-1 rounded-md bg-inherit text-md placeholder-md p-2' />
+                            <div>
+                                <input type='text' {...register('firstName')} placeholder='First Name' className='bg-inherit border-2 mt-1 border-gray-600 w-full placeholder-gray-600 rounded-md text-md placeholder-md p-2' />
+                                {errors.firstName && <p className="text-red-600 text-sm p-2">{errors.firstName.message}</p>}
+                            </div>
+                            <div>
+                                <input type='text' {...register('lastName')}  placeholder='Last Name' className='border-2 border-gray-600 w-full placeholder-gray-600 mt-1 rounded-md bg-inherit text-md placeholder-md p-2' />
+                                {errors.lastName && <p className="text-red-600 text-sm p-2">{errors.lastName.message}</p>}
+                            </div>
+                            
+                            
                        </div>
                    </div>
-                   <div className='mt-2 flex flex-col items-start justify-center'>
+                   {/* <div className='mt-2 flex flex-col items-start justify-center'>
                       <label className='text-black dark:text-white text-md'>Username</label>
                       <input type='text' placeholder='Username' className='border-2 border-gray-600 w-full placeholder-gray-600 mt-1 rounded-md bg-inherit text-md placeholder-md p-2' />
-                   </div>
+                   </div> */}
                    <div className='mt-2 flex flex-col items-start justify-center'>
                       <label className='text-black dark:text-white text-md'>Email</label>
-                      <input type='email' placeholder='Email' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-md mt-1 bg-inherit text-md placeholder-md p-2' />
+                      <input type='email' {...register('email')} placeholder='Email' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-md mt-1 bg-inherit text-md placeholder-md p-2' />
+                      {errors.email && <p className="text-red-600 text-sm p-2">{errors.email.message}</p>}
                    </div>
                    <div className='mt-2 flex items-center justify-start gap-5'>
                       <div className='flex flex-col items-start justify-center'>
                             <label className='text-black dark:text-white text-md'>Password</label>
-                            <input type='email' placeholder='Enter password' className='border-2 border-gray-600 w-full placeholder-gray-600 mt-1 rounded-md bg-inherit text-md placeholder-md p-2' />
+                            <input {...register('password')} type='password' placeholder='Enter password' className='border-2 border-gray-600 w-full placeholder-gray-600 mt-1 rounded-md bg-inherit text-md placeholder-md p-2' />
+                            {errors.password && <p className="text-red-600 text-sm p-2">{errors.password.message}</p>}
                       </div>
                       <div className='flex flex-col items-start justify-center'>
                             <label className='text-black dark:text-white text-md'>Confirm Password</label>
-                            <input type='email' placeholder='Confirm password' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-md mt-1 bg-inherit text-md placeholder-md p-2' />
+                            <input {...register('confirmPassword')} type='password' placeholder='Confirm password' className='border-2 border-gray-600 w-full placeholder-gray-600 rounded-md mt-1 bg-inherit text-md placeholder-md p-2' />
+                            {errors.confirmPassword && <p className="text-red-600 text-sm p-2">{errors.confirmPassword.message}</p>}
                       </div>
                    </div>
                    <div className='flex items-center justify-start gap-2 mt-2'>
-                      <input type='radio' />
-                      <Link href='' className='text-blue-800 text-sm' >I agree to all terms and conditions</Link>
+                      <input type='checkbox' />
+                      <Link href='' className='text-blue-800 text-sm' {...register('termsAccepted')} >I agree to all terms and conditions</Link>
                     </div>
+                    {errors.termsAccepted && <p className="text-red-600 text-sm p-2">{errors.termsAccepted.message}</p>}
+
                     <div className='flex items-center justify-end'>
-                        <button className='bg-indigo-600 text-white font-semibold p-3 flex items-center justify-center gap-1 font-base rounded-full mt-2'>Sign Up <span><FaArrowRight className='text-black'/></span></button>
+                        <button type='submit' className='bg-indigo-600 text-white font-semibold p-3 flex items-center justify-center gap-1 font-base rounded-full mt-2'>Sign Up <span><FaArrowRight className='text-black'/></span></button>
                     </div>   
                </form>
                <p className='text-center font-semibold text-md text-black dark:text-white'>OR SIGN IN WITH</p>
@@ -65,4 +128,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

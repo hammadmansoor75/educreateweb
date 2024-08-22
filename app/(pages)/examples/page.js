@@ -1,3 +1,4 @@
+"use client"
 import ExampleCarousel from '@/components/ExamplesCarousel'
 import ExampleSlider from '@/components/ExampleSlider'
 import Image from 'next/image'

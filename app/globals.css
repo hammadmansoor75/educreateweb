@@ -67,3 +67,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+@layer utilities {
+  .page-break {
+    @apply break-after-page; /* Use this utility for page break */
+  }
+}

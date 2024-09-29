@@ -53,10 +53,22 @@ export const authOptions = {
       ],
       callbacks: {
         async jwt ({token,user,account,profile,isNewUser}){
-            return token
+            if(user){
+              token.id = user.id;
+              token.email = user.email;
+              token.name = user.name;
+            }
+            // console.log("JWT token:", token);
+            return token;
         },
         async session({session,user,token}){
-            return session
+          if (token) {
+            session.user.id = token.id;
+            session.user.email = token.email;
+            session.user.name = token.name;
+          }
+          // console.log("Session:", session); 
+          return session;
         },
         // async signIn({profile}){
         //     if(!profile?.email){

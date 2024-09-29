@@ -1,17 +1,14 @@
-"use client"
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
+import SessionNav from '@/lib/SessionNav'
 import React from 'react'
-import { SessionProvider } from 'next-auth/react'
 
 const PagesLayout = ({children}) => {
   return (
     <div>
-      <SessionProvider>
-      <Navbar/>
+      <SessionNav/>
       {children}
-      <Footer/>
-      </SessionProvider>
+      <Footer/>  
     </div>
   )
 }

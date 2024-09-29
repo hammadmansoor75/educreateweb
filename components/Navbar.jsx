@@ -6,8 +6,8 @@ import ThemeToggler from './ThemeToggler'
 import { FaBars } from 'react-icons/fa6';
 import {MdOutlineClose} from 'react-icons/md'
 import { useSession } from 'next-auth/react';
-import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import { signOut } from 'next-auth/react';
+
 
 const navLinks = [
     {
@@ -51,7 +51,11 @@ const Navbar = () => {
                         return <Link className='hover:border-b-2 hover:border-black dark:hover:border-white ' href={link.link} key={link.link}>{link.name}</Link>
                     })}
                     {session?.user && (
-                        <Link href='/myLearning' className='hover:border-b-2 hover:border-black dark:hover:border-white ' >My Learning</Link>
+                        <div className='flex items-center justify-center gap-4'>
+                            <Link href='/mylearning' className='hover:border-b-2 hover:border-black dark:hover:border-white ' >My Learning</Link>
+                            <Link href='/mycourses' className='hover:border-b-2 hover:border-black dark:hover:border-white ' >My Courses</Link>
+                        </div>
+                        
                     ) }
                 </div>
                 <div className='hidden md:flex items-center justify-center gap-3'>
@@ -66,10 +70,7 @@ const Navbar = () => {
                             redirect:true,
                             callbackUrl: `${window.location.origin}/`
                         })} className='bg-signinBtn p-2 rounded-md text-white' >Sign Out</button>
-                    )}
-                    
-                    
-                    
+                    )}      
                 </div>
                 
                 <div className='md:hidden sm:flex'>

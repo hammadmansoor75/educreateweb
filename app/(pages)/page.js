@@ -1,10 +1,8 @@
 "use client"
 import Image from "next/image";
-import {FcComments} from 'react-icons/fc'
 import {FaArrowRight,FaArrowLeft } from "react-icons/fa6";
 import CourseSlide from "@/components/CourseSlide";
 import {useState} from "react"
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Testimonials from "@/components/Testimonials";4
 import {motion} from 'framer-motion'
 import { useInView } from "framer-motion";
@@ -60,7 +58,7 @@ export default function Home() {
   return (
     <main className="">
       <section className="py-20 bg-white dark:bg-gradient-to-r from-gradientBlueStart via-gradientBlueMid to-gradientBlueEnd">
-        <div className="md:flex items-center justify-between gap-2">
+        <div className="md:flex items-center justify-between gap-8">
           <motion.div
           ref={ref}
           initial={{opacity:0, y : '100%'}}
@@ -69,7 +67,7 @@ export default function Home() {
           className="w-4/5 md:w-1/2 ml-14">
             <h1 className="text-3xl md:text-5xl font-bold dark:text-white">Unlock the power of AI for your Education </h1>
             <p className=" text-base text-textGray dark:text-white mt-4">Our mission is to help people to design the best course content anytime, anywhere.</p>
-            <Link href='/contentcreation' >
+            <Link href='/mylearning' >
               <button  className="text-md flex items-center gap-2 justify-center bg-gradient-to-r from-pink-300 to-blue-400 border-blue-700 border-2 opacity-1 rounded-full p-3 text-pinkBtnText font-bold mt-5 dark:bg-blueBtn shadow-2xl shadow-pinkBtn" >Create Free AI Course <span><FaArrowRight/></span></button>
             </Link>
             
@@ -82,7 +80,7 @@ export default function Home() {
             animate={ isInView ? {x:'0%',opacity:1} : {}}
             transition = {{duration:1, ease:'easeInOut'}}
             className="hidden md:flex">
-            <Image src='/assets/homepage-01.svg' height={700} width={700} alt="homepage"/>
+            <Image src='/assets/homepage-01-replaced.png' className='rounded-[70px]' height={1000} width={700} alt="homepage"/>
           </motion.div>
         </div>
       </section>

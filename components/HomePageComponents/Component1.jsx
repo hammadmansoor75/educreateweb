@@ -4,15 +4,12 @@ import { useInView } from 'framer-motion'
 import Image from 'next/image';
 import React from 'react'
 import {motion} from 'framer-motion'
-import { FaArrowRight } from 'react-icons/fa6';
-import { Link } from 'next/link';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Component1 = () => {
     const ref = React.useRef(null)
     const isInView = useInView(ref, {once: false});
 
-   
   return (
     <section className="py-20 px-5 bg-darkGreyBg dark:bg-black text-white">
         <div className="container mx-auto md:flex items-center justify-center gap-5">
@@ -24,7 +21,7 @@ const Component1 = () => {
           className="w-full md:w-1/2">
             <h1 className="text-3xl font-semibold">Start teaching with us and inspire others</h1>
             <p className="mt-3 text-base text-white dark:text-white">Become an instructor & start teaching with 26k certified instructors. Create a success story with 67.1k Students — Grow yourself with 71 countries.</p>
-            <button className="mt-3 bg-darkGreyBgBlueBtn py-2 rounded-md text-xl shadow-md shadow-inherit px-4">Register Now</button>
+            <Link href="/signup" ><button className="mt-3 bg-darkGreyBgBlueBtn py-2 rounded-md text-xl shadow-md shadow-inherit px-4">Register Now</button></Link>
           </motion.div>
           <motion.div
           ref = {ref}

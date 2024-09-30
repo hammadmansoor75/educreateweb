@@ -6,22 +6,22 @@ import axios from 'axios';
 const CourseQuiz = () => {
     const [loading, setLoading] = useState(false);
     const [quiz, setQuiz] = useState({ questions: [], answers: {} });
-    const [submissionStatus, setSubmissionStatus] = useState(null);
+    const [submissionStatus, setSubmissionStatus] = useState(false);
+    const [feedback,setFeedback] = useState(null)
+    const [score, setScore] = useState(null);
 
     useEffect(() => {
-        const urlPath = window.location.pathname;
-        const idFromPath = urlPath.split("/").pop();
-
         const getQuizByCourseId = async (courseId) => {
             try {
                 setLoading(true);
                 const response = await axios.post('/api/get-quiz', { id: courseId });
                 const quizQuestions = response.data.quizQuestions;
-                console.log("Quiz Questions: ",quizQuestions)
+
                 const initialAnswers = quizQuestions.reduce((acc, question) => {
                     acc[question.id] = ''; // Empty string for no selected answer
                     return acc;
                 }, {});
+
                 setQuiz({ questions: quizQuestions, answers: initialAnswers });
             } catch (error) {
                 console.error("Error: ", error);
@@ -30,10 +30,26 @@ const CourseQuiz = () => {
             }
         };
 
-        if (idFromPath) {
-            getQuizByCourseId(idFromPath);
+        if (typeof window !== 'undefined') {
+            const urlPath = window.location.pathname;
+            const idFromPath = urlPath.split("/").pop();
+            if (idFromPath) {
+                getQuizByCourseId(idFromPath);
+            }
         }
     }, []);
+
+    const calculateScore = () => {
+        const correctAnswersCount = quiz.questions.reduce((count, question) => {
+            if (quiz.answers[question.id] === question.answer) {
+                return count + 1;
+            }
+            return count;
+        }, 0);
+
+        const totalQuestions = quiz.questions.length;
+        return (correctAnswersCount / totalQuestions) * 100;
+    };
 
     const handleOptionChange = (questionId, selectedOption) => {
         setQuiz((prevQuiz) => ({
@@ -48,14 +64,35 @@ const CourseQuiz = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        
+
+        const incorrectAnswers = quiz.questions.filter(question => quiz.answers[question.id] !== question.answer);
+        let prompt = "The user answered the following questions incorrectly in a quiz. Provide feedback on these topics and suggest how they can improve in these areas:\n\n";
+
+        incorrectAnswers.forEach((question, index) => {
+            prompt = prompt.concat(
+                `${index + 1}. Question: ${question.question}\n`,
+                `Selected Answer: ${quiz.answers[question.id]}\n`,
+                `Correct Answer: ${question.answer}\n\n`
+            );
+        });
+
+        prompt = prompt.concat("Please provide feedback and advice on how to improve. The response should be a paragraph and it should not include the quiz questions again just provide an overall feedback and improvements.");
+
+        prompt.toString();
+        const score = calculateScore();
+        setScore(score);
+        
         try {
-            const response = await axios.post('/api/submit-quiz', { answers: quiz.answers });
-            setSubmissionStatus(response.data.message); // Assuming the API returns a message
+            const response = await axios.post('/api/submit-quiz', { prompt : prompt });
+            setFeedback(response.feedback)
+            // handle response and update submissionStatus if needed
         } catch (error) {
-            console.error("Error submitting quiz:", error);
-            setSubmissionStatus("Submission failed. Please try again.");
+            console.log(error);
+            setFeedback("Something went wrong while submitting the quiz");
         } finally {
             setLoading(false);
+            setSubmissionStatus(true)
         }
     };
 
@@ -97,12 +134,14 @@ const CourseQuiz = () => {
                 </button>
                 {submissionStatus && (
                     <div className="mt-4 text-center text-gray-700">
-                        {submissionStatus}
+                        <h1>Score : {score}</h1>
+                        <p>Feedback: {feedback}</p>
                     </div>
                 )}
             </form>
+                
         </div>
     );
-}
+};
 
 export default CourseQuiz;

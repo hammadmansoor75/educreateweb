@@ -4,6 +4,55 @@ import PricingCard from '@/components/PricingCard'
 import Image from 'next/image'
 import React,{useState} from 'react'
 
+export const pricingPlans = [
+    {
+        packageName : 'Basic',
+        packagePrice : 0,
+        packageDesc : 'A budget-friendly option for individuals and small businesses.',
+        features : ['Single user license','20 x eLearning course per month ', 'Mobile app access','File synchronization across devices', 'Support for common file types'],
+        link : 
+            process.env.NODE_ENV === 'development'
+                ? 'https://buy.stripe.com/test_00g8yCbkn8xh2k07sv'
+                : '',
+        priceId : 
+            process.env.NODE_ENV === 'development'
+                ? 'price_1Q4hrkRxUd9CVk8lSGUPrkHa'
+                : '',
+        duration : '/month'
+    },
+    {
+        packageName : 'Professional',
+        packagePrice : 19.99,
+        packageDesc : 'A comprehensive option for businesses with more advanced needs.',
+        features :['100 GB storage','Advanced file collaboration', 'Mobile app access', 'File synchronization across devices', 'Support for common file types', 'Automatic file backup', 'Advanced security features','Purchase additional features' ],
+        link : 
+            process.env.NODE_ENV === 'development'
+                ? 'https://buy.stripe.com/test_6oE8yCagjfZJbUAcMM'
+                : '',
+        priceId : 
+            process.env.NODE_ENV === 'development'
+                ? 'price_1Q4hM6RxUd9CVk8lXDIw89Gz'
+                : '',
+        duration : '/month'
+    },
+    {
+        packageName : 'Enterprise',
+        packagePrice : 49.99,
+        packageDesc : 'A customizable plan for large organizations with specific needs.',
+        features :['Customizable storage capacity','Advanced file collaboration', 'Mobile app access', 'File synchronization across devices', 'Support for common file types', 'Automatic file backup', 'Advanced security features', 'Customizable features','Purchase additional features'],
+        link : 
+            process.env.NODE_ENV === 'development'
+                ? 'https://buy.stripe.com/test_cN23ei4VZ4h1aQw4gi'
+                : '',
+        priceId : 
+            process.env.NODE_ENV === 'development'
+                ? 'price_1Q4hlhRxUd9CVk8lhdpI8hhJ'
+                : '',
+        duration : '/month'
+    }
+
+]
+
 const Page = () => {
     const [duration,setDuration] = useState(false);
     const handleDuration = () => {
@@ -19,8 +68,8 @@ const Page = () => {
                 <Image className='drop-shadow-[0_100px_100px_rgba(160,32,40,0.75)]' src='/assets/pricingIcon.svg' alt="icon" height={300} width={300} />
             </div>
             <div className='md:flex space-y-5 md:space-y-0  items-start justify-center gap-10'>
-                <PricingCard  packageName='Basic' packagePrice={0} packageDesc={'A budget-friendly option for individuals and small businesses.'} features={['Single user license','20 x eLearning course per month ', 'Mobile app access','File synchronization across devices', 'Support for common file types']} />
-                <PricingCard packageName='Professional' packagePrice={19.99} packageDesc={'A comprehensive option for businesses with more advanced needs.'} features={['100 GB storage','Advanced file collaboration', 'Mobile app access', 'File synchronization across devices', 'Support for common file types', 'Automatic file backup', 'Advanced security features','Purchase additional features' ]} />
+                <PricingCard  packageName={pricingPlans[0].packageName} packagePrice={pricingPlans[0].packagePrice} packageDesc={pricingPlans[0].packageDesc} features={pricingPlans[0].features} link={pricingPlans[0].link} priceId={pricingPlans[0].priceId} duration={pricingPlans[0].duration} />
+                <PricingCard  packageName={pricingPlans[1].packageName} packagePrice={pricingPlans[1].packagePrice} packageDesc={pricingPlans[1].packageDesc} features={pricingPlans[1].features} link={pricingPlans[1].link} priceId={pricingPlans[1].priceId} duration={pricingPlans[1].duration} />
             </div>
         </section>
         <section className='p-10 bg-white dark:bg-black'>
@@ -31,9 +80,9 @@ const Page = () => {
                 <button className='p-3 text-lg text-white bg-indigo-600 rounded-full flex items-center justify-center gap-1'>Annually <span className='text-blue-800'>Save 50%</span></button>
             </div> */}
             <div className='md:flex space-y-5 md:space-y-0 items-start justify-center gap-10 mt-10'>
-            <PricingCard  packageName='Basic' packagePrice={0} packageDesc={'A budget-friendly option for individuals and small businesses.'} features={['Single user license','20 x eLearning course per month ', 'Mobile app access','File synchronization across devices', 'Support for common file types']} />
-            <PricingCard  packageName='Professional' packagePrice={15} packageDesc={'A comprehensive option for businesses with more advanced needs.'} features={['100 GB storage','Advanced file collaboration', 'Mobile app access', 'File synchronization across devices', 'Support for common file types', 'Automatic file backup', 'Advanced security features','Purchase additional features' ]} />
-            <PricingCard  packageName='Enterprise' packagePrice={'Custom'} packageDesc={'A customizable plan for large organizations with specific needs.'} features={['Customizable storage capacity','Advanced file collaboration', 'Mobile app access', 'File synchronization across devices', 'Support for common file types', 'Automatic file backup', 'Advanced security features', 'Customizable features','Purchase additional features']} />
+                {pricingPlans.map((plan,index) => (
+                    <PricingCard key={index} packageName={plan.packageName} packagePrice={plan.packagePrice} packageDesc={plan.packageDesc} features={plan.features} link={plan.link} priceId={plan.priceId} duration={plan.duration} ></PricingCard>
+                ))}
             </div>
         </section>
         <section className='py-10 bg-slate-200 dark:bg-black'>

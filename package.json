@@ -45,6 +45,7 @@
     "react-icons": "^5.2.1",
     "react-rnd": "^10.4.12",
     "react-spinners": "^0.14.1",
+    "react-toastify": "^10.0.5",
     "replicate": "^0.32.1",
     "stripe": "^16.12.0",
     "tailwind-merge": "^2.5.2",

@@ -16,13 +16,7 @@ const Page = () => {
           // Fetch courses when user is authenticated and userId is available
           async function fetchCourses() {
             try {
-              const response = await fetch("/api/get-courses", {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  userId: session.user.id, // Pass userId in headers
-                },
-              });
+              const response = await axios.post('/api/get-courses', {userId : session.user.id})
               const result = await response.json();
     
               if (response.ok) {
@@ -46,7 +40,7 @@ const Page = () => {
         <div className="container mx-auto p-10" >
             <div className='flex items-center justify-center flex-col gap-5' >
                 <h1 className='text-4xl font-bold' >My Courses</h1>
-                <h3 className='text-xl' >"Empower yourself through knowledge"</h3>
+                <h3 className='text-xl' >{"Empower yourself through knowledge"}</h3>
             </div>
             <div className='mt-5' >
                 <DataTable columns={columns} data={courses} ></DataTable>

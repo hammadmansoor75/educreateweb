@@ -22,21 +22,24 @@ const EditCourse = () => {
    const refs = useRef([])
     
     useEffect(() => {
-        // Extract the 'id' from the current URL (if present)
-        const urlPath = window.location.pathname; // Get the current URL path
-        const idFromPath = urlPath.split("/").pop(); // Extract the ID from the path
-        // console.log("Course id from params :" , idFromPath);
+        if (typeof window !== 'undefined'){
+            // Extract the 'id' from the current URL (if present)
+            const urlPath = window.location.pathname; // Get the current URL path
+            const idFromPath = urlPath.split("/").pop(); // Extract the ID from the path
+            // console.log("Course id from params :" , idFromPath);
+            
+            const getCourseById = async (courseId) => {
+                const response = await axios.post('/api/get-course',{id : courseId});
+                // console.log(response.data.course);
+                initializeEditCourse(response.data.course);
+                // console.log("Context Course: ", course);
+            }
+            if (idFromPath) {
+                // Fetch course data once ID is available
+                getCourseById(idFromPath);
+            }
+        }
         
-        const getCourseById = async (courseId) => {
-            const response = await axios.post('/api/get-course',{id : courseId});
-            // console.log(response.data.course);
-            initializeEditCourse(response.data.course);
-            // console.log("Context Course: ", course);
-        }
-        if (idFromPath) {
-            // Fetch course data once ID is available
-            getCourseById(idFromPath);
-        }
       }, []);
 
 

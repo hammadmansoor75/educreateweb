@@ -22,6 +22,7 @@ import axios from 'axios'
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa";
+import { CiVideoOn } from "react-icons/ci";
 
 
 export function DataTable({ columns, data }) {
@@ -41,29 +42,30 @@ export function DataTable({ columns, data }) {
       router.push(`/preview-course/${courseId}`); // Navigate to the edit page with courseId
   };
 
-    const generateVideo = async (courseId) => {
-      try {
-        const getCourse = await axios.post('/api/get-course',{
-          id : courseId
-        })
+    const handleVideo = async (courseId) => {
+      router.push(`/course-video/${courseId}`)
+      // try {
+      //   const getCourse = await axios.post('/api/get-course',{
+      //     id : courseId
+      //   })
 
-        if(!getCourse){
-          throw new Error('Cannot find the course')
-        }
+      //   if(!getCourse){
+      //     throw new Error('Cannot find the course')
+      //   }
 
-        // console.log('Course', getCourse.data.course)
-        const courseData = getCourse.data.course;
-        const videoCreation = await axios.post('http://127.0.0.1:8000/create-video',
-          courseData,{
-            headers: {
-              'Content-Type': 'application/json',
-          },
-          }
-        );
-        console.log("Video Creation Response: ", videoCreation)
-      } catch (error) { 
-        console.log("Error Creating the Video", error)
-      }
+      //   // console.log('Course', getCourse.data.course)
+      //   const courseData = getCourse.data.course;
+      //   const videoCreation = await axios.post('http://127.0.0.1:8000/create-video',
+      //     courseData,{
+      //       headers: {
+      //         'Content-Type': 'application/json',
+      //     },
+      //     }
+      //   );
+      //   console.log("Video Creation Response: ", videoCreation)
+      // } catch (error) { 
+      //   console.log("Error Creating the Video", error)
+      // }
     }
     
     const handleDelete = async (courseId) => {
@@ -107,6 +109,7 @@ export function DataTable({ columns, data }) {
             <TableHead>Edit</TableHead>
             <TableHead>Delete</TableHead>
             <TableHead>Preview</TableHead>
+            <TableHead>Video</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -151,10 +154,10 @@ export function DataTable({ columns, data }) {
                 </TableCell>
                 <TableCell>
                   <button
-                    className="text-red-500 hover:underline"
-                    onClick={() => generateVideo(row.original.courseId)} // Pass course ID to handleEdit
+                    className="text-blue-500 hover:underline"
+                    onClick={() => handleVideo(row.original.courseId)} // Pass course ID to handleEdit
                   >
-                    Generate Video
+                    <CiVideoOn size={20} />
                   </button>
                 </TableCell>
               </TableRow>

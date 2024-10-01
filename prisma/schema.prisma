@@ -22,7 +22,7 @@ model User {
   isVerified Boolean?
   priceId String?
   pricingPlan String @default("Basic")
-  stripeCustomerId String? @unique
+  stripeCustomerId String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
   courses Course[]
@@ -68,6 +68,16 @@ model QuizQuestion {
   options   String[]
   courseId  String   @db.ObjectId
   course    Course   @relation(fields: [courseId], references: [id])
+}
+
+
+model CourseVideo {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  courseId String @unique
+  scripts String[]
+  videoUrl String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 

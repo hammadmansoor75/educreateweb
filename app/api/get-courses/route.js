@@ -2,10 +2,10 @@ import { db } from "@/app/helpers/server-helper";
 import { NextResponse } from "next/server";
 
 // Define a handler for the GET request
-export async function GET(req) {
+export async function POST(req) {
   try {
     // Extract the userId from the query parameters or headers (depending on your auth strategy)
-    const userId = req.headers.get("userId"); // Adjust according to your auth mechanism
+    const userId = await req.json(); // Adjust according to your auth mechanism
 
     if (!userId) {
       return new NextResponse(

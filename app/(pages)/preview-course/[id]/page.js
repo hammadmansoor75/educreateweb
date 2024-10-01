@@ -16,24 +16,27 @@ const PreviewCourse = () => {
     const router = useRouter();
 
     useEffect(() => {
-        const urlPath = window.location.pathname;
-        const idFromPath = urlPath.split("/").pop();
+        if (typeof window !== 'undefined'){
+            const urlPath = window.location.pathname;
+            const idFromPath = urlPath.split("/").pop();
 
-        const getCourseById = async (courseId) => {
-            try {
-                setLoading(true);
-                const response = await axios.post('/api/get-course', { id: courseId });
-                setCourse(response.data.course);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
+            const getCourseById = async (courseId) => {
+                try {
+                    setLoading(true);
+                    const response = await axios.post('/api/get-course', { id: courseId });
+                    setCourse(response.data.course);
+                } catch (error) {
+                    console.log(error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            if (idFromPath) {
+                getCourseById(idFromPath);
             }
-        };
-
-        if (idFromPath) {
-            getCourseById(idFromPath);
         }
+        
     }, []);
 
     if (loading) {

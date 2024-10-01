@@ -30,7 +30,8 @@ export async function POST(req){
                 firstName,
                 lastName,
                 email,
-                hashedPassword
+                hashedPassword,
+                stripeCustomerId : null
             }
         })
 

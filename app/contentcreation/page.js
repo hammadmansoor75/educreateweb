@@ -15,32 +15,69 @@ import {useRouter} from 'next/navigation'
 import html2canvas from 'html2canvas'
 import axios from 'axios'
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Page = () => {
   const {course,saveCourse,updateRndComponentImage} = useCourse();
   const router = useRouter();
   console.log( "Course: ",course);
+  const [loading,setLoading] = useState(false)
 
-  if(!course){
-    router.push('/mylearning');
-  }
+  
 
   const handleElearning = async () => {
     try{
+      setLoading(true)
       course.sections.map(async (section,index) => {
         await captureAndUpload(index)
       })
       saveCourse();
+      // toast.success('Course is saved!', {
+      //   position: toast.POSITION.TOP_RIGHT, // Position of the toast
+      //   autoClose: 5000, // Auto close after 5 seconds
+      //   hideProgressBar: true, // Show the progress bar
+      //   closeOnClick: true, // Close on click
+      //   pauseOnHover: true, // Pause on hover
+      //   draggable: true, // Allow dragging to dismiss
+      //   progress: undefined, // Disable the default progress
+      //   style: { 
+      //     backgroundColor: '#4caf50', // Custom background color
+      //     color: '#fff', // Custom text color
+      //     border: '1px solid #388e3c', // Custom border
+      //   },
+      // });
     }catch(error){
-      console.log('Error:', error)
+      console.log('Error:', error);
+      // toast.error("Something went wrong! Please try again!", {
+      //   position : toast.POSITION.TOP_RIGHT,
+      //   autoClose:5000,
+      //   hideProgressBar : true,
+      //   closeOnClick : true,
+      //   pauseOnHover : true,
+      //   draggable : true,
+      //   progress : undefined,
+      //   style : {
+      //     backgroundColor : "#f44336",
+      //     color: "#fff",
+      //     border : "1px solid #b00020"
+      //   }
+      // })
+    }finally{
+      setLoading(false)
     }
   }
 
   const refs = useRef([])
 
   useEffect(() => {
+    if(!course){
+      router.push('/mylearning');
+    }
     if(course?.sections){
       refs.current = refs.current.slice(0,course.sections.length)
     }
+
   },[course])
 
 
@@ -80,7 +117,9 @@ const Page = () => {
   };
 
 
-
+  if (!course) {
+    return <div>Loading...</div>; // Or you can return a loading spinner or a message
+  }
 
   return (
     <main>
@@ -104,15 +143,15 @@ const Page = () => {
         <div className='md:flex items-center justify-start gap-4'>
           <FaArrowLeft size={20} />
           <div className=''>
-            <p className='font-semibold text-black'>Course : {course.courseTitle}</p>
+            <p className='font-semibold text-black'>Course : {course?.courseTitle}</p>
             <div className='mt-2 flex flex-col items-start md:flex-row md:items-center justify-start gap-5'>
               <span className='flex items-center justify-center gap-2'>
                 <LuFolderClosed className='text-black' />
-                <p className='text-contentcreationtext text-sm'>{course.sections.length}</p>
+                <p className='text-contentcreationtext text-sm'>{course?.sections.length}</p>
               </span>
               <span className='flex items-center justify-center gap-2'>
                 <BsQuestionSquareFill className='text-black' />
-                <p className='text-contentcreationtext text-sm'>{course.quizQuestions.length}</p>
+                <p className='text-contentcreationtext text-sm'>{course?.quizQuestions.length}</p>
               </span>
               <span className='flex items-center justify-center w-2/3 gap-2'>
                 <BiSolidMessageSquareDetail className='text-black' />
@@ -123,55 +162,42 @@ const Page = () => {
         </div>
       </div>
 
-      <Course course={course} />
-
-
-      <section className='bg-white dark:bg-black'>
-            {course.sections.map((section, index) => (
-                <div className="flex flex-col" key={section.id}>
-                    <ContentCreationSlide
-                        ref={el => refs.current[index] = el}
-                        section={section}
-                        sectionIndex={index}
-                    />
-                    {/* <p className='mt-10' >just for testing</p>
-                    <button className="bg-blue-900 text-white" onClick={() => captureAndUpload(index)}>Capture and Upload</button> */}
-                </div>
-            ))}
-      </section>
-
-      {/* <div>
-        {course && course.sections.map((section,index) => (
-            <div key={index}>
-                <h1>Background Image Url : {section.backgroundImageUrl} </h1>
-                <h1>Preview Images : </h1>
-                {section.previewImages && section.previewImages.map((image) => (
-                    <p key={image}>{image}</p>
-                ))} 
-            </div>
-        ))}
-      </div> */}
-
+      {course && (
+        <Course course={course} />
+      )}
       
 
-      
+
+      {course?.sections?.length > 0 && (
+        <section className='bg-white dark:bg-black'>
+              {course?.sections.map((section, index) => (
+                  <div className="flex flex-col" key={section.id}>
+                      <ContentCreationSlide
+                          ref={el => refs.current[index] = el}
+                          section={section}
+                          sectionIndex={index}
+                      />
+                  </div>
+              ))}
+        </section>
+      )}
 
       <section className='py-10 px-5 bg-white dark:bg-black w-full'>
         <h1 className='text-3xl font-semibold text-black dark:text-white' >Quiz Questions</h1>
 
         <div className='mt-5 md:flex items-start justify-between' >
           <div className='space-y-5' >
-            {course.quizQuestions.map((question,index) => (
+            {course?.quizQuestions?.length > 0 && course?.quizQuestions.map((question,index) => (
               <QuizQuestion key={index} qno={index+1} question={question} />
             ))}
             
 
             <div className='flex items-center justify-end' >
-              <button onClick={handleElearning} className='bg-indigo-700 text-white shadow-lg rounded-full py-2 px-4 text-sm' >Create elearning</button>
+              <button onClick={handleElearning} className='bg-indigo-700 text-white shadow-lg rounded-full py-2 px-4 text-sm' >{loading ? 'Creating eLearning...' : 'Create eLearning'}</button>
             </div>
           </div>
 
-          <LearningObjectives sections={course.sections} />
+          <LearningObjectives sections={course?.sections} />
         </div>
 
       </section>
@@ -179,6 +205,7 @@ const Page = () => {
       <footer className='bg-black p-4' >
         <p className='text-gray-500 text-center'>© 2024 - educreateai. Designed by Adil. All rights reserved</p>
       </footer>
+      <ToastContainer/>
     </main>
   )
 }

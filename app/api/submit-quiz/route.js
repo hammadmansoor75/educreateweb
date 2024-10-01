@@ -6,8 +6,8 @@ export async function POST(req,res){
 
     try{
         prompt.toString();
-        console.log(prompt)
-        const chatGPTFeedback = generateQuizFeedback(prompt);
+        const chatGPTFeedback = await generateQuizFeedback(prompt);
+        // console.log("Chatgpt feedback: ",chatGPTFeedback)
         return new NextResponse(
             JSON.stringify({ feedback: chatGPTFeedback }),
             { status: 200, headers: { "Content-Type": "application/json" } }

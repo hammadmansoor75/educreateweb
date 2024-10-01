@@ -11,32 +11,35 @@ const CourseQuiz = () => {
     const [score, setScore] = useState(null);
 
     useEffect(() => {
-        const getQuizByCourseId = async (courseId) => {
-            try {
-                setLoading(true);
-                const response = await axios.post('/api/get-quiz', { id: courseId });
-                const quizQuestions = response.data.quizQuestions;
-
-                const initialAnswers = quizQuestions.reduce((acc, question) => {
-                    acc[question.id] = ''; // Empty string for no selected answer
-                    return acc;
-                }, {});
-
-                setQuiz({ questions: quizQuestions, answers: initialAnswers });
-            } catch (error) {
-                console.error("Error: ", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (typeof window !== 'undefined') {
-            const urlPath = window.location.pathname;
-            const idFromPath = urlPath.split("/").pop();
-            if (idFromPath) {
-                getQuizByCourseId(idFromPath);
+        if (typeof window !== 'undefined'){
+            const getQuizByCourseId = async (courseId) => {
+                try {
+                    setLoading(true);
+                    const response = await axios.post('/api/get-quiz', { id: courseId });
+                    const quizQuestions = response.data.quizQuestions;
+    
+                    const initialAnswers = quizQuestions.reduce((acc, question) => {
+                        acc[question.id] = ''; // Empty string for no selected answer
+                        return acc;
+                    }, {});
+    
+                    setQuiz({ questions: quizQuestions, answers: initialAnswers });
+                } catch (error) {
+                    console.error("Error: ", error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+    
+            if (typeof window !== 'undefined') {
+                const urlPath = window.location.pathname;
+                const idFromPath = urlPath.split("/").pop();
+                if (idFromPath) {
+                    getQuizByCourseId(idFromPath);
+                }
             }
         }
+        
     }, []);
 
     const calculateScore = () => {
@@ -85,7 +88,8 @@ const CourseQuiz = () => {
         
         try {
             const response = await axios.post('/api/submit-quiz', { prompt : prompt });
-            setFeedback(response.feedback)
+            // console.log(response.data.feedback)
+            setFeedback(response.data.feedback)
             // handle response and update submissionStatus if needed
         } catch (error) {
             console.log(error);
@@ -101,7 +105,7 @@ const CourseQuiz = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md mt-10">
+        <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md mt-10 mb-10">
             <h1 className='text-3xl font-semibold text-center mb-6'>Quiz</h1>
             <form className='space-y-8' onSubmit={handleSubmit}>
                 {quiz.questions.map((question, index) => (
@@ -133,9 +137,9 @@ const CourseQuiz = () => {
                     Submit Quiz
                 </button>
                 {submissionStatus && (
-                    <div className="mt-4 text-center text-gray-700">
-                        <h1>Score : {score}</h1>
-                        <p>Feedback: {feedback}</p>
+                    <div className="mt-4 flex items-center justify-center flex-col text-gray-700">
+                        <h1 className='text-2xl font-semibold' >Score : {score} %</h1>
+                        <p className='text-md mt-3 px-5 text-center text-accent-foreground'>{feedback}</p>
                     </div>
                 )}
             </form>

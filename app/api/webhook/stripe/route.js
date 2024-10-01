@@ -80,7 +80,7 @@ export async function POST(req,res){
 
                 const customerId = subscription.customer
     
-                const user = await db.user.findUnique({
+                const user = await db.user.findMany({
                     where : {stripeCustomerId : customerId}
                 })
 

@@ -8,6 +8,8 @@ import { MdCircle } from "react-icons/md";
 import html2pdf from 'html2pdf.js';
 import '@/app/globals.css'
 import {useRouter} from 'next/navigation'
+import { ClipLoader } from 'react-spinners';
+import { Button } from '@/components/ui/button';
 
 const PreviewCourse = () => {
     const [course, setCourse] = useState(null);
@@ -40,7 +42,9 @@ const PreviewCourse = () => {
     }, []);
 
     if (loading) {
-        return <h1>Loading...</h1>;
+        return <div className="flex items-center justify-center h-screen" >
+            <ClipLoader size={50}  />
+        </div>;
     }
 
     const generatePDF = () => {
@@ -92,7 +96,7 @@ const PreviewCourse = () => {
                             </div>
                             {course?.sections.map((section, index) => (
                                 <div key={index} className='mt-3 flex items-center justify-between text-black'>
-                                    <div className='md:flex items-center justify-center gap-2'>
+                                    <div className='md:flex-row flex flex-col items-start md:items-center justify-center gap-2'>
                                         <div className='bg-gray-300 rounded-full py-1 px-3'>
                                             {index + 1}
                                         </div>
@@ -109,51 +113,53 @@ const PreviewCourse = () => {
             <div className='page-break' ></div>
 
             <section className='py-10 bg-white dark:bg-black'>
-                {course?.sections.map((section, index) => (
-                    <div key={index} >
-                        <div className='flex flex-col md:flex-row items-center justify-between mt-10 md:px-10 gap-5' key={index}>
-                        <div className='relative w-full md:w-[800px] h-[500px] rounded-xl overflow-hidden'>
-                            <Image
-                                className='rounded-xl'
-                                src={section.backgroundImageUrl}
-                                layout='fill'
-                                objectFit='cover'
-                                alt="Section Image"
-                            />
-                            <div className="bg-white rounded-lg px-6 py-4 bg-opacity-50 border-white/20 backdrop-blur-sm text-black"
-                                style={{
-                                    position: 'absolute',
-                                    left: section.x,
-                                    top: section.y,
-                                    width: section.width,
-                                    height: section.height,
-                                }}
-                            >
-                                <h2 className="border border-blue-900 px-6 py-2 rounded-full font-bold text-md">{section.sectionTitle}</h2>
-                                <p className="mt-3 text-sm px-4 py-2 text-black">{section.smallPara}</p>
-                            </div>
-                        </div>
-                        <div className='bg-white rounded-xl p-4 border border-blue-900 w-full md:w-1/3'>
-                            <div>
-                                <h2 className='text-md font-semibold text-blue-900'>Section # {index + 1}</h2>
-                                <h1 className='text-xl font-bold text-black'>{section.sectionTitle}</h1>
-                                <p className='text-sm mt-3 mb-3 text-black'>{section.smallPara}</p>
-                                <p className='text-md font-semibold'>Key Points</p>
-                                {section.keyPoints.map((point, index) => (
-                                    <p className='text-sm mt-1 flex items-center text-black justify-start gap-2' key={index}><span className='font-semibold'>{index + 1}</span>{point}</p>
-                                ))}
-                            </div>
-                        </div>
+    {course?.sections.map((section, index) => (
+        <div key={index}>
+            <div className='flex flex-col md:flex-row items-start justify-between mt-10 px-5 md:px-10 gap-5'>
+                <div className='relative w-full md:w-[800px] h-[400px] md:h-[500px] rounded-xl overflow-hidden'>
+                    <Image
+                        className='rounded-lg'
+                        src={section.backgroundImageUrl}
+                        layout='fill'
+                        objectFit='contain'
+                        alt="Section Image"
+                    />
+                    <div className="bg-white hidden md:flex md:flex-col rounded-lg px-6 py-4 bg-opacity-50 border-white/20 backdrop-blur-sm text-black"
+                        style={{
+                            position: 'absolute',
+                            left: section.x,
+                            top: section.y,
+                            width: window.innerWidth <= 768 ? 250 : section.width,
+                            height: window.innerWidth <= 768 ? 150 : section.height,
+                        }}
+                    >
+                        <h2 className="border border-blue-900 px-6 py-2 rounded-full font-bold text-xs md:text-md">{section.sectionTitle}</h2>
+                        <p className="mt-3 text-xs md:text-sm px-4 py-2 text-black">{section.smallPara}</p>
                     </div>
-                    <div className='page-break' ></div>
+                </div>
+                <div className='bg-white rounded-xl p-4 border border-blue-900 w-full md:w-1/3'>
+                    <div>
+                        <h2 className='text-md font-semibold text-blue-900'>Section # {index + 1}</h2>
+                        <h1 className='text-xl font-bold text-black'>{section.sectionTitle}</h1>
+                        <p className='text-sm mt-3 mb-3 text-black'>{section.smallPara}</p>
+                        <p className='text-md font-semibold'>Key Points</p>
+                        {section.keyPoints.map((point, index) => (
+                            <p className='text-sm mt-1 flex items-center text-black justify-start gap-2' key={index}>
+                                <span className='font-semibold'>{index + 1}</span>{point}
+                            </p>
+                        ))}
                     </div>
-                ))}
-            </section>
+                </div>
+            </div>
+            <div className='page-break'></div>
+        </div>
+    ))}
+</section>
 
             <section className='py-10 bg-white dark:bg-black'>
                 <h1 className='text-3xl font-bold flex items-center justify-center mb-5'>Quiz Questions</h1>
                 {course?.quizQuestions.map((question, index) => (
-                    <div key={index} >
+                    <div key={index} className='px-5' >
                         <div className='flex items-center justify-center flex-col'>
                             <div className="mt-5 border border-purple-500 bg-inherit px-5 py-5 rounded-lg w-full md:w-[700px]">
                                 <h1 className="text-green-500 font-semibold">Question: {index + 1}</h1>
@@ -182,12 +188,12 @@ const PreviewCourse = () => {
                         Remember, learning is a continuous process, and we are excited to have been a part of yours.
                     </p>
                     <div className="mt-6 flex items-center justify-center gap-5">
-                        <button onClick={generatePDF} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition">
+                        <Button onClick={generatePDF} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-500 transition">
                             Download Course as Pdf
-                        </button>
-                        <button onClick={handleQuiz} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition">
+                        </Button>
+                        <Button onClick={handleQuiz} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-blue-500 transition">
                             Perform Quiz
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </section>

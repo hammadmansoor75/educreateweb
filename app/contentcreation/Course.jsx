@@ -6,6 +6,8 @@ import { LuFolderClosed } from "react-icons/lu"
 import { FaPlus } from 'react-icons/fa6';
 import axios from 'axios';
 import { useCourse } from '@/providers/CourseProvider';
+import { Button } from '@/components/ui/button';
+import { ClipLoader } from 'react-spinners';
 
 const Course = ({course}) => {
     const [courseImage, setCourseImage] = useState('');
@@ -85,14 +87,19 @@ const Course = ({course}) => {
         <section className='py-10 bg-white dark:bg-black px-5'>
         <div className='md:flex items-center justify-start gap-5'>
           <div>
-            <Image src={courseImage} className='rounded-xl mb-5' alt='content' height={700} width={900} />
+            {loading ? <div className='flex items-center justify-center w-full md:min-w-[900px]' >
+              <ClipLoader size={30} />
+            </div> : <Image src={courseImage} className='rounded-xl mb-5' alt='content' height={700} width={900} /> }
+            
             <div className='md:flex items-center justify-end gap-4 space-y-2 md:space-y-0'>
               <button className='text-black dark:text-white sm:text-sm bg-inherit py-2 px-4 border border-purple-500'>Select design or generate new image</button>
               <label htmlFor="course-image" className="cursor-pointer">
                 <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" id="course-image" />
               </label>
-              <button onClick={() => document.getElementById('course-image').click()} className='flex items-center justify-center gap-2 bg-indigo-700 text-white rounded-full py-2 px-4' ><IoCloudUploadOutline size={20} /> Upload Photo</button>
-              <button onClick={handleGenerateImage} className='flex items-center justify-center gap-2 bg-indigo-700 text-white rounded-full py-2 px-4' ><FaPlus size={20} />{loading ? 'Generating...' : 'Generate Image'}</button>
+              <Button onClick={() => document.getElementById('course-image').click()} className="flex item-center justify-center gap-2"  ><IoCloudUploadOutline size={20} /> Upload Photo</Button>
+              {/* <button onClick={() => document.getElementById('course-image').click()} className='flex items-center justify-center gap-2 bg-indigo-700 text-white rounded-full py-2 px-4' ><IoCloudUploadOutline size={20} /> Upload Photo</button> */}
+              <Button onClick={handleGenerateImage} variant='outline' className="flex item-center justify-center gap-2"  ><FaPlus size={20} />{loading ? 'Generating...' : 'Generate Image'}</Button>
+              {/* <button onClick={handleGenerateImage} className='flex items-center justify-center gap-2 bg-indigo-700 text-white rounded-full py-2 px-4' ><FaPlus size={20} />{loading ? 'Generating...' : 'Generate Image'}</button> */}
             </div>
           </div>
           <div className='bg-white border border-green-500 rounded-lg shadow-lg py-2 px-5 mt-5 md:mt-0 w-full md:w-1/3 min-h-[600px]'>
@@ -109,7 +116,7 @@ const Course = ({course}) => {
                 </div>
                 {course.sections.map((section, index) => (
                   <div key={index} className='mt-3 flex items-center justify-between text-black' >
-                    <div className='md:flex items-center justify-center gap-2'>
+                    <div className='md:flex-row flex flex-col items-start md:items-center justify-center gap-2'>
                       <div className='bg-gray-300 rounded-full py-1 px-3' >
                         {index + 1}
                       </div>

@@ -9,8 +9,14 @@ import {z} from 'zod'
 import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import {useState} from 'react'
+import {useSnackbar} from 'notistack'
+import { ClipLoader } from 'react-spinners'
 
 const Page = () => {
+    const {enqueueSnackbar} = useSnackbar();
+    const [loading,setLoading] = useState(false)
+
     const router = useRouter();
     const formSchema = z.object({
         firstName : z.string().min(3,'First Name is required'),
@@ -30,6 +36,7 @@ const Page = () => {
 
     const onSubmit = async(data) => {
         try {
+            setLoading(true)
             const response = await fetch('/api/user', {
                 method: 'POST',
                 headers: {
@@ -47,12 +54,17 @@ const Page = () => {
                 const errorData = await response.json();
                 // Handle API errors
                 console.log(errorData.message);
+                enqueueSnackbar( `${errorData.message}`, { variant: 'error' });
             } else {
                 // Handle successful submission
-                router.push('/signIn')
+                enqueueSnackbar( `Signed up successfully`, { variant: 'success' });
+                router.push('/mylearning')
             }
         } catch (error) {
+            enqueueSnackbar( `Submission Error! Please try again!`, { variant: 'error' });
             console.error('Submission error:', error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -113,7 +125,7 @@ const Page = () => {
                     {errors.termsAccepted && <p className="text-red-600 text-sm p-2">{errors.termsAccepted.message}</p>}
 
                     <div className='flex items-center justify-end'>
-                        <button type='submit' className='bg-indigo-600 text-white font-semibold p-3 flex items-center justify-center gap-1 font-base rounded-full mt-2'>Sign Up <span><FaArrowRight className='text-black'/></span></button>
+                        <button disabled={loading} type='submit' className='bg-indigo-600 text-white font-semibold p-3 flex items-center justify-center gap-1 font-base rounded-full mt-2'>{ loading ? <>Signing Up <ClipLoader className='text-white' size={20} /></> : <>Sign Up <span><FaArrowRight className='text-black'/></span></> }</button>
                     </div>   
                </form>
                <p className='text-center font-semibold text-md text-black dark:text-white'>OR SIGN IN WITH</p>

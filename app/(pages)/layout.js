@@ -3,12 +3,13 @@ import Navbar from '@/components/Navbar'
 import SessionNav from '@/lib/SessionNav'
 import React from 'react'
 
+
 const PagesLayout = ({children}) => {
   return (
     <div>
-      <SessionNav/>
-      {children}
-      <Footer/>  
+        <SessionNav/>
+          {children}
+        <Footer/>
     </div>
   )
 }

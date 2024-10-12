@@ -5,7 +5,8 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     // Extract the userId from the query parameters or headers (depending on your auth strategy)
-    const userId = await req.json(); // Adjust according to your auth mechanism
+    const {userId} = await req.json(); // Adjust according to your auth mechanism
+    console.log("GET_COURSES_userId: ", userId);
 
     if (!userId) {
       return new NextResponse(

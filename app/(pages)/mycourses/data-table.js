@@ -7,6 +7,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import {useState} from 'react'
+
 import {
   Table,
   TableBody,
@@ -23,15 +25,19 @@ import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa";
 import { CiVideoOn } from "react-icons/ci";
+import {useSnackbar} from 'notistack'
+import { ClipLoader } from "react-spinners";
 
 
 export function DataTable({ columns, data }) {
+  const {enqueueSnackbar} = useSnackbar();
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
 
+    // console.log("React Table: ", table.getRowModel().rows)
     const router = useRouter();
 
     const handleEdit = (courseId) => {
@@ -67,9 +73,10 @@ export function DataTable({ columns, data }) {
       //   console.log("Error Creating the Video", error)
       // }
     }
-    
+    const [deleteLoading,setDeleteLoading] = useState(false)
     const handleDelete = async (courseId) => {
         try {
+          setDeleteLoading(true)
           const response = await axios.delete('/api/delete-course', {
               data: { courseId }
           });
@@ -77,14 +84,20 @@ export function DataTable({ columns, data }) {
           if (response.status === 200) {
               // Handle success (e.g., show a success message, redirect, or update UI)
               console.log('Course deleted successfully');
+              enqueueSnackbar('Course Deleted Successfully!', { variant: 'success' });
+              // router.reload();
               // You might want to refresh the list of courses or redirect the user
           } else {
               // Handle non-success status codes
               console.error('Error deleting course:', response.data.error);
+              enqueueSnackbar('Something went wrong! Please try again.', { variant: 'error' });
           }
       } catch (error) {
           // Handle error (e.g., show an error message)
           console.error('Error deleting course:', error);
+          enqueueSnackbar('Something went wrong! Please try again.', { variant: 'error' });
+      }finally{
+        setDeleteLoading(false)
       }
     }
 
@@ -141,7 +154,8 @@ export function DataTable({ columns, data }) {
                     className="text-red-500 hover:underline"
                     onClick={() => handleDelete(row.original.courseId)} // Pass course ID to handleEdit
                   >
-                    <AiOutlineDelete size={20} />
+                    {deleteLoading ? <ClipLoader size={20} /> : <AiOutlineDelete size={20} /> }
+                    
                   </button>
                 </TableCell>
                 <TableCell>
@@ -164,7 +178,7 @@ export function DataTable({ columns, data }) {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length + 1} className="h-24 text-center">
+              <TableCell colSpan={columns.length + 5} className="h-24 text-center">
                 No results.
               </TableCell>
             </TableRow>

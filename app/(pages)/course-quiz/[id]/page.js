@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
 
 const CourseQuiz = () => {
     const [loading, setLoading] = useState(false);
@@ -101,16 +102,18 @@ const CourseQuiz = () => {
     };
 
     if (loading) {
-        return <div className="text-center">Loading...</div>;
+        return <div className="flex items-center justify-center h-screen">
+            <ClipLoader size={50} />
+        </div>;
     }
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md mt-10 mb-10">
-            <h1 className='text-3xl font-semibold text-center mb-6'>Quiz</h1>
+            <h1 className='text-3xl font-semibold text-center mb-6 text-black'>Quiz</h1>
             <form className='space-y-8' onSubmit={handleSubmit}>
                 {quiz.questions.map((question, index) => (
                     <div key={question.id} className="p-5 bg-white rounded-lg shadow-md">
-                        <h2 className='font-bold text-lg mb-3'>
+                        <h2 className='font-bold text-lg mb-3 text-black'>
                             {index + 1}. {question.question}
                         </h2>
                         <div className="space-y-2">
@@ -139,7 +142,7 @@ const CourseQuiz = () => {
                 {submissionStatus && (
                     <div className="mt-4 flex items-center justify-center flex-col text-gray-700">
                         <h1 className='text-2xl font-semibold' >Score : {score} %</h1>
-                        <p className='text-md mt-3 px-5 text-center text-accent-foreground'>{feedback}</p>
+                        <p className='text-md mt-3 px-5 text-center text-accent-foreground text-black'>{feedback}</p>
                     </div>
                 )}
             </form>

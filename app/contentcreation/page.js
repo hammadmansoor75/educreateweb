@@ -14,13 +14,14 @@ import { useCourse } from '@/providers/CourseProvider';
 import {useRouter} from 'next/navigation'
 import html2canvas from 'html2canvas'
 import axios from 'axios'
+import {useSnackbar} from 'notistack'
+import { ClipLoader } from 'react-spinners';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Page = () => {
   const {course,saveCourse,updateRndComponentImage} = useCourse();
   const router = useRouter();
+  const {enqueueSnackbar} = useSnackbar();
   console.log( "Course: ",course);
   const [loading,setLoading] = useState(false)
 
@@ -29,40 +30,27 @@ const Page = () => {
   const handleElearning = async () => {
     try{
       setLoading(true)
-      course.sections.map(async (section,index) => {
-        await captureAndUpload(index)
-      })
-      saveCourse();
-      // toast.success('Course is saved!', {
-      //   position: toast.POSITION.TOP_RIGHT, // Position of the toast
-      //   autoClose: 5000, // Auto close after 5 seconds
-      //   hideProgressBar: true, // Show the progress bar
-      //   closeOnClick: true, // Close on click
-      //   pauseOnHover: true, // Pause on hover
-      //   draggable: true, // Allow dragging to dismiss
-      //   progress: undefined, // Disable the default progress
-      //   style: { 
-      //     backgroundColor: '#4caf50', // Custom background color
-      //     color: '#fff', // Custom text color
-      //     border: '1px solid #388e3c', // Custom border
-      //   },
-      // });
+      await Promise.all(
+        course.sections.map(async (section, index) => {
+          await captureAndUpload(index);
+        })
+      );
+      const saveResponse = await saveCourse();
+      console.log("Save Response: ", saveResponse)
+      if(saveResponse.courseId){
+        enqueueSnackbar('Course Created Successfully!', { variant: 'success' });
+        router.push('/mycourses')
+      }else{
+        enqueueSnackbar(`${saveResponse.problem} Please try again.`, { variant: 'error' });
+      }
+
+      
+      // router.push('/mycourses')
+      
     }catch(error){
       console.log('Error:', error);
-      // toast.error("Something went wrong! Please try again!", {
-      //   position : toast.POSITION.TOP_RIGHT,
-      //   autoClose:5000,
-      //   hideProgressBar : true,
-      //   closeOnClick : true,
-      //   pauseOnHover : true,
-      //   draggable : true,
-      //   progress : undefined,
-      //   style : {
-      //     backgroundColor : "#f44336",
-      //     color: "#fff",
-      //     border : "1px solid #b00020"
-      //   }
-      // })
+      enqueueSnackbar('Something went wrong! Please try again.', { variant: 'error' });
+      
     }finally{
       setLoading(false)
     }
@@ -105,20 +93,10 @@ const Page = () => {
   };
 
 
-  const captureAndUploadAllSections = async () => {
-    if (!course?.sections?.length) return;
-    try {
-        const uploadPromises = course.sections.map((section, index) => captureAndUpload(index));
-        await Promise.all(uploadPromises);
-        console.log('All section images captured and uploaded.');
-    } catch (error) {
-        console.error('Error capturing and uploading section images:', error);
-    }
-  };
-
-
   if (!course) {
-    return <div>Loading...</div>; // Or you can return a loading spinner or a message
+    return <div className='flex items-center justify-center h-screen' >
+      <ClipLoader size={50} />
+    </div>; // Or you can return a loading spinner or a message
   }
 
   return (
@@ -135,14 +113,15 @@ const Page = () => {
       <div className='bg-white py-3 px-6 shadow-lg'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center justify-center gap-2'>
-            <Image src='/assets/logoSingle.png' alt='logo' height={70} width={70}/>
+            <Image src='/assets/logoSingle.png' className='hidden md:flex' alt='logo' height={70} width={70}/>
+            <Image src='/assets/logoSingle.png' className='sm:flex md:hidden' alt='logo' height={30} width={30}/>
             <h1 className='text-3xl font-semibold text-black'>EduCreate AI</h1>
            </div>
         </div>
 
         <div className='md:flex items-center justify-start gap-4'>
-          <FaArrowLeft size={20} />
-          <div className=''>
+          <FaArrowLeft className='hidden md:flex' size={20} />
+          <div className='mt-4'>
             <p className='font-semibold text-black'>Course : {course?.courseTitle}</p>
             <div className='mt-2 flex flex-col items-start md:flex-row md:items-center justify-start gap-5'>
               <span className='flex items-center justify-center gap-2'>
@@ -153,7 +132,7 @@ const Page = () => {
                 <BsQuestionSquareFill className='text-black' />
                 <p className='text-contentcreationtext text-sm'>{course?.quizQuestions.length}</p>
               </span>
-              <span className='flex items-center justify-center w-2/3 gap-2'>
+              <span className='flex items-center justify-center w-full md:w-2/3 gap-2'>
                 <BiSolidMessageSquareDetail className='text-black' />
                 <p className='text-contentcreationtext text-sm'>Select designs and/or expand screens, edit text then scroll to bottom to create eLearning. This eLearning can then be further edited once it has been created.</p>
               </span>
@@ -193,7 +172,7 @@ const Page = () => {
             
 
             <div className='flex items-center justify-end' >
-              <button onClick={handleElearning} className='bg-indigo-700 text-white shadow-lg rounded-full py-2 px-4 text-sm' >{loading ? 'Creating eLearning...' : 'Create eLearning'}</button>
+              <button onClick={handleElearning} disabled={loading} className='bg-indigo-700 text-white shadow-lg rounded-full py-2 px-4 text-sm' >{loading ? 'Creating eLearning...' : 'Create eLearning'}</button>
             </div>
           </div>
 
@@ -205,7 +184,6 @@ const Page = () => {
       <footer className='bg-black p-4' >
         <p className='text-gray-500 text-center'>© 2024 - educreateai. Designed by Adil. All rights reserved</p>
       </footer>
-      <ToastContainer/>
     </main>
   )
 }

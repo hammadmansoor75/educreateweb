@@ -1,7 +1,6 @@
 "use client";
 import { CourseProvider, useCourse } from "@/providers/CourseProvider";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import {useState, useEffect} from 'react'
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { BsQuestionSquareFill } from "react-icons/bs";
@@ -14,10 +13,17 @@ import QuizQuestion from "@/components/QuizQuestion";
 import LearningObjectives from "@/app/contentcreation/LearningObjectives";
 import {useRef} from 'react'
 import html2canvas from 'html2canvas'
+import {useSnackbar} from 'notistack'
+import {ClipLoader} from 'react-spinners'
+import {useRouter} from 'next/navigation'
 
 const EditCourse = () => {
     // const [course,setCourse] = useState();
     const {course,loading,initializeEditCourse,editCourseInDb,updateRndComponentImage} = useCourse();
+
+    const [loadingState,setLoadingState] = useState(false);
+    const {enqueueSnackbar} = useSnackbar();
+    const router = useRouter()
     
    const refs = useRef([])
     
@@ -52,18 +58,27 @@ const EditCourse = () => {
 
 
       if(loading){
-        return <div>Loading...</div>
+        return <div className="flex items-center justify-center h-screen flex-col gap-2"  >
+            <ClipLoader size={50} ></ClipLoader>
+            <h1 className="text-lg" ></h1>
+        </div>
       }
 
-
+      
       const handleCourseUpdation = () => {
         try{
+            setLoadingState(true);
             course.sections.map(async (section,index) => {
               await captureAndUpload(index)
             })
             editCourseInDb();
+            enqueueSnackbar('Course Updated Successfully!', { variant: 'success' });
+            router.push('/mycourses')
           }catch(error){
+            enqueueSnackbar('Something went wrong! Please try again.', { variant: 'error' });
             console.log('Error:', error)
+          }finally{
+            setLoadingState(false);
           }
       }
 
@@ -104,13 +119,14 @@ const EditCourse = () => {
             <div className='bg-white py-3 px-6 shadow-lg'>
                 <div className='flex items-center justify-between'>
                 <div className='flex items-center justify-center gap-2'>
-                    <Image src='/assets/logoSingle.png' alt='logo' height={70} width={70}/>
+                    <Image src='/assets/logoSingle.png' className="hidden md:flex" alt='logo' height={70} width={70}/>
+                    <Image src='/assets/logoSingle.png' className="sm:flex md:hidden" alt='logo' height={30} width={30}/>
                     <h1 className='text-3xl font-semibold text-black'>EduCreate AI</h1>
                 </div>
                 </div>
 
-                <div className='md:flex items-center justify-start gap-4'>
-                <FaArrowLeft size={20} />
+                <div className='md:flex items-center justify-start mt-3 gap-4'>
+                <FaArrowLeft className="hidden md:flex" size={20} />
                 <div className=''>
                     <p className='font-semibold text-black'>Course : {course.courseTitle}</p>
                     <div className='mt-2 flex flex-col items-start md:flex-row md:items-center justify-start gap-5'>
@@ -122,7 +138,7 @@ const EditCourse = () => {
                         <BsQuestionSquareFill className='text-black' />
                         <p className='text-contentcreationtext text-sm'>{course.quizQuestions.length}</p>
                     </span>
-                    <span className='flex items-center justify-center w-2/3 gap-2'>
+                    <span className='flex items-center justify-center w-full md:w-2/3 gap-2'>
                         <BiSolidMessageSquareDetail className='text-black' />
                         <p className='text-contentcreationtext text-sm'>Select designs and/or expand screens, edit text then scroll to bottom to create eLearning. This eLearning can then be further edited once it has been created.</p>
                     </span>
@@ -159,7 +175,7 @@ const EditCourse = () => {
                     
 
                     <div className='flex items-center justify-end' >
-                    <button onClick={handleCourseUpdation} className='bg-indigo-700 text-white shadow-lg rounded-full py-2 px-4 text-sm' >Update elearning</button>
+                    <button onClick={handleCourseUpdation} disabled={loadingState} className='bg-indigo-700 text-white shadow-lg rounded-full py-2 px-4 text-sm' >{loadingState ? 'Updating' : 'Update elearning'} </button>
                     </div>
                 </div>
 

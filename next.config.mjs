@@ -2,8 +2,10 @@
 
 /** @type {import('next').NextConfig} */
 
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 const nextConfig = {
+  reactStrictMode: !isDevelopment,
     images: {
         remotePatterns: [
           {
@@ -19,7 +21,8 @@ const nextConfig = {
             hostname: "res.cloudinary.com", // Add Cloudinary hostname
         },
         ],
-      }
+      },
+
 }
 
 export default nextConfig;

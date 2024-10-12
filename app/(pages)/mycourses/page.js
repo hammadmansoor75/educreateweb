@@ -3,6 +3,7 @@ import {DataTable} from './data-table';
 import {columns} from './columns'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import axios from 'axios'
 
 
 const Page = () => {
@@ -14,16 +15,17 @@ const Page = () => {
     useEffect(() => {
         if (status === "authenticated" && session?.user?.id) {
           // Fetch courses when user is authenticated and userId is available
-          async function fetchCourses() {
+          const fetchCourses = async () =>  {
             try {
               const response = await axios.post('/api/get-courses', {userId : session.user.id})
-              const result = await response.json();
+              // const result = await response.json();
+              console.log(response.data)
     
-              if (response.ok) {
-                setCourses(result.data);
-                console.log(result.data);
+              if (response.status === 200 ) {
+                setCourses(response.data.data);
+                console.log(response.data);
               } else {
-                console.error("Error fetching courses:", result.error);
+                console.error("Error fetching courses:", response.error);
               }
             } catch (error) {
               console.error("Error fetching courses:", error);

@@ -1,11 +1,14 @@
 "use client"
 import { SessionProvider } from "next-auth/react"
+import {SnackbarProvider} from 'notistack'
 
 const MyCoursesLayout = ({children}) => {
     return (
-        <SessionProvider>
-            {children}
-        </SessionProvider>
+        <SnackbarProvider>
+            <SessionProvider>
+                {children}
+            </SessionProvider>
+        </SnackbarProvider>
     )
 }
 

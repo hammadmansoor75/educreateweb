@@ -1,13 +1,16 @@
 "use client"
 import { SessionProvider } from "next-auth/react";
+import {SnackbarProvider} from 'notistack'
 
 
 export default function ContentCreationLayout({children}){
     return (
-        <SessionProvider>
+        <SnackbarProvider>
+            <SessionProvider>
             
-            {children}
+                {children}
 
-        </SessionProvider>
+            </SessionProvider>
+        </SnackbarProvider>
     )
 }

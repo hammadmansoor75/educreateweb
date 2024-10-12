@@ -11,12 +11,18 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import {signIn} from 'next-auth/react'
 import { useToast } from '@/components/ui/use-toast'
+import {useState} from 'react'
+import { ClipLoader } from 'react-spinners'
+import {useSnackbar} from 'notistack'
 
 
 
 const Page = () => {
     const router = useRouter();
     const {toast} = useToast()
+    const [loading,setLoading] = useState(false)
+    const {enqueueSnackbar} = useSnackbar()
+
     const formSchema = z.object({
         email : z.string().email('Invalid Email Address'),
         password : z.string().min(6,'Password must be 6 characters')
@@ -25,6 +31,7 @@ const Page = () => {
     const {register,handleSubmit,formState : {errors}} = useForm({resolver:zodResolver(formSchema)})
     const onSubmit = async (data) => {
         try {
+            setLoading(true)
             const signInData = await signIn('credentials', {
                 email : data.email,
                 password : data.password,
@@ -35,17 +42,16 @@ const Page = () => {
             
             if(signInData?.error){
                 console.log(signInData.error)
-                // toast({
-                //     title: "Error",
-                //     description : "Something went wrong!",
-                //     variant : 'destructive'
-                // })
+                enqueueSnackbar( `Invalid Credentials!`, { variant: 'error' });
             }else{
+                enqueueSnackbar('Signed in sucessfully!', { variant: 'success' });
                 router.refresh();
                 router.push('/mylearning')
             }
         } catch (error) {
             console.error('Submission error:', error);
+        } finally{
+            setLoading(false)
         }
     }
   return (
@@ -77,7 +83,7 @@ const Page = () => {
                       <Link href='/signup' className='text-blue-800 underline text-sm' >Create Account</Link>
                     </div>
                     <div className='flex items-center justify-end'>
-                        <button type='submit' className='bg-indigo-600 text-white font-semibold p-3 flex items-center justify-center gap-1 font-base rounded-full mt-5'>Log In <span><FaArrowRight className='text-black'/></span></button>
+                        <button type='submit' disabled={loading} className='bg-indigo-600 text-white font-semibold p-3 flex items-center justify-center gap-1 font-base rounded-full mt-5'>{loading ? <>Logging in <ClipLoader className='text-white' size={20} /></> : <>Log In <span><FaArrowRight size={20} className='text-white'/></span></> }</button>
                     </div>   
                </form>
                <p className='text-center font-semibold text-md text-black dark:text-white'>OR SIGN IN WITH</p>

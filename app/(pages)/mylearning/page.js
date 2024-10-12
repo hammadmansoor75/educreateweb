@@ -11,6 +11,9 @@ import { useRouter } from 'next/navigation';
 import {useSession} from 'next-auth/react'
 import {ClipLoader} from 'react-spinners'
 import { useCourse } from '@/providers/CourseProvider';
+import { Button } from '@/components/ui/button';
+import { FaBagShopping } from "react-icons/fa6";
+
 
 const Page = () => {
     const router = useRouter();
@@ -102,11 +105,13 @@ const Page = () => {
     <main>
         <section className='bg-slate-100 py-10 dark:bg-gradient-to-r from-blue-950 to-black px-2 md:px-10'>
             <div className='flex items-center justify-center flex-col gap-5'>
-                <PiGraduationCap size={40} className='text-orange-500'/>
-                <h1 className='text-4xl font-bold text-blue-700 drop-shadow-lg shadow-blue-700'>MY Learning</h1>
-                <p className='text-md text-black dark:text-white'>You are currently using EduCreate AI version</p>
-                <p className='text-md text-black dark:text-white'>Give it a try right below.</p>
-                <button className='flex items-center justify-center gap-2 text-blue-700 font-semibold border-2 border-gray-300 py-1 px-3 bg-blue-300 drop-shadow-lg '>Select to upgrade <FaShoppingCart className='text-orange-500'/> </button>
+                <PiGraduationCap size={40} className='text-blue-500'/>
+                <h1 className='text-4xl font-bold text-blue-700 drop-shadow-lg shadow-blue-700'>My Learning</h1>
+                <p className='text-md text-black dark:text-white text-center'>Unleash Your Knowledge: Create Your Own Course</p>
+                
+                
+                <Button className='flex items-center justify-center gap-2 px-4 '>Upgrade Now!<FaBagShopping className='' size={15}/> </Button>
+                <p className='text-sm text-black dark:text-white'>You are currently using EduCreate AI version</p>
             </div>
 
             <div className='bg-white dark:bg-black md:py-5 py-2 px-2 md:px-10 rounded-lg border-2 border-newBlue mt-10'>
@@ -120,17 +125,17 @@ const Page = () => {
                         <h1 className='text-2xl md:text-4xl font-bold text-blue-700 text-center'>Enter Details to Create Course Content</h1>
                     <div className='flex flex-col items-start justify-center gap-1'>
                         <label className='text-black dark:text-white'>Title</label>
-                        <input {...register('courseTitle')} type='text' placeholder='Your course title' className='bg-white px-4 py-2 border-newBlue rounded-lg placeholder-black text-black w-1/2 md:w-full border' />
+                        <input {...register('courseTitle')} type='text' placeholder='Your course title' className='bg-white px-4 py-2 border-newBlue rounded-lg placeholder-black text-black w-full md:w-full border' />
                         {errors.courseTitle && <p className="text-red-600 text-sm p-2">{errors.courseTitle.message}</p>}
                     </div>
                     <div className='flex flex-col items-start justify-center gap-1 mt-3'>
                         <label className='text-black dark:text-white'>Subtitle</label>
-                        <input {...register('courseSubtitle')} type='text' placeholder='Your course subtitle' className='bg-white text-black px-4 py-2 border-newBlue rounded-lg placeholder-black md:w-full w-1/2 border' />
+                        <input {...register('courseSubtitle')} type='text' placeholder='Your course subtitle' className='bg-white text-black px-4 py-2 border-newBlue rounded-lg placeholder-black md:w-full w-full border' />
                         {errors.courseSubtitle && <p className="text-red-600 text-sm p-2">{errors.courseSubtitle.message}</p>}
                     </div>
                     <div className='flex flex-col items-start justify-center gap-1 mt-3'>
                         <label className='text-black dark:text-white'>Learning Objectices (Optional)</label>
-                        <textarea {...register('learningOptions')} type='text' placeholder='Your course subtitle' className='bg-white text-black px-4 py-2 border-newBlue rounded-lg placeholder-black md:w-full w-1/2 border md:min-h-52' />
+                        <textarea {...register('learningOptions')} type='text' placeholder='Your course subtitle' className='bg-white text-black px-4 py-2 border-newBlue rounded-lg placeholder-black md:w-full w-full border md:min-h-52' />
                         {errors.learningOptions && <p className="text-red-600 text-sm p-2">{errors.learningOptions.message}</p>}
                     </div>
                     <div className='md:flex items-center justify-between mt-3 gap-3'>
@@ -176,7 +181,7 @@ const Page = () => {
                     </div>
                     <div className='flex flex-col items-start justify-center gap-1 mt-3'>
                         <label className='text-black dark:text-white'>Upload Document (Optional)</label>
-                        <div className='bg-white text-black px-4 border-newBlue rounded-lg placeholder-black w-2/3 md:w-full border md:min-h-52 py-4'>
+                        <div className='bg-white text-black px-4 border-newBlue rounded-lg placeholder-black w-full md:w-full border md:min-h-52 py-4'>
                             <div className='flex items-center justify-center gap-5'>
                                 <CiImageOn className='hidden md:flex border border-newBlue rounded-lg' size={200} />
                                 <div className='w-full md:w-1/2'>

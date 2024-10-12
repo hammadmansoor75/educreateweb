@@ -6,6 +6,8 @@ import {useState,useEffect,forwardRef} from 'react'
 import { Button } from "./ui/button";
 import html2canvas from 'html2canvas'
 import { useCourse } from "@/providers/CourseProvider";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import { FaPlus } from "react-icons/fa6";
 
 const ContentCreationSlide = forwardRef( (props,ref) => {
     const {section,sectionIndex} = props
@@ -177,7 +179,7 @@ const ContentCreationSlide = forwardRef( (props,ref) => {
 
     return (
         <div className="mt-10 md:flex items-center justify-between md:px-10 gap-5">
-            <div className="relative w-[800px] h-[500px] bg-cover bg-center rounded-xl" style={{backgroundImage : `url(${imagePath})`}} >
+            <div className="relative w-[800px] h-[500px] bg-cover bg-center rounded-xl mx-3 my-3 " style={{backgroundImage : `url(${imagePath})`}} >
                 <Rnd
                     ref={ref}
                     id={`rnd-container-${sectionIndex}`}
@@ -185,11 +187,11 @@ const ContentCreationSlide = forwardRef( (props,ref) => {
                     default={{
                         x:section.x,
                         y:section.y,
-                        width:section.width, 
-                        height:section.height
+                        width: section.width, 
+                        height: section.height
                     }}
-                    minWidth={200}
-                    minHeight={100}
+                    minWidth={window.innerWidth < 768 ? 70 : 200}
+                    minHeight={window.innerWidth < 768 ? 40 : 100}
                     bounds="parent"
                     onDragStop={handleDragStop}
                     onResizeStop={handleResizeStop}
@@ -198,28 +200,29 @@ const ContentCreationSlide = forwardRef( (props,ref) => {
                     <p className="mt-3 text-sm px-4 py-2 text-black" onBlur={handleParaChange} contentEditable={true} >{smallPara}</p>
                 </Rnd>
             </div>
-            <div>
-                <h1 className="flex items-center justify-center border border-blue-900 px-4 py-2 mb-5" >Select design or generate new image</h1>
-                <div className="flex items-center justify-center gap-2" >
+            <div  >
+                <h1 className="mx-5 md:mx-0 flex items-center justify-center border border-blue-900 px-4 py-2 mb-5" >Select design or generate new image</h1>
+                <div className="flex items-center justify-center gap-2 mr-2 md:mr-0" >
                     
                 `   <label htmlFor="file-input" className="cursor-pointer">
                         <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" id="file-input" />
                     </label>
-                    <Button variant="outline" onClick={() => document.getElementById('file-input').click()}>
-                        Upload Photo
+                    <Button variant="outline" className="flex item-center justify-center gap-2"  onClick={() => document.getElementById('file-input').click()}>
+                    <IoCloudUploadOutline size={20} />Upload Photo
                     </Button>
                     
-                    <Button variant={'secondary'} onClick={generateImage} disabled={loading} >
-                        {loading ? 'Generating...' : 'Generate Image'}
+                    <Button variant={'secondary'} onClick={generateImage} disabled={loading} className="flex item-center justify-center gap-2" >
+                    <FaPlus size={20} /> {loading ? 'Generating...' : 'Generate Image'}
                     </Button>
                 </div>
-                <div className="bg-white px-6 py-4 overflow-y-auto h-72 w-96 border mt-5 grid grid-cols-2 gap-3 drop-shadow-xl shadow-xl rounded-xl">
+                <div className="bg-white mx-3 md:mx-0 px-6 py-4 overflow-y-auto md:h-72 md:w-96 border mt-5 grid grid-cols-2 gap-3 drop-shadow-xl shadow-xl rounded-xl">
                     
                     {uploadedImages && uploadedImages.map((path) => (
                         <Image key={path} src={path} onClick={()=>handlePathChange(path)} alt="image" height={300} width={300}  className="rounded-lg" />
                     ))}
                 </div>
             </div>
+            <br/>
         </div>
     )
 })

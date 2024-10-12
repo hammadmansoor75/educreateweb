@@ -196,9 +196,20 @@ export const CourseProvider = ({children}) => {
     const saveCourse = async () => {
         try{
             const response = await axios.post('/api/save-course', course);
-            console.log('Course saved successfully:', response.data);
+            if(response.status === 200){
+                console.log('Course saved successfully:', response.data);
+                const courseId = response.data.data;
+                return {courseId};
+            }else{
+                console.log("Error Saving the course: ", response.data)
+                const problem = response.data.error;
+                return {problem}
+            }
+            
         }catch(error){
             console.error('Error saving course:', error.response ? error.response.data : error.message);
+            const problem =  error.response ? error.response.data : error.message;
+            return {problem}
         }
     }
 

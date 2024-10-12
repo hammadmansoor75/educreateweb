@@ -64,7 +64,7 @@ export async function POST(req){
           });
 
         if(course){
-            console.log('Course saved to DB')
+            console.log('Course saved to DB: ', course)
         }
 
         return new Response(JSON.stringify({data : course.id}), {
@@ -73,7 +73,7 @@ export async function POST(req){
           });
     }catch(error){
         console.error("Error saving course :", error);
-        return new Response(JSON.stringify({ error: "Failed to generate text" }), {
+        return new Response(JSON.stringify({ error: "Error saving course" }), {
         status: 500,
         headers: { "Content-Type": "application/json" },
         });

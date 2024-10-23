@@ -11,7 +11,7 @@ export async function POST(req){
             );
         }
 
-        const courseVideo = await db.courseVideo.findMany({
+        const courseVideo = await db.courseVideo.findUnique({
             where : {courseId : courseId}
         })
 
@@ -22,19 +22,12 @@ export async function POST(req){
             );
         }
 
-        console.log(courseVideo);
+        // console.log(courseVideo);
 
-        if(courseVideo.length > 0){
-            console.log("Course Video: ",courseVideo);
-            return new NextResponse(
-                JSON.stringify({ courseVideo: courseVideo[0] }),
-                { status: 200, headers: { "Content-Type": "application/json" } }
-            );
-        }
-
-        
-        
-
+        return new NextResponse(
+            JSON.stringify({ courseVideo: courseVideo }),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        );
 
     }catch(error){
         console.error("Error fetching course:", error);

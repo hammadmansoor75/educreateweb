@@ -29,7 +29,7 @@ import {useSnackbar} from 'notistack'
 import { ClipLoader } from "react-spinners";
 
 
-export function DataTable({ columns, data }) {
+export function DataTable({ columns, data, setCourses }) {
   const {enqueueSnackbar} = useSnackbar();
     const table = useReactTable({
         data,
@@ -50,28 +50,6 @@ export function DataTable({ columns, data }) {
 
     const handleVideo = async (courseId) => {
       router.push(`/course-video/${courseId}`)
-      // try {
-      //   const getCourse = await axios.post('/api/get-course',{
-      //     id : courseId
-      //   })
-
-      //   if(!getCourse){
-      //     throw new Error('Cannot find the course')
-      //   }
-
-      //   // console.log('Course', getCourse.data.course)
-      //   const courseData = getCourse.data.course;
-      //   const videoCreation = await axios.post('http://127.0.0.1:8000/create-video',
-      //     courseData,{
-      //       headers: {
-      //         'Content-Type': 'application/json',
-      //     },
-      //     }
-      //   );
-      //   console.log("Video Creation Response: ", videoCreation)
-      // } catch (error) { 
-      //   console.log("Error Creating the Video", error)
-      // }
     }
     const [deleteLoading,setDeleteLoading] = useState(false)
     const handleDelete = async (courseId) => {
@@ -83,6 +61,8 @@ export function DataTable({ columns, data }) {
 
           if (response.status === 200) {
               // Handle success (e.g., show a success message, redirect, or update UI)
+              
+              setCourses((prevCourses) => prevCourses.filter(course => course.courseId !== courseId));
               console.log('Course deleted successfully');
               enqueueSnackbar('Course Deleted Successfully!', { variant: 'success' });
               // router.reload();

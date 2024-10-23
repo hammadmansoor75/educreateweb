@@ -1,13 +1,11 @@
 "use client";
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import ThemeToggler from './ThemeToggler'
 import { FaBars } from 'react-icons/fa6';
 import {MdOutlineClose} from 'react-icons/md'
-import { useSession } from 'next-auth/react';
-import { signOut } from 'next-auth/react';
-
+import {UserButton, SignInButton, useAuth, useUser, SignUpButton, SignedIn, SignedOut} from '@clerk/nextjs'
 
 const navLinks = [
     {
@@ -32,10 +30,20 @@ const navLinks = [
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
     const handleOpenChange = () => {
         setIsOpen(!isOpen);
     }
-    const {data:session,status} = useSession();
+    // const {data:session,status} = useSession();
+    const {isSignedIn} = useAuth();
+    const {user} = useUser();
+
+    useEffect(()=>{
+        setIsMounted(true)
+    },[])
+
+    if(!isMounted) return null;
+
   return (
     <>
         <header className='dark:bg-black dark:text-white bg-white text-black sticky top-0 z-50'>
@@ -50,27 +58,27 @@ const Navbar = () => {
                     {navLinks.map((link) => {
                         return <Link className='hover:border-b-2 hover:border-black dark:hover:border-white ' href={link.link} key={link.link}>{link.name}</Link>
                     })}
-                    {session?.user && (
+                    <SignedIn>
                         <div className='flex items-center justify-center gap-4'>
                             <Link href='/mylearning' className='hover:border-b-2 hover:border-black dark:hover:border-white ' >My Learning</Link>
                             <Link href='/mycourses' className='hover:border-b-2 hover:border-black dark:hover:border-white ' >My Courses</Link>
                         </div>
-                        
-                    ) }
+                    </SignedIn>
                 </div>
                 <div className='hidden md:flex items-center justify-center gap-3'>
                 <ThemeToggler/>
-                    {!session?.user ? (
-                        <>
-                            <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md text-white'>Create Account</button></Link>
-                            <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md text-white'>Sign In</button></Link>
-                        </>
-                    ) : (
-                        <button onClick={()=>signOut({
-                            redirect:true,
-                            callbackUrl: `${window.location.origin}/`
-                        })} className='bg-signinBtn p-2 rounded-md text-white' >Sign Out</button>
-                    )}      
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
+                <SignedOut>
+                    <SignUpButton mode='modal' >
+                        <button className='bg-signupBtn p-2 rounded-md text-white'>Create Account</button>
+                    </SignUpButton>
+                    <SignInButton mode='modal' >
+                        <button className='bg-signinBtn p-2 rounded-md text-white'>Sign In</button>
+                    </SignInButton>
+                </SignedOut>
+                        
                 </div>
                 
                 <div className='md:hidden sm:flex'>
@@ -92,31 +100,28 @@ const Navbar = () => {
                     {navLinks.map((link) => {
                         return <Link className='hover:border-b-2 hover:border-black dark:hover:border-white ' href={link.link} key={link.link}>{link.name}</Link>
                     })}
-                    {session?.user && (
+                    <SignedIn>
                         <div className='flex flex-col items-center justify-center'>
                             <Link href='/mylearning' className='hover:border-b-2 hover:border-black dark:hover:border-white ' >My Learning</Link>
                             <Link href='/mycourses' className='hover:border-b-2 hover:border-black dark:hover:border-white ' >My Courses</Link>
                         </div>
-                        
-                    ) }
+                    </SignedIn>
                     </div>
-                    {!session?.user ? (
+                    <SignedOut>
                         <div className='mt-3 px-5 flex items-center justify-center gap-3' >
-                            <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md text-white'>Create Account</button></Link>
-                            <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md text-white'>Sign In</button></Link>
+                            <SignUpButton mode='modal' >
+                                <button className='bg-signupBtn p-2 rounded-md text-white'>Create Account</button>
+                            </SignUpButton>
+                            <SignInButton mode='modal' >
+                                <button className='bg-signinBtn p-2 rounded-md text-white'>Sign In</button>
+                            </SignInButton>
                         </div>
-                    ) : (
+                    </SignedOut>
+                    <SignedIn>
                         <div className='flex items-center justify-center mt-5' >
-                            <button onClick={()=>signOut({
-                            redirect:true,
-                            callbackUrl: `${window.location.origin}/`
-                        })} className='bg-signinBtn p-2 rounded-md text-white' >Sign Out</button>
+                            <UserButton />
                         </div>
-                    )} 
-                    {/* <div className='mt-3 px-5 flex items-center justify-center gap-3'>
-                        <Link href='/signup'><button className='bg-signupBtn p-2 rounded-md text-white'>Create Account</button></Link>
-                        <Link href='/signIn'><button className='bg-signinBtn p-2 rounded-md text-white'>Sign In</button></Link>
-                    </div> */}
+                    </SignedIn>
                     
                 </div>
             )}

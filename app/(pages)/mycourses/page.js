@@ -2,22 +2,25 @@
 import {DataTable} from './data-table';
 import {columns} from './columns'
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
 import axios from 'axios'
+import {useAuth} from '@clerk/nextjs'
 
 
 const Page = () => {
 
-    const {data:session,status} = useSession();
+    const {isLoaded, isSignedIn, userId} = useAuth();
+    const [user, setUser] = useState(null)
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (status === "authenticated" && session?.user?.id) {
+        if (isLoaded && userId) {
           // Fetch courses when user is authenticated and userId is available
-          const fetchCourses = async () =>  {
+          const fetchCourses = async (clerkId) =>  {
             try {
-              const response = await axios.post('/api/get-courses', {userId : session.user.id})
+              const getUserResponse = await axios.post('/api/get-user-by-clerkId', {clerkId});
+              const user = getUserResponse.data.user;
+              const response = await axios.post('/api/get-courses', {userId : user.id})
               // const result = await response.json();
               console.log(response.data)
     
@@ -33,10 +36,9 @@ const Page = () => {
               setLoading(false);
             }
           }
-    
-          fetchCourses();
+          fetchCourses(userId);
         }
-      }, [status, session]);
+      }, [isLoaded, userId]);
 
     return(
         <div className="container mx-auto p-10" >
@@ -45,7 +47,7 @@ const Page = () => {
                 <h3 className='text-xl' >{"Empower yourself through knowledge"}</h3>
             </div>
             <div className='mt-5' >
-                <DataTable columns={columns} data={courses} ></DataTable>
+                <DataTable columns={columns} data={courses} setCourses={setCourses} ></DataTable>
             </div>
         </div>
     )

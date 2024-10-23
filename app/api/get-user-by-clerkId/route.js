@@ -5,41 +5,39 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     // Extract the ID directly from req.body
-    const { id } = await req.json();
+    const { clerkId } = await req.json();
 
-    if (!id) {
+    if (!clerkId) {
       return new NextResponse(
-        JSON.stringify({ error: "Course ID is required" }),
+        JSON.stringify({ error: "Clerk ID is required" }),
         { status: 400 }
       );
     }
 
     // Fetch the course data from the database
-    const course = await db.course.findUnique({
-      where: { id: id },
-      include: {
-        sections: true,
-        quizQuestions: true,
-      },
+    const user = await db.user.findUnique({
+      where : {
+        clerkId: clerkId
+      }
     });
 
-    if (!course) {
+    if (!user) {
       return new NextResponse(
-        JSON.stringify({ error: "Course not found" }),
+        JSON.stringify({ error: "User not found" }),
         { status: 404 }
       );
     }
 
     // Return the course data as JSON
-    // console.log(course);
+    console.log(user);
     return new NextResponse(
-      JSON.stringify({ course: course }),
+      JSON.stringify({ user: user }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
-    console.error("Error fetching course:", error);
+    console.error("Error fetching user:", error);
     return new NextResponse(
-      JSON.stringify({ error: "Failed to fetch course" }),
+      JSON.stringify({ error: "Failed to fetch user" }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }

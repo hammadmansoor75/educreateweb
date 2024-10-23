@@ -1,13 +1,8 @@
 "use client"
-
-import { SessionProvider } from "next-auth/react";
+import {SnackbarProvider} from 'notistack'
 
 export default function MyLearningLayout({children}) {
     return (
-        <SessionProvider>
-            
-                {children}
-            
-        </SessionProvider>
+        <SnackbarProvider>{children}</SnackbarProvider>
     )
 }

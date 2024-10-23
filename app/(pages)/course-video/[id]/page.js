@@ -7,126 +7,177 @@ import { ClipLoader } from 'react-spinners';
 import {SnackbarProvider, useSnackbar} from 'notistack'
 import { Button } from 'flowbite-react';
 
-
 const CourseVideo = () => {
-    const [course,setCourse] = useState(null)
-    const [loading,setLoading] = useState(false);
+    const [course,setCourse] = useState(null) 
     const [courseVideo,setCourseVideo] = useState(null);
-    const [videoLoading,setVideoLoading] = useState(false);
+    const [scripts, setScripts] = useState(null)
+
     const {enqueueSnackbar} = useSnackbar();
+    const [videoExists, setVideoExists] = useState(false);
+
+    const [loading,setLoading] = useState(false);
+    const [videoLoading,setVideoLoading] = useState(false);
+    const [scriptLoading,setScriptLoading] = useState(false);
+
+    const [courseUpdatedAt, setCourseUpdatedAt] = useState(null);
+
+    const getCourseById = async (courseId) => {
+        try {
+            setLoading(true);
+            const response = await axios.post('/api/get-course', { id: courseId });
+            setCourse(response.data.course);
+            setCourseUpdatedAt(response.data.course.updatedAt);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const getCourseVideo = async (courseId) => {
+        try{
+            setLoading(true);
+            const response = await axios.post('/api/get-course-video', {courseId : courseId});
+
+            if(response.status === 200 && response.data.courseVideo){
+                const courseVideoId = response.data.courseVideo.id
+                const courseVideoCreatedAt = response.data.courseVideo.createdAt
+                console.log("Course Video Created At : ", courseVideoCreatedAt )
+                console.log("Course Updated At :" , courseUpdatedAt )
+                console.log("Greater: ", new Date (courseUpdatedAt) > new Date (courseVideoCreatedAt) )
+                if(new Date (courseUpdatedAt) > new Date (courseVideoCreatedAt)){
+                    console.log("Course Updated!")
+                    const deleteResponse = await axios.delete('/api/delete-course-video', {
+                        data: { courseVideoId },
+                    });
+                    setVideoExists(false);
+                }else{
+                    console.log("Course Not Updated!")
+                    setCourseVideo(response.data.courseVideo)
+                    setVideoExists(true)
+                }
+            }else{
+                setVideoExists(false);
+            }
+        }catch(error){
+            console.log("Error Getting the Video", error)
+        }finally{
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
-        if (typeof window !== 'undefined'){
-            const urlPath = window.location.pathname;
-            const idFromPath = urlPath.split("/").pop();
-
-            const getCourseById = async (courseId) => {
-                try {
-                    setLoading(true);
-                    const response = await axios.post('/api/get-course', { id: courseId });
-                    setCourse(response.data.course);
-                } catch (error) {
-                    console.log(error);
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            const getCourseVideo = async (courseId) => {
-                try{
-                    setLoading(true);
-                    const response = await axios.post('/api/get-course-video', {courseId : courseId});
-                    if(response.status ===200 && response.data.courseVideo){
-                        setCourseVideo(response.data.courseVideo)
+        const fetchCourseData = async () => {
+            if (typeof window !== 'undefined'){
+                const urlPath = window.location.pathname;
+                const idFromPath = urlPath.split("/").pop();
+    
+                if (idFromPath) {
+                    if(!course){
+                        await getCourseById(idFromPath);
                     }
-                }catch(error){
-                    console.log("Error Getting the Video", error)
-                }finally{
-                    setLoading(false)
+                    await getCourseVideo(idFromPath);
+    
+                    if (videoExists) {
+                        console.log("Video Already Exists: ", courseVideo);
+                    } else {
+                        console.log("Generating Scripts")
+                        const generatedScripts = await generateScripts();
+                    }
                 }
-            }
-
-            if (idFromPath) {
-                getCourseById(idFromPath);
-                getCourseVideo(idFromPath);
             }
         }
+
+        fetchCourseData();
         
-    }, []);
+    }, [course]);
 
+    const handleScriptChange = (index, newScript) => {
+        const updatedScripts = scripts.map((script, i) =>
+          i === index ? { ...script, script: newScript } : script
+        );
+        setScripts(updatedScripts);
+    };
 
-    useEffect(() => {
-        const saveCourseVideo = async (courseId, arrayOfScripts, videoUrl) => {
+    const generateScripts = async () => {
+        if(course){
             try{
-                const data = {
-                    courseId : courseId,
-                    scripts : arrayOfScripts,
-                    videoUrl : videoUrl
-                }
-                console.log("Data before sending:", data);
-                const response  = await axios.post('/api/save-course-video', data);
-                console.log(response);
-                if(response.status === 200){
-                    setCourseVideo(response.data.data)
-                    console.log(courseVideo);
-                }
+                setScriptLoading(true)
+                const scriptsResponse = await axios.post('/api/generate-scripts', {course : course})
+                const responseScripts = scriptsResponse.data.data;
+                setScripts(responseScripts)
             }catch(error){
-                console.log(error)
-            }
-        }
-
-
-        const generateVideo = async () => {
-            try{
-                setVideoLoading(true)
-                if(course){
-                    const videoCreation = await axios.post('http://127.0.0.1:8000/create-video',
-                        course,{
-                          headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        }
-                    );
-                    console.log("Video Creation API Response: ", videoCreation)
-                    if(videoCreation.status === 200){
-                        console.log("Inside the if statement");
-                        console.log("Video Url: ", videoCreation.data.video_url)
-                        console.log("Scripts: ", videoCreation.data.scripts);
-                        
-                        const orderedSections = course.sections.map((section) => section.sectionTitle)
-                        orderedSections.unshift("Introduction")
-                        console.log("Ordered Sections: ", orderedSections)
-                        const arrayOfScripts = orderedSections.map(key => videoCreation.data.scripts[key]);
-                        console.log("Array of Scripts: ", arrayOfScripts)
-                        // const videoInformationObj = {
-                        //     courseId : course.id,
-                        //     scripts : arrayOfScripts,
-                        //     videoUrl : videoCreation.data.video_url
-                        // }
-                        await saveCourseVideo(course.id , arrayOfScripts , videoCreation.data.video_url);
-                    }else{
-                        console.log("Error: ", videoCreation)
-                    }
-                    
-                    return videoCreation;
-                }
-            }catch(error){
-                console.log("Error Generating The Video: ", error)
-                enqueueSnackbar('Something went wrong while generating the video! Please try again.', { variant: 'error' });
+                console.log("Error Generating The Scripts: ", error)
+                enqueueSnackbar('Something went wrong while generating the scripts! Please try again.', { variant: 'error' });
             }finally{
-                setVideoLoading(false);
-            }            
+                setScriptLoading(false)
+            }
+        }else{
+            console.log("Course is not available")
         }
+    }
 
-        
-        if (courseVideo) {
-            console.log("Video Already Exists: ", courseVideo);
-        } else {
-            const generateVideoResponse = generateVideo();
-            console.log("Generate Video Response: ", generateVideoResponse)
+    const saveCourseVideo = async (courseId, arrayOfScripts, videoUrl) => {
+        try{
+            const data = {
+                courseId : courseId,
+                scripts : arrayOfScripts,
+                videoUrl : videoUrl
+            }
+            console.log("Data before sending:", data);
+            const response  = await axios.post('/api/save-course-video', data);
+            console.log(response);
+            if(response.status === 200){
+                setCourseVideo(response.data.data)
+                console.log(courseVideo);
+            }
+        }catch(error){
+            console.log(error)
         }
+    }
 
-    }, [courseVideo,course]);
+
+
+    const generateVideoAPI = async() => {
+        try{
+            setVideoExists(true)
+            setVideoLoading(true)
+            setCourseVideo(null)
+            
+            const videoCreation = await axios.post('http://127.0.0.1:8000/create-video',
+                {course, scripts},{
+                  headers: {
+                    'Content-Type': 'application/json',
+                },
+                }
+            );
+            console.log("Video Creation API Response: ", videoCreation)
+            if(videoCreation.status === 200){
+                console.log("Inside the if statement");
+                console.log("Video Url: ", videoCreation.data.video_url)
+                console.log("Scripts: ", videoCreation.data.scripts);
+                
+                const arrayOfScripts = videoCreation.data.scripts.map((script) => {return script.script})
+                console.log('ArrayOfScripts: ', arrayOfScripts)
+                await saveCourseVideo(course.id , arrayOfScripts , videoCreation.data.video_url);
+                
+            }else{
+                console.log("Error: ", videoCreation)
+            }
+
+        }catch(error){
+            console.log("Error : ", error);
+        }finally{
+            setVideoLoading(false)
+        }
+    } 
+
+
+    const handleSave = async () => {
+        console.log("Saved Scripts:", scripts);
+        const generateVideo = await generateVideoAPI();
+        // You can send the updated `scripts` to an API here
+      };
 
     if (loading) {
         return <div className="flex items-center justify-center h-screen" >
@@ -145,7 +196,29 @@ const CourseVideo = () => {
                 </div>
             </section>
 
-            <section className="bg-white dark:bg-black mb-10" >
+            <section className={!videoExists ? 'bg-white py-10 px-10 dark:bg-black' : 'hidden'} >
+                <form className='w-full flex items-center justify-center flex-col border-2 border-blue-700 rounded-lg p-4' >
+                    <h1 className='text-3xl font-medium text-black dark:text-white' >Edit & Save the following scripts to continue</h1>
+                    {scriptLoading ? <div className='mt-10 flex items-center justify-center gap-3 ' >
+                        <ClipLoader size={30} />
+                        <h2>Generating your scripts!</h2>
+                    </div> : <><div className="flex flex-col gap-2 items-start justify-start mt-5 w-full" >
+                        {scripts?.map((script,index) => (
+                            <div key={script.sectionTitle} >
+                                <h1 className='text-lg font-medium'>{script.sectionTitle}</h1>
+                                <textarea className='mt-2 w-[500px] h-96 p-4 border border-blue-900 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-md sm:h-80 md:h-[500px]' onChange={(e) => handleScriptChange(index, e.target.value) }  value={script.script} />
+                            </div>
+                        ))}
+                    </div>
+                    <div className='w-full flex items-center justify-end gap-5' >
+                        <Button className="text-white text-lg bg-green-500" variant="primary" onClick={generateScripts} >Generate New</Button>
+                        <Button className='text-white text-lg bg-blue-600' variant="primary" onClick={handleSave} >Save Scripts</Button>
+                        
+                    </div></>}
+                </form>
+            </section>
+
+            <section className={videoExists ? 'bg-white py-10 px-10 dark:bg-black' : 'hidden'} >
                 <div className='flex items-center justify-center' >
                     {videoLoading ? <div className='flex items-center justify-center flex-col' >
                         <ClipLoader size={30} />
@@ -162,7 +235,7 @@ const CourseVideo = () => {
             </section>
 
 
-            <section className='py-10 bg-white dark:bg-black md:px-10 px-5' >
+            <section className={videoExists ? 'bg-white py-10 px-10 dark:bg-black' : 'hidden'} >
                 <div className="flex items-center justify-center flex-col gap-2" >
                     {courseVideo?.scripts.map((script,index) => (
                         <div key={index} className='mt-4' >
@@ -173,7 +246,7 @@ const CourseVideo = () => {
                 </div>
             </section>
 
-            <section className="py-10 bg-white dark:bg-black">
+            <section className={videoExists ? 'bg-white py-10 px-10 dark:bg-black' : 'hidden'}>
                 <div className="p-6 text-center mt-8">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                         Thank You for Completing the Course!

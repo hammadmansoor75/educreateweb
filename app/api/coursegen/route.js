@@ -1,9 +1,6 @@
 import { generateCourse } from "@/lib/courseGeneration/generation";
 import * as z from 'zod'
 import { db } from "@/app/helpers/server-helper";
-import { getServerSideSession } from "@/app/helpers/auth";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/options";
 
 const formSchema = z.object({
     courseTitle : z.string().min(10, "Course Title is required"),
@@ -15,6 +12,8 @@ const formSchema = z.object({
     styleTone : z.string(),
     file: z.any().optional(),
 })
+
+
 
 export async function POST(req,res) {
      
@@ -30,6 +29,7 @@ export async function POST(req,res) {
         const body = await req.json()
         const {courseTitle,courseSubtitle,learningOptions,courseLength,wordiness,courseLevel,styleTone,file,userId} = body;
         console.log('User Id: ', userId)
+        // const text = extractTextFromPDF(file)
         const formData = {
             courseTitle : courseTitle,
             courseSubtitle : courseSubtitle,

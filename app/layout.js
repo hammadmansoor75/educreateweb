@@ -1,14 +1,11 @@
 import { Inter } from "next/font/google";
 import {Open_Sans} from 'next/font/google'
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 const sans = Open_Sans({subsets:["latin"]})
-import {useNavigation} from 'next/navigation'
-import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/toaster";
 import {CourseProvider} from '@/providers/CourseProvider'
+import {ClerkProvider} from '@clerk/nextjs'
 
 export const metadata = {
   title: "Educreate ai",
@@ -20,12 +17,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={sans.className}>
-        <CourseProvider>
-        <main>
-          {children}
-        </main>
-        <Toaster/>
-        </CourseProvider>
+        <ClerkProvider>
+          <CourseProvider>
+          <main>
+            {children}
+          </main>
+          <Toaster/>
+          </CourseProvider>
+        </ClerkProvider>
         
       </body>
     </html>

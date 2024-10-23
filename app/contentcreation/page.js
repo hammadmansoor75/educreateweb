@@ -7,7 +7,6 @@ import { BsQuestionSquareFill } from "react-icons/bs";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import ContentCreationSlide from '@/components/ContentCreationSlide';
 import QuizQuestion from '@/components/QuizQuestion';
-import { useDataContext } from '@/lib/DataContext';
 import LearningObjectives from './LearningObjectives';
 import Course from './Course';
 import { useCourse } from '@/providers/CourseProvider';
@@ -16,6 +15,9 @@ import html2canvas from 'html2canvas'
 import axios from 'axios'
 import {useSnackbar} from 'notistack'
 import { ClipLoader } from 'react-spinners';
+import { Button } from "@/components/ui/button"
+import AddQuestionForm from './AddQuestionForm';
+
 
 
 const Page = () => {
@@ -24,8 +26,30 @@ const Page = () => {
   const {enqueueSnackbar} = useSnackbar();
   console.log( "Course: ",course);
   const [loading,setLoading] = useState(false)
+  const [allImagesUpload,setAllImagesUpload] = useState(false)
 
-  
+  useEffect(() => {
+    if (allImagesUpload) {
+      // Once all images are uploaded and course is updated, call saveCourse
+      saveCourse()
+        .then((saveResponse) => {
+          console.log("Save Response: ", saveResponse);
+          if (saveResponse.courseId) {
+            enqueueSnackbar('Course Created Successfully!', { variant: 'success' });
+            router.push('/mycourses');
+          } else {
+            enqueueSnackbar(`${saveResponse.problem} Please try again.`, { variant: 'error' });
+          }
+        })
+        .catch((error) => {
+          console.log('Error:', error);
+          enqueueSnackbar('Something went wrong! Please try again.', { variant: 'error' });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  },[allImagesUpload])
 
   const handleElearning = async () => {
     try{
@@ -35,23 +59,15 @@ const Page = () => {
           await captureAndUpload(index);
         })
       );
-      const saveResponse = await saveCourse();
-      console.log("Save Response: ", saveResponse)
-      if(saveResponse.courseId){
-        enqueueSnackbar('Course Created Successfully!', { variant: 'success' });
-        router.push('/mycourses')
-      }else{
-        enqueueSnackbar(`${saveResponse.problem} Please try again.`, { variant: 'error' });
-      }
+      
 
+      setAllImagesUpload(true);
       
       // router.push('/mycourses')
       
     }catch(error){
       console.log('Error:', error);
       enqueueSnackbar('Something went wrong! Please try again.', { variant: 'error' });
-      
-    }finally{
       setLoading(false)
     }
   }
@@ -170,6 +186,9 @@ const Page = () => {
               <QuizQuestion key={index} qno={index+1} question={question} />
             ))}
             
+            <div>
+              <AddQuestionForm />
+            </div>
 
             <div className='flex items-center justify-end' >
               <button onClick={handleElearning} disabled={loading} className='bg-indigo-700 text-white shadow-lg rounded-full py-2 px-4 text-sm' >{loading ? 'Creating eLearning...' : 'Create eLearning'}</button>

@@ -15,11 +15,11 @@ datasource db {
 
 model User {
   id String @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId String @unique
   firstName String
   lastName String
   email String @unique
-  hashedPassword String?
-  isVerified Boolean?
+  isVerified Boolean @default(false)
   priceId String?
   pricingPlan String @default("Basic")
   stripeCustomerId String?
@@ -73,7 +73,7 @@ model QuizQuestion {
 
 model CourseVideo {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  courseId String
+  courseId String @unique
   scripts String[]
   videoUrl String
   createdAt DateTime @default(now())

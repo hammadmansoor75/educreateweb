@@ -1,37 +1,77 @@
 "use client"
 import React,{useEffect, useState} from 'react'
 import {PiGraduationCap} from 'react-icons/pi'
-import { FaShoppingCart } from "react-icons/fa";
 import { CiImageOn } from "react-icons/ci";
 import * as z from 'zod'
 import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
-import { useDataContext } from '@/lib/DataContext';
 import { useRouter } from 'next/navigation';
-import {useSession} from 'next-auth/react'
 import {ClipLoader} from 'react-spinners'
 import { useCourse } from '@/providers/CourseProvider';
 import { Button } from '@/components/ui/button';
 import { FaBagShopping } from "react-icons/fa6";
-
+import { getDocument } from 'pdfjs-dist/legacy/build/pdf';
+import {useAuth} from '@clerk/nextjs'
+import axios from 'axios'
+import {useSnackbar} from 'notistack'
 
 const Page = () => {
     const router = useRouter();
-    const {data:session,status} = useSession();
-    useEffect(()=> {
-        if (status === 'loading') {
+    const {isLoaded, isSignedIn, userId} = useAuth();
+    const [user,setUser] = useState(null)
+    const {enqueueSnackbar} = useSnackbar();
+    
+    async function extractTextFromPDF(file) {
+    if (!file) {
+        console.error("No file provided");
+        return "";
+    }
+
+    try {
+        const pdfBuffer = await file.arrayBuffer();
+        const pdfDoc = await getDocument({ data: pdfBuffer }).promise;
+        console.log("PDF DOC: ", pdfDoc)
+        let text = '';
+
+        for (let i = 0; i < pdfDoc.numPages; i++) {
+            const page = await pdfDoc.getPage(i); // Get each page
+            console.log("Page: ", page)
+            const textContent = await page.getTextContent(); // Extract text content
+            const pageText = textContent.items.map(item => item.str).join(' '); // Combine text items into a single string
+      
+            text += `Page ${i}: ${pageText}\n`; // Append to the final text output 
+        }
+
+        console.log("Extracted Text:", text);
+        return text;
+    } catch (error) {
+        console.error("Error extracting text from PDF:", error);
+        return "";
+    }
+    }
+
+    useEffect( ()=> {
+        if (isLoaded === 'loading') {
             // Wait until the session is loading
             return;
         }
-        if(!session){
+        if(!isSignedIn){
             console.log("Redirecting to signIn because no session found");
-            console.log("Session",session)
+            // console.log("Session",session)
             
         }else{
-            // console.log(session);
-            console.log('User Id', session.user.id)
+            const fetchUser = async (clerkId) => {
+                const response = await axios.post('/api/get-user-by-clerkId', {clerkId})
+                if(response.status === 200){
+                    setUser(response.data.user)
+                    console.log(response.data.user);
+                }
+            }
+            fetchUser(userId); 
+            console.log("User: ", user)
         }
-    },[session,router,status])
+            
+    },[isLoaded,router,isSignedIn])
     
     const {updateCourse} = useCourse();
     const [loading,setLoading] = useState(false);
@@ -53,6 +93,9 @@ const Page = () => {
     const handleFormSubmission = async (data) => {
         try {
             setLoading(true);
+            const file = data.file?.[0]; // Use the first uploaded file
+            const fileText = file ? await extractTextFromPDF(file) : "";
+            console.log("File text: ", fileText)
             const response = await fetch('/api/coursegen', {
                 method: 'POST',
                 headers: {
@@ -67,19 +110,20 @@ const Page = () => {
                     courseLevel : data.courseLevel,
                     styleTone : data.styleTone,
                     file : data.file,
-                    userId : session.user.id
+                    userId : user?.id
                 }),
             });
 
             if(!response.ok){
                 const errorData = await response.json();
                 console.log("API Error: ", errorData);
+                enqueueSnackbar('Something went wrong while generating a course! Please try again!', { variant: 'error' });
                 setLoading(false);
             }else{
                 const responseData = await response.json();
                 // console.log("Data Recieved: ", responseData)
                 const {courseTitle, courseSubtitle, sections,quizQuestions} = responseData.data;
-                const createdBy = session.user.id;
+                const createdBy = user?.id;
                 const courseToUpdate = {
                     courseTitle,
                     courseSubtitle,
@@ -89,6 +133,7 @@ const Page = () => {
                 }
                 updateCourse(courseToUpdate);
                 console.log(responseData);
+                enqueueSnackbar('Course Generated Successfully! Redirecting to contentcreation page!', { variant: 'success' });
                 router.push(`/contentcreation`);
                 setLoading(false);
             }

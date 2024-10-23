@@ -11,9 +11,9 @@ const CourseVideoSchema = z.object({
 export async function POST(req) {
     try{
         const data = await req.json();
-        console.log("Recieved Data: ", data)
+        // console.log("Recieved Data: ", data)
         const validatedData = CourseVideoSchema.parse(data);
-        console.log(validatedData)
+        // console.log(validatedData)
         const courseVideo = await db.courseVideo.create({
             data : {
                 courseId : validatedData.courseId,

@@ -50,6 +50,7 @@ export const CourseProvider = ({children}) => {
         }
     },[course])
 
+
     const updateCourse = (updatedCourse) => {
         try{
             const validatedCourse = CourseSchema.parse(updatedCourse);
@@ -222,8 +223,64 @@ export const CourseProvider = ({children}) => {
         }
     }
 
+    const addNewQuestion = async (newQuestion) => {
+        setCourse((prevCourse) => {
+            if(!prevCourse) return prevCourse;
+
+            const updatedQuizQuestions = [...prevCourse.quizQuestions, newQuestion] 
+
+            return {
+                ...prevCourse,
+                quizQuestions : updatedQuizQuestions
+            }
+        })
+    }
+
+    const editQuizQuestion = (qno, updatedQuestion) => {
+        setCourse((prevCourse) => {
+            if (!prevCourse) return prevCourse;
+
+            // Use optional chaining to avoid errors if quizQuestions is undefined
+            const updatedQuizQuestions = prevCourse.quizQuestions?.map((question, index) => {
+                return index === qno ? { ...question, ...updatedQuestion } : question;
+            }) || []; // Default to an empty array if undefined
+
+            return {
+                ...prevCourse,
+                quizQuestions: updatedQuizQuestions,
+            };
+        });
+    };
+
+
+    const deleteQuizQuestion = (qno) => {
+        setCourse((prevCourse) => {
+            if (!prevCourse) return prevCourse;
+    
+            const indexToDelete = qno - 1; // Adjust qno to match the zero-based index
+            console.log("Attempting to delete question number: ", qno);  // Debugging log
+            console.log("Previous Quiz Questions: ", prevCourse.quizQuestions);  // Log current questions
+    
+            // Ensure indexToDelete is within the bounds of the array
+            if (indexToDelete < 0 || indexToDelete >= prevCourse.quizQuestions.length) {
+                console.warn("Invalid question number:", qno);
+                return prevCourse; // Return previous state if index is invalid
+            }
+    
+            const updatedQuizQuestions = prevCourse.quizQuestions.filter((_, index) => index !== indexToDelete);
+    
+            console.log("Updated Quiz Questions: ", updatedQuizQuestions);  // Debugging log
+    
+            return {
+                ...prevCourse,
+                quizQuestions: updatedQuizQuestions,
+            };
+        });
+    };
+    
+
     return(
-        <CourseContext.Provider value={{course,loading,initializeEditCourse,updateRndComponentImage, editCourseInDb , updateCourse, getCourse, updateCourseImageUrl,updateSectionImages,updateSectionPositionAndSize, updateSectionContent,saveCourse}} >
+        <CourseContext.Provider value={{course,loading,addNewQuestion,editQuizQuestion,deleteQuizQuestion,initializeEditCourse,updateRndComponentImage, editCourseInDb , updateCourse, getCourse, updateCourseImageUrl,updateSectionImages,updateSectionPositionAndSize, updateSectionContent,saveCourse}} >
             {children}
         </CourseContext.Provider>
     )

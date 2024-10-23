@@ -16,6 +16,7 @@ import html2canvas from 'html2canvas'
 import {useSnackbar} from 'notistack'
 import {ClipLoader} from 'react-spinners'
 import {useRouter} from 'next/navigation'
+import AddQuestionForm from "@/app/contentcreation/AddQuestionForm";
 
 const EditCourse = () => {
     // const [course,setCourse] = useState();
@@ -65,13 +66,13 @@ const EditCourse = () => {
       }
 
       
-      const handleCourseUpdation = () => {
+      const handleCourseUpdation = async () => {
         try{
             setLoadingState(true);
             course.sections.map(async (section,index) => {
               await captureAndUpload(index)
             })
-            editCourseInDb();
+            await editCourseInDb();
             enqueueSnackbar('Course Updated Successfully!', { variant: 'success' });
             router.push('/mycourses')
           }catch(error){
@@ -173,6 +174,9 @@ const EditCourse = () => {
                     <QuizQuestion key={index} qno={index+1} question={question} />
                     ))}
                     
+                    <div>
+                        <AddQuestionForm />
+                    </div>
 
                     <div className='flex items-center justify-end' >
                     <button onClick={handleCourseUpdation} disabled={loadingState} className='bg-indigo-700 text-white shadow-lg rounded-full py-2 px-4 text-sm' >{loadingState ? 'Updating' : 'Update elearning'} </button>

@@ -6,6 +6,11 @@ import Link from 'next/link';
 import { ClipLoader } from 'react-spinners';
 import {SnackbarProvider, useSnackbar} from 'notistack'
 import { Button } from 'flowbite-react';
+import { io } from 'socket.io-client'
+
+const socket = io('http://127.0.0.1:8000', {
+    transports: ['websocket'], // Ensure to use the websocket transport
+});
 
 const CourseVideo = () => {
     const [course,setCourse] = useState(null) 
@@ -20,6 +25,7 @@ const CourseVideo = () => {
     const [scriptLoading,setScriptLoading] = useState(false);
 
     const [courseUpdatedAt, setCourseUpdatedAt] = useState(null);
+    const [originalCourseId,setOriginalCourseId] = useState(null);
 
     const getCourseById = async (courseId) => {
         try {
@@ -73,6 +79,7 @@ const CourseVideo = () => {
                 const idFromPath = urlPath.split("/").pop();
     
                 if (idFromPath) {
+                    setOriginalCourseId(idFromPath)
                     if(!course){
                         await getCourseById(idFromPath);
                     }
@@ -117,65 +124,49 @@ const CourseVideo = () => {
         }
     }
 
-    const saveCourseVideo = async (courseId, arrayOfScripts, videoUrl) => {
-        try{
-            const data = {
-                courseId : courseId,
-                scripts : arrayOfScripts,
-                videoUrl : videoUrl
-            }
-            console.log("Data before sending:", data);
-            const response  = await axios.post('/api/save-course-video', data);
-            console.log(response);
-            if(response.status === 200){
-                setCourseVideo(response.data.data)
-                console.log(courseVideo);
-            }
-        }catch(error){
-            console.log(error)
-        }
-    }
 
-
-
-    const generateVideoAPI = async() => {
+    const generateVideoSocket = async () => {
         try{
             setVideoExists(true)
             setVideoLoading(true)
             setCourseVideo(null)
-            
-            const videoCreation = await axios.post('http://127.0.0.1:8000/create-video',
-                {course, scripts},{
-                  headers: {
-                    'Content-Type': 'application/json',
-                },
-                }
-            );
-            console.log("Video Creation API Response: ", videoCreation)
-            if(videoCreation.status === 200){
-                console.log("Inside the if statement");
-                console.log("Video Url: ", videoCreation.data.video_url)
-                console.log("Scripts: ", videoCreation.data.scripts);
-                
-                const arrayOfScripts = videoCreation.data.scripts.map((script) => {return script.script})
-                console.log('ArrayOfScripts: ', arrayOfScripts)
-                await saveCourseVideo(course.id , arrayOfScripts , videoCreation.data.video_url);
-                
-            }else{
-                console.log("Error: ", videoCreation)
-            }
-
+            socket.emit('create_video', {course,scripts});
         }catch(error){
-            console.log("Error : ", error);
-        }finally{
-            setVideoLoading(false)
+            console.log("Error Emitting video creation" , error);
         }
-    } 
+    }
+
+
+    useEffect(() => {
+        const handleVideoResponse = async (response) => {
+            setVideoLoading(false)
+            if (response.error) {
+                enqueueSnackbar(response.error, { variant: 'error' });
+            } else {
+                enqueueSnackbar(response.message, { variant: 'success' });
+                if(originalCourseId){
+                    await getCourseVideo(originalCourseId)
+                }else{
+                    if(typeof window !== 'undefined'){
+                        const urlPath = window.location.pathname;
+                        const idFromPath = urlPath.split("/").pop();
+                        await getCourseVideo(idFromPath)
+                    }
+                }
+            }
+        };
+
+        socket.on('video_response', handleVideoResponse);
+
+        return () => {
+            socket.off('video_response', handleVideoResponse); // Clean up the listener
+        };
+    }, []);
 
 
     const handleSave = async () => {
         console.log("Saved Scripts:", scripts);
-        const generateVideo = await generateVideoAPI();
+        const generateVideo = generateVideoSocket()
         // You can send the updated `scripts` to an API here
       };
 

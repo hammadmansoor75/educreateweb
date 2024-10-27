@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(req){
     try{
         const { courseId } = await req.json();
+        console.log("Course Id in GET COURSE VIDEO: ", courseId)
         if (!courseId) {
             return new NextResponse(
               JSON.stringify({ error: "Course ID is required" }),

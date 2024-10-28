@@ -137,31 +137,33 @@ const CourseVideo = () => {
     }
 
 
-    useEffect(() => {
-        const handleVideoResponse = async (response) => {
-            setVideoLoading(false)
-            if (response.error) {
-                enqueueSnackbar(response.error, { variant: 'error' });
-            } else {
-                enqueueSnackbar(response.message, { variant: 'success' });
-                if(originalCourseId){
-                    await getCourseVideo(originalCourseId)
-                }else{
-                    if(typeof window !== 'undefined'){
-                        const urlPath = window.location.pathname;
-                        const idFromPath = urlPath.split("/").pop();
-                        await getCourseVideo(idFromPath)
-                    }
-                }
-            }
-        };
+    // useEffect(() => {
+    //     const handleVideoResponse = async (response) => {
+    //         setVideoLoading(false)
+    //         if (response.error) {
+    //             enqueueSnackbar(response.error, { variant: 'error' });
+    //         } else {
+    //             enqueueSnackbar(response.message, { variant: 'success' });
+    //             if(originalCourseId){
+    //                 await getCourseVideo(originalCourseId)
+    //             }else{
+    //                 if(typeof window !== 'undefined'){
+    //                     const urlPath = window.location.pathname;
+    //                     const idFromPath = urlPath.split("/").pop();
+    //                     await getCourseVideo(idFromPath)
+    //                 }
+    //             }
+    //         }
+    //     };
 
-        socket.on('video_response', handleVideoResponse);
+    //     socket.on('video_response', handleVideoResponse);
 
-        return () => {
-            socket.off('video_response', handleVideoResponse); // Clean up the listener
-        };
-    }, []);
+    //     return () => {
+    //         socket.off('video_response', handleVideoResponse); // Clean up the listener
+    //     };
+    // }, []);
+
+
 
 
     const handleSave = async () => {
@@ -169,6 +171,42 @@ const CourseVideo = () => {
         const generateVideo = generateVideoSocket()
         // You can send the updated `scripts` to an API here
       };
+
+    // Video POLLING CODE
+
+    const [videoExistsPolling,setVideoExistsPolling] = useState(false);
+    const getCourseVideoPolling = async (courseId) => {
+        const response = await axios.post('/api/get-course-video', {courseId : courseId});
+        if(response.status === 200 && response.data.courseVideo){
+            setCourseVideo(response.data.courseVideo)
+            setVideoExists(true)
+            setVideoLoading(false)
+            setVideoExistsPolling(true)
+        }
+    }
+
+    const pollForVideo = (courseId) => {
+        const intervalId = setInterval(async () => {
+            if(!videoExists){
+                await getCourseVideoPolling(courseId);
+                if(videoExistsPolling){
+                    
+                    clearInterval(intervalId);
+                    console.log("Video found and stopped polling")
+                }
+            }
+        }, 120000);
+
+        return () => clearInterval(intervalId);
+    }
+
+    useEffect(() => {
+        if(typeof window !== 'undefined'){
+            const urlPath = window.location.pathname;
+            const idFromPath = urlPath.split("/").pop();
+            pollForVideo(idFromPath)
+        }
+    }, [videoExists])
 
     if (loading) {
         return <div className="flex items-center justify-center h-screen" >

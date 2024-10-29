@@ -51,6 +51,10 @@ export function DataTable({ columns, data, setCourses }) {
     const handleVideo = async (courseId) => {
       router.push(`/course-video/${courseId}`)
     }
+
+    const handleVideoUpload = async (courseId) => {
+      router.push(`/course-video-upload/${courseId}`)
+    }
     const [deleteLoading,setDeleteLoading] = useState(false)
     const handleDelete = async (courseId) => {
         try {
@@ -103,6 +107,7 @@ export function DataTable({ columns, data, setCourses }) {
             <TableHead>Delete</TableHead>
             <TableHead>Preview</TableHead>
             <TableHead>Video</TableHead>
+            <TableHead>Video Upload</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -152,6 +157,14 @@ export function DataTable({ columns, data, setCourses }) {
                     onClick={() => handleVideo(row.original.courseId)} // Pass course ID to handleEdit
                   >
                     <CiVideoOn size={20} />
+                  </button>
+                </TableCell>
+                <TableCell>
+                  <button
+                    className="text-white bg-blue-500 hover:bg-white hover:border rounded-xl hover:text-black p-3"
+                    onClick={() => handleVideoUpload(row.original.courseId)} // Pass course ID to handleEdit
+                  >
+                    Upload Video
                   </button>
                 </TableCell>
               </TableRow>

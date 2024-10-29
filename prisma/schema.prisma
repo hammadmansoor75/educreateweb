@@ -74,7 +74,7 @@ model QuizQuestion {
 model CourseVideo {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   courseId String @unique
-  scripts String[]
+  scripts String[] @default([]) 
   videoUrl String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

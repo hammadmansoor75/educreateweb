@@ -82,7 +82,7 @@ const CourseVideoUpload = () => {
                 if(courseVideoExists.status === 200 && courseVideoExists.data.courseVideo){
                     const deleteResponse = await axios.delete('/api/delete-course-video-with-courseId', {
                         data: {courseId},
-                    });
+                    }); 
                 }
                 const videoUrl = response.data.secure_url
                 console.log("Video Uploaded: ", videoUrl)

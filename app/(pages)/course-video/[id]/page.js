@@ -174,6 +174,7 @@ const CourseVideo = () => {
 
     // Video POLLING CODE
 
+
     const [videoExistsPolling,setVideoExistsPolling] = useState(false);
     const getCourseVideoPolling = async (courseId) => {
         const response = await axios.post('/api/get-course-video', {courseId : courseId});
@@ -214,6 +215,22 @@ const CourseVideo = () => {
         </div>
     }
 
+    const handleDownload = async () => {
+        try {
+            const response = await fetch(courseVideo?.videoUrl, { mode: 'cors' });
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = course?.courseTitle || 'video.mp4';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error("Download failed", error);
+        }
+    };
 
 
     return (
@@ -256,9 +273,9 @@ const CourseVideo = () => {
                 </div>
 
                 <div className="flex md:flex-row sm:flex-col  items-center justify-center mt-5 gap-5" >
-                    <a herf={courseVideo?.videoUrl} download={course?.courseTitle} style={{ textDecoration: 'none' }} >
-                        <Button className='bg-blue-500 px-4 py-2 text-white rounded-lg text-lg font-semibold' >Download Video</Button>
-                    </a>
+                    {/* <a href={downloadUrl} onClick={handleDownload} download={course?.courseTitle} style={{ textDecoration: 'none' }} > */}
+                        <Button onClick={handleDownload} className='bg-blue-500 px-4 py-2 text-white rounded-lg text-lg font-semibold' >Download Video</Button>
+                    {/* </a> */}
                     <Link href={`/course-quiz/${course?.id}`} ><Button className='bg-green-500 px-4 py-2 text-white rounded-lg text-lg font-semibold' > Perform Quiz</Button></Link>
                 </div>
             </section>

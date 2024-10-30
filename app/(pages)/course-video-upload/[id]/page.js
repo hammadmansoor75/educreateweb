@@ -78,6 +78,12 @@ const CourseVideoUpload = () => {
                 },
             });
             if(response.status === 200){
+                const courseVideoExists = await axios.post('/api/get-course-video', {courseId : courseId});
+                if(courseVideoExists.status === 200 && courseVideoExists.data.courseVideo){
+                    const deleteResponse = await axios.delete('/api/delete-course-video-with-courseId', {
+                        data: {courseId},
+                    });
+                }
                 const videoUrl = response.data.secure_url
                 console.log("Video Uploaded: ", videoUrl)
                 const scripts = splitIntoEqualParts(videoScript,5);

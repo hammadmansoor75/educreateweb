@@ -44,9 +44,8 @@ const Testimonials = () => {
               Top Customer Feedback
             </h2>
 
-            <p className="mt-4 text-white">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas veritatis illo placeat
-              harum porro optio fugit a culpa sunt id!
+            <p className="mt-4 text-black dark:text-white">
+            Discover what our users are saying about their experience with EduCreate. Their success stories and testimonials reflect the impact our platform has on teaching and learning.
             </p>
 
             <div className="hidden lg:mt-8 lg:flex lg:gap-4">
@@ -118,18 +117,16 @@ const Testimonials = () => {
                     </div>
 
                     <div className="mt-4">
-                      <p className="text-2xl font-bold text-newBlue sm:text-3xl">Staying Alive</p>
+                      <p className="text-2xl font-bold text-newBlue sm:text-3xl">Transformative Experience</p>
 
                       <p className="mt-4 leading-relaxed text-gray-700 dark:text-white">
-                        No, Rose, they are not breathing. And they have no arms or legs … Where are
-                        they? You know what? If we come across somebody with no arms or legs, do we
-                        bother resuscitating them? I mean, what quality of life do we have there?
+                      EduCreate has revolutionized my teaching approach. The {`platform's`} intuitive design and extensive resources have allowed me to create engaging content that resonates with my students. {`I've`} seen a remarkable improvement in their enthusiasm for learning!
                       </p>
                     </div>
                   </div>
 
                   <footer className="mt-4 text-sm font-medium text-gray-700 dark:text-white sm:mt-6">
-                    &mdash; Michael Scott
+                    &mdash; Sarah Johnson, Educator
                   </footer>
                 </blockquote>
               </div>
@@ -156,16 +153,16 @@ const Testimonials = () => {
                     </div>
 
                     <div className="mt-4">
-                      <p className="text-2xl font-bold text-newBlue sm:text-3xl">Dwight Schrute Wisdom</p>
+                      <p className="text-2xl font-bold text-newBlue sm:text-3xl">Empowering Educators</p>
 
                       <p className="mt-4 leading-relaxed text-gray-700 dark:text-white">
-                        I am fast. To give you a reference point, I am somewhere between a snake and a mongoose... and a panther.
+                      Since I started using EduCreate, my ability to connect with students has skyrocketed. The tools available have made lesson planning a breeze, and my students are more engaged than ever. {`It's`} a game changer for any educator!
                       </p>
                     </div>
                   </div>
 
                   <footer className="mt-4 text-sm font-medium text-gray-700 dark:text-white sm:mt-6">
-                    &mdash; Dwight Schrute
+                    &mdash; David Thompson, High School Teacher
                   </footer>
                 </blockquote>
               </div>
@@ -192,16 +189,16 @@ const Testimonials = () => {
                     </div>
 
                     <div className="mt-4">
-                      <p className="text-2xl font-bold text-newBlue sm:text-3xl">Jims Jokes</p>
+                      <p className="text-2xl font-bold text-newBlue sm:text-3xl">Outstanding Support and Resources</p>
 
                       <p className="mt-4 leading-relaxed text-gray-700 dark:text-white">
-                        Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.
+                      EduCreate provides not just a platform, but a community of support. The resources available are top-notch, and the customer service team is always ready to help. I {`couldn't`} ask for a better partner in education!
                       </p>
                     </div>
                   </div>
 
                   <footer className="mt-4 text-sm font-medium text-gray-700 sm:mt-6 dark:text-white">
-                    &mdash; Jim Halpert
+                    &mdash; Jessica Lee, College Lecturer
                   </footer>
                 </blockquote>
               </div>

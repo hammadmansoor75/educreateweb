@@ -117,28 +117,28 @@ const CourseVideoUpload = () => {
 
     return (
         <section className='py-10 bg-white dark:bg-black px-10 md:px-20' >
-            <div className='border-2 rounded-xl border-blue-900 p-10 flex flex-col items-center justify-center gap-5' >
-                <h1 className='text-center text-5xl font-bold mb-10' >Upload Your Video</h1>
-                <div className='flex flex-col items-start justify-center gap-1 mt-3'>
-                    <label className='text-black dark:text-white'>Upload Video</label>
-                    <div className='bg-white text-black px-4 border-newBlue rounded-lg placeholder-black w-full md:w-full border md:min-h-52 py-4'>
+            <div className='border rounded-xl border-blue-700 p-10 flex flex-col items-center justify-center gap-5' >
+                <h1 className='text-center text-5xl font-semibold mb-10' >Upload Your Video</h1>
+                <div className='flex flex-col items-center justify-center gap-1 mt-3'>
+                    <label className='text-black dark:text-white text-xl font-medium mb-4'>Upload Video</label>
+                    <div className='bg-slate-50 dark:bg-gray-800 text-black px-4 border-black dark:border-white rounded-lg placeholder-black w-full md:w-1/2 border md:min-h-52 py-4'>
                         <div className='flex items-center justify-center gap-5'>
-                            <CiVideoOn className='hidden md:flex border border-newBlue rounded-lg' size={200} />
+                            <CiVideoOn color='black dark:white' className='dark:bg-white hidden p-5 md:flex border border-black dark:border-white rounded-lg' size={150} />
                             <div className='w-full md:w-1/2'>
-                                <p className=''>Upload a <strong>.video file (size limit of 50MB)</strong> in order to facilitate the students with your own personal video</p>
-                                <input type="file" className='mt-5' accept="video/*" onChange={handleFileChange} />
+                                <p className='text-black dark:text-white'>Upload a <strong>.video file </strong> in order to facilitate the students with your own personal video</p>
+                                <input type="file" className='mt-5 text-black dark:text-white' accept="video/*" onChange={handleFileChange} />
                             </div>
                         </div>    
                     </div>
                 </div>
 
-                <div className='flex flex-col items-start justify-center w-full gap-1 mt-3'>
-                    <label className='text-black dark:text-white'>Video Script</label>
-                    <textarea value={videoScript} onChange={handleScriptChange}  type='text' placeholder='Your course video scripts' className='bg-white text-black px-4 py-2 border-newBlue rounded-lg placeholder-black md:w-full w-full border md:min-h-52' />
+                <div className='flex flex-col items-center justify-center w-full gap-1 mt-10'>
+                    <label className='text-black dark:text-white text-xl mb-2 font-medium'>Video Script</label>
+                    <textarea value={videoScript} onChange={handleScriptChange}  type='text' placeholder='Your course video scripts' className='bg-white dark:bg-gray-800 text-black dark:text-white px-4 py-2 border-black dark:border-white rounded-lg placeholder-black dark:placeholder-white md:w-full w-full border md:min-h-52' />
                     
                 </div>
                 
-                <Button onClick={handleUpload}>{uploading ? <div className='flex items-center justify-center gap-2' ><span>Uploading</span><ClipLoader className='text-white' size={20}></ClipLoader></div> : 'Upload Video'}</Button>
+                <Button onClick={handleUpload}>{uploading ? <div className='flex items-center justify-center gap-2' ><span>Uploading</span><ClipLoader className='text-white' color='white dark:black' size={20}></ClipLoader></div> : 'Upload Video'}</Button>
             </div>
             
         </section>

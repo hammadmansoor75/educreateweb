@@ -43,7 +43,7 @@ const PreviewCourse = () => {
 
     if (loading) {
         return <div className="flex items-center justify-center h-screen" >
-            <ClipLoader size={50}  />
+            <ClipLoader color='black dark:white' size={50}  />
         </div>;
     }
 
@@ -178,13 +178,13 @@ const PreviewCourse = () => {
 
             <section className="py-10 bg-white dark:bg-black">
                 <div className="p-6 text-center mt-8">
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                    <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
                         Thank You for Completing the Course!
                     </h2>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg text-gray-600 dark:text-white">
                         We appreciate your time and effort in going through this journey. We hope you gained valuable insights and knowledge.
                     </p>
-                    <p className="text-lg text-gray-600 mt-2">
+                    <p className="text-lg text-gray-600 mt-2 dark:text-white">
                         Remember, learning is a continuous process, and we are excited to have been a part of yours.
                     </p>
                     <div className="mt-6 flex items-center justify-center gap-5">

@@ -18,10 +18,10 @@ const InstructorComponent = () => {
             transition = {{duration:1, ease:'easeInOut'}}
             className="w-full md:w-1/2">
               <h2 className="text-2xl text-black dark:text-white">10k+ Instructor created their success story with EduCreate AI</h2>
-              <p className="mt-3 text-black dark:text-white text-base">Nunc euismod sapien non felis eleifend porttitor. Maecenas dictum eros justo, id commodo ante laoreet nec. Phasellus aliquet, orci id pellentesque mollis.</p>
+              <p className="mt-3 text-black dark:text-white text-base">Join thousands of instructors who have transformed their teaching journey with EduCreate AI. Our platform empowers educators to design, create, and share impactful learning experiences.</p>
               <div className="mt-3 p-2 rounded-md">
                   <FcComments size={30} />
-                  <p className="mt-3 text-black dark:text-white text-base">Nulla sed malesuada augue. Morbi interdum vulputate imperdiet. Pellentesque ullamcorper auctor ante, egestas interdum quam facilisis commodo. Phasellus efficitur quis ex in consectetur. Mauris tristique suscipit metus, a molestie dui dapibus vel.</p>
+                  <p className="mt-3 text-black dark:text-white text-base">With EduCreate, you can effortlessly build courses that engage and inspire your students. Let us help you bring your educational vision to life!</p>
               </div>
               <div className="mt-4 flex items-center justify-start gap-2">
                   <button className="bg-gray-300 p-2 rounded-md"><FaArrowLeft/></button>

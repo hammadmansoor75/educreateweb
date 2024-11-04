@@ -39,16 +39,16 @@ const FAQItem = ({ question, answer }) => {
 const Faq = () => {
   const faqs = [
     {
-      question: "How secure is my insurance information?",
-      answer: "We prioritize the security of your insurance information. We use advanced encryption and strict data protection measures to ensure your data is safe and confidential.",
+      question: "What is EduCreate?",
+      answer: "EduCreate is an innovative online platform designed for educators and learners to create, share, and manage customized courses. Our user-friendly tools empower instructors to design engaging educational content, making learning more interactive and effective.",
     },
     {
-      question: "How can I customize my insurance coverage?",
-      answer: "Our insurance plans are customizable. You can tailor your coverage to meet your specific needs and budget.",
+      question: "How do I create a course on EduCreate?",
+      answer: "Creating a course on EduCreate is easy! Simply sign up for an account, navigate to the course creation section, and follow the guided prompts. You can add multimedia elements, quizzes, and interactive features to enrich your course and engage your students.",
     },
     {
-      question: "Is there a waiting period for insurance claims?",
-      answer: "There may be a waiting period for certain insurance claims, depending on the policy terms and conditions. Please refer to your policy documents for details.",
+      question: "Can I collaborate with other educators on EduCreate?",
+      answer: " Yes! EduCreate encourages collaboration among educators. You can invite colleagues to co-create courses, share resources, and provide feedback on each other’s work. This collaborative environment enhances the learning experience for both instructors and students.",
     },
   ];
 

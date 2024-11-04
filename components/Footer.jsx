@@ -5,6 +5,7 @@ import { FaInstagram } from "react-icons/fa6";
 import { FaTwitter } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import { FaLinkedin } from "react-icons/fa";
+import Link from 'next/link';
 
 
 
@@ -12,7 +13,7 @@ const Footer = () => {
   return (
     <footer className='bg-darkGreyBg py-10'>
         <div className='border-b border-textGray mb-5'></div>
-        <div className='container mx-auto py-10'>
+        <div className='mx-auto py-10'>
             <div className='md:flex items-center justify-center gap-5'>
                 {/* Logo Div */}
                 <div className='flex flex-col items-center justify-center'>
@@ -20,8 +21,7 @@ const Footer = () => {
                         <Image src='/assets/logoWhite.png' alt="logo" height={180} width={180}/>
                         {/* <h1 className='text-white text-2xl font-semibold'>EduCreate AI</h1> */}
                     </div>
-                    <p className='md:w-1/2 mt-2 text-textGray text-center'>Aliquam rhoncus ligula est, non pulvinar elit
-                    convallis nec. Donec mattis odio at.</p>
+                    <p className='md:w-1/2 mt-2 text-textGray text-center'>At EduCreate, we empower educators and learners to innovate <br/> and inspire through accessible, customizable  course creation <br/>tools. Together, we’re shaping the future of education</p>
                     <div className='mt-2 flex items-center justify-center gap-2'>
                         <MdFacebook className='text-white white hover:text-blue-600' size={30} />
                         <FaInstagram className='text-white white  hover:text-blue-600' size={30} />
@@ -43,19 +43,19 @@ const Footer = () => {
                 {/* Quick Links */}
                 <div className='flex flex-col text-center items-center justify-center gap-1 mt-8 md:mt-0'>
                     <p className='text-base text-white'>QUICK LINKS</p>
-                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'>About</p>
-                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'>Become an instructor</p>
-                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'>Contact</p>
-                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'>Career</p>
+                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'><Link href='/about' >About</Link></p>
+                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'><Link href='/signup'>Become an instructor</Link></p>
+                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'><Link href='/about' ></Link>Contact</p>
+                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'><Link href='/examples' >Examples</Link></p>
                 </div>
 
                 {/* Support */}
                 <div className='flex flex-col items-center text-center justify-center gap-1 mt-8 md:mt-0'>
                     <p className='text-base text-white'>SUPPORT</p>
-                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'>Help Center</p>
-                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'>FAQs</p>
-                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'>Terms & Conditions</p>
-                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'>Privacy Policy</p>
+                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'><Link href='/about' >Help Center</Link></p>
+                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'><Link href='/about' >FAQs</Link></p>
+                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'><Link href='/terms'>Terms & Conditions</Link></p>
+                    <p className='text-sm text-textGray hover:border-b-2 hover:border-blue-500'><Link href='/privacy-policy'>Privacy Policy</Link></p>
                 </div>
 
 

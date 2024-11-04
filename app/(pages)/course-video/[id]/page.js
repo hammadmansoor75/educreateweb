@@ -7,8 +7,11 @@ import { ClipLoader } from 'react-spinners';
 import {SnackbarProvider, useSnackbar} from 'notistack'
 import { Button } from 'flowbite-react';
 import { io } from 'socket.io-client'
+import Image from 'next/image';
 
-const socket = io('http://127.0.0.1:8000', {
+const socketUrl = process.env.SOCKET_URL
+
+const socket = io(socketUrl, {
     transports: ['websocket'], // Ensure to use the websocket transport
 });
 
@@ -211,7 +214,7 @@ const CourseVideo = () => {
 
     if (loading) {
         return <div className="flex items-center justify-center h-screen" >
-            <ClipLoader size={50} />
+            <ClipLoader color='black dark:white' size={50} />
         </div>
     }
 
@@ -237,22 +240,48 @@ const CourseVideo = () => {
             <main>
             <section className='py-10 bg-white dark:bg-black'>
                 <div className='flex flex-col gap-4 items-center justify-center'>
-                    <h1 className='text-4xl font-semibold text-center'>Welcome to this course on {course?.courseTitle}</h1>
-                    <h3 className='text-lg text-center'>{course?.courseSubtitle}</h3>
+                    <h1 className='text-2xl md:text-4xl font-semibold text-center'>Welcome to this course on {course?.courseTitle}</h1>
+                    <h3 className='text-md md:text-lg text-center'>{course?.courseSubtitle}</h3>
                 </div>
             </section>
 
             <section className={!videoExists ? 'bg-white py-10 px-10 dark:bg-black' : 'hidden'} >
                 <form className='w-full flex items-center justify-center flex-col border-2 border-blue-700 rounded-lg p-4' >
                     <h1 className='text-3xl font-medium text-black dark:text-white' >Edit & Save the following scripts to continue</h1>
-                    {scriptLoading ? <div className='mt-10 flex items-center justify-center gap-3 ' >
-                        <ClipLoader size={30} />
+                    {scriptLoading ? <div className='mt-10 text-black dark:text-white flex items-center justify-center gap-3 ' >
+                        <ClipLoader color='black dark:white' className="" size={30} />
                         <h2>Generating your scripts!</h2>
                     </div> : <><div className="flex flex-col gap-2 items-start justify-start mt-5 w-full" >
                         {scripts?.map((script,index) => (
-                            <div key={script.sectionTitle} >
-                                <h1 className='text-lg font-medium'>{script.sectionTitle}</h1>
-                                <textarea className='mt-2 w-[500px] h-96 p-4 border border-blue-900 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-md sm:h-80 md:h-[500px]' onChange={(e) => handleScriptChange(index, e.target.value) }  value={script.script} />
+                            <div key={script.sectionTitle} className='flex items-center justify-between gap-5' >
+                                <div>
+                                    <h1 className='text-lg font-medium'>{script.sectionTitle}</h1>
+                                    <textarea className='mt-2 max-w-sm md:w-[500px] h-96 p-4 text-black border border-blue-900 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-md sm:h-80 md:h-[500px]' onChange={(e) => handleScriptChange(index, e.target.value) }  value={script.script} />
+                                </div>
+                                <div>
+                                    {index === 0 ? <Image src={course?.courseImageUrl} className='hidden md:flex rounded-xl' alt="slide" height={700} width={800} /> : <div className='hidden md:flex relative w-full md:w-[600px] lg:w-[800px] h-[400px] md:h-[500px] lg:[h-650px] rounded-xl overflow-hidden'>
+                                        <Image
+                                            className='rounded-xl'
+                                            src={course?.sections[index - 1]?.backgroundImageUrl}
+                                            layout='fill'
+                                            objectFit='contain'
+                                            alt="Section Image"
+                                        />
+                                        <div className="bg-white hidden md:flex md:flex-col rounded-lg px-6 py-4 bg-opacity-50 border-white/20 backdrop-blur-sm text-black"
+                                            style={{
+                                                position: 'absolute',
+                                                left: course?.sections[index - 1]?.x,
+                                                top: course?.sections[index - 1]?.y,
+                                                width: window.innerWidth <= 768 ? 250 : 350,
+                                                height: window.innerWidth <= 768 ? 150 : 250,
+                                            }}
+                                        >
+                                            <h2 className="border border-blue-900 px-6 py-2 rounded-full font-bold text-xs md:text-sm">{course?.sections[index - 1]?.sectionTitle}</h2>
+                                            <p className="mt-3 text-xs md:text-xs px-4 py-2 text-black">{course?.sections[index - 1]?.smallPara}</p>
+                                        </div>
+                                    </div> }
+                                    
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -267,8 +296,8 @@ const CourseVideo = () => {
             <section className={videoExists ? 'bg-white py-10 px-10 dark:bg-black' : 'hidden'} >
                 <div className='flex items-center justify-center' >
                     {videoLoading ? <div className='flex items-center justify-center flex-col' >
-                        <ClipLoader size={30} />
-                        <p>Generating your video</p>
+                        <ClipLoader color='black dark:white' size={30} />
+                        <p className='text-black dark:text-white' >Generating your video</p>
                     </div> : <video className='rounded-lg' src={courseVideo?.videoUrl} controls width={1000} height={800} >Your browser does not support the video tag.</video>}
                 </div>
 
@@ -294,13 +323,13 @@ const CourseVideo = () => {
 
             <section className={videoExists ? 'bg-white py-10 px-10 dark:bg-black' : 'hidden'}>
                 <div className="p-6 text-center mt-8">
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                    <h2 className="text-2xl font-semibold dark:text-white text-gray-800 mb-4">
                         Thank You for Completing the Course!
                     </h2>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg text-gray-600 dark:text-white">
                         We appreciate your time and effort in going through this journey. We hope you gained valuable insights and knowledge.
                     </p>
-                    <p className="text-lg text-gray-600 mt-2">
+                    <p className="text-lg text-gray-600 dark:text-white mt-2">
                         Remember, learning is a continuous process, and we are excited to have been a part of yours.
                     </p>
                 </div>

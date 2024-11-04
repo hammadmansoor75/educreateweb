@@ -13,6 +13,7 @@ import InstructorComponent from "@/components/HomePageComponents/InstructorCompo
 import BecomeInstructorComponent from "@/components/HomePageComponents/BecomeInstructorComponent";
 import Link from "next/link";
 import Companies from "@/components/HomePageComponents/Companies";
+import FeatureCourses from "@/components/HomePageComponents/FeatureCourses";
 
 
 const courseSlideData = [
@@ -91,18 +92,7 @@ export default function Home() {
       
 
       <section className="py-10 px-5 bg-slate-100 dark:bg-black">
-        <div className="container mx-auto bg-white shadow-lg px-20 py-10 rounded-lg">
-          <div className="md:flex items-center justify-between">
-            <h1 className="text-black text-3xl md:text-4xl  font-semibold">Our feature courses</h1>
-            <div className="flex items-center justify-center gap-2">
-              <button onClick={handlePrev} className="bg-black mt-3 md:mt-0 text-white px-3 py-2 rounded-full"><span><FaArrowLeft size={20}/></span></button>
-              <button  onClick={handleNext} className="bg-black mt-3 md:mt-0 text-white px-3 py-2 rounded-full"><span><FaArrowRight size={20}/></span></button>
-            </div>
-          </div>
-          
-          <CourseSlide className="min-w-full"  courseImage={courseSlideData[currentIndex].courseImage} courseTag={courseSlideData[currentIndex].courseTag} courseTitle={courseSlideData[currentIndex].courseTitle} courseDesc={courseSlideData[currentIndex].courseDesc} />
-          
-        </div>
+          <FeatureCourses />
       </section>
 
       <InstructorComponent/>
